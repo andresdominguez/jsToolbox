@@ -1,8 +1,8 @@
 <idea-plugin version="2">
-    <id>com.yourcompany.unique.plugin.id</id>
-    <name>Plugin display name here</name>
+    <id>com.karateca.jstoolbox</id>
+    <name>An Intellij / Webstrom plugin that provides several tools for javascript development.</name>
     <version>1.0</version>
-    <vendor email="support@yourcompany.com" url="http://www.yourcompany.com">YourCompany</vendor>
+    <vendor email="code@karateca.com" url="http://www.andresdominguez.com">YourCompany</vendor>
 
     <description><![CDATA[
       Enter short description for your plugin here.<br>
@@ -43,5 +43,6 @@
 
     <extensions defaultExtensionNs="com.intellij">
         <!-- Add your extensions here -->
+        <applicationConfigurable instance="com.karateca.jstoolbox.config.Config"></applicationConfigurable>
     </extensions>
 </idea-plugin>
