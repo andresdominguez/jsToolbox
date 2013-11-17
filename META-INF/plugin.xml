@@ -43,6 +43,8 @@
 
     <extensions defaultExtensionNs="com.intellij">
         <!-- Add your extensions here -->
-        <applicationConfigurable instance="com.karateca.jstoolbox.config.Config"></applicationConfigurable>
+        <applicationConfigurable instance="com.karateca.jstoolbox.config.Config"/>
+        <applicationService serviceInterface="com.karateca.jstoolbox.config.JsToolboxSettings"
+                            serviceImplementation="com.karateca.jstoolbox.config.JsToolboxSettings"/>
     </extensions>
 </idea-plugin>

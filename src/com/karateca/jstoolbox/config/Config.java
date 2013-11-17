@@ -20,32 +20,35 @@ public class Config implements Configurable {
   @Nullable
   @Override
   public String getHelpTopic() {
-    return null;  //To change body of implemented methods use File | Settings | File Templates.
+    return null;
   }
 
   @Nullable
   @Override
   public JComponent createComponent() {
-    return null;  //To change body of implemented methods use File | Settings | File Templates.
+    JsToolboxConfigurationPanel jsToolboxConfigurationPanel = new JsToolboxConfigurationPanel();
+
+    return jsToolboxConfigurationPanel.getMyPanel();
+
   }
 
   @Override
   public boolean isModified() {
-    return false;  //To change body of implemented methods use File | Settings | File Templates.
+    return false;
   }
 
   @Override
   public void apply() throws ConfigurationException {
-    //To change body of implemented methods use File | Settings | File Templates.
+
   }
 
   @Override
   public void reset() {
-    //To change body of implemented methods use File | Settings | File Templates.
+
   }
 
   @Override
   public void disposeUIResources() {
-    //To change body of implemented methods use File | Settings | File Templates.
+
   }
 }
