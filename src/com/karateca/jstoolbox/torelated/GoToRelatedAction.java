@@ -24,7 +24,7 @@ public class GoToRelatedAction extends AnAction {
     Editor editor = e.getData(PlatformDataKeys.EDITOR);
 
     // Disable the option if there is no file or editor.
-    if (file == null || editor == null) {
+    if (file == null || editor == null || editor.getProject() == null) {
       e.getPresentation().setEnabled(false);
       return;
     }
@@ -32,11 +32,11 @@ public class GoToRelatedAction extends AnAction {
     final String fileName = file.getName();
 
     // Ignore non-js files.
-    if (fileName.endsWith(".js") == false) {
+    if (!fileName.endsWith(".js")) {
       return;
     }
 
-    String findFileName = "";
+    String findFileName;
     if (fileName.endsWith("-spec.js")) {
       findFileName = fileName.replace("-spec.js", ".js");
     } else {
