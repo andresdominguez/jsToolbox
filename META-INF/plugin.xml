@@ -40,10 +40,10 @@
                 description="Go to the constructor">
             <keyboard-shortcut keymap="$default" first-keystroke="shift ctrl meta G"/>
         </action>
-        <action id="com.karateca.jstoolbox.torelated.GoToRelatedAction"
-                class="com.karateca.jstoolbox.torelated.GoToRelatedAction"
-                text="Go to related ..."
-                description="Go to the related test of the file for the test">
+        <action id="com.karateca.jstoolbox.torelated.GoToTestAction"
+                class="com.karateca.jstoolbox.torelated.GoToTestAction"
+                text="Go to test"
+                description="Go to the test file form the file of the view">
             <keyboard-shortcut keymap="$default" first-keystroke="alt T"/>
         </action>
         <action id="com.karateca.jstoolbox.torelated.SwitchToViewAction"

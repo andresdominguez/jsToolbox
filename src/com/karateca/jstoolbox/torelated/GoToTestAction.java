@@ -2,6 +2,7 @@ package com.karateca.jstoolbox.torelated;
 
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.LangDataKeys;
+import com.intellij.openapi.project.Project;
 import com.intellij.openapi.roots.ContentIterator;
 import com.intellij.openapi.roots.ProjectRootManager;
 import com.intellij.psi.PsiFile;
@@ -12,7 +13,7 @@ import com.karateca.jstoolbox.config.JsToolboxSettings;
 /**
  * @author andresdom@google.com (Andres Dominguez)
  */
-public class GoToRelatedAction extends MyAction {
+public class GoToTestAction extends MyAction {
 
   @Override
   public void actionPerformed(AnActionEvent e) {
@@ -24,28 +25,37 @@ public class GoToRelatedAction extends MyAction {
       return;
     }
 
-    JsToolboxSettings settings = new JsToolboxSettings();
-
     final String fileName = file.getName();
 
-    // Ignore non-js files.
+    JsToolboxSettings settings = new JsToolboxSettings();
     String fileSuffix = settings.getFileSuffix();
     String testSuffix = settings.getTestSuffix();
+    String viewSuffix = settings.getViewSuffix();
 
-    if (!fileName.endsWith(fileSuffix)) {
-      return;
-    }
-
-    String findFileName;
+    // Ignore non-js files.
     if (fileName.endsWith(testSuffix)) {
-      findFileName = fileName.replace(testSuffix, fileSuffix);
-    } else {
-      findFileName = fileName.replace(fileSuffix, testSuffix);
+      // From test to file.
+      goToFile(e, testSuffix, fileSuffix);
+    } else if (fileName.endsWith(viewSuffix)) {
+      // From view to test.
+      goToFile(e, viewSuffix, testSuffix);
+    } else if(fileName.endsWith(fileSuffix)){
+      // From file to test.
+      goToFile(e, fileSuffix, testSuffix);
     }
+  }
+
+  private void goToFile(AnActionEvent e, String fromSuffix, String toSuffix) {
+    PsiFile file = e.getData(LangDataKeys.PSI_FILE);
+    String fileName = file.getName();
+    Project project = e.getProject();
+
+    String findFileName = fileName.replace(fromSuffix, toSuffix);
 
     ContentIterator fileIterator = new FindRelatedFileIterator(findFileName, PsiManager.getInstance(
-        e.getProject()));
+        project));
 
-    ProjectRootManager.getInstance(e.getProject()).getFileIndex().iterateContent(fileIterator);
+    ProjectRootManager.getInstance(project).getFileIndex().iterateContent(fileIterator);
   }
+
 }
