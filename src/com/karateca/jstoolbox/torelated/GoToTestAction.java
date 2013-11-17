@@ -1,13 +1,11 @@
 package com.karateca.jstoolbox.torelated;
 
 import com.intellij.openapi.actionSystem.AnActionEvent;
-import com.karateca.jstoolbox.MyAction;
-import com.karateca.jstoolbox.config.JsToolboxSettings;
 
 /**
  * @author andresdom@google.com (Andres Dominguez)
  */
-public class GoToTestAction extends MyAction {
+public class GoToTestAction extends GoToRelatedAction {
 
   @Override
   public void actionPerformed(AnActionEvent e) {
@@ -18,18 +16,13 @@ public class GoToTestAction extends MyAction {
 
     String fileName = getCurrentFileName(e);
 
-    JsToolboxSettings settings = new JsToolboxSettings();
-    String fileSuffix = settings.getFileSuffix();
-    String viewSuffix = settings.getViewSuffix();
-    String testSuffix = settings.getTestSuffix();
-
-    if (fileName.endsWith(testSuffix)) {
+    if (isTestFile(fileName)) {
       // From test to file.
       goToFile(e, testSuffix, fileSuffix);
-    } else if (fileName.endsWith(viewSuffix)) {
+    } else if (isViewFile(fileName)) {
       // From view to test.
       goToFile(e, viewSuffix, testSuffix);
-    } else if (fileName.endsWith(fileSuffix)) {
+    } else if (isFileFile(fileName)) {
       // From file to test.
       goToFile(e, fileSuffix, testSuffix);
     }
