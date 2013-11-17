@@ -35,7 +35,7 @@ public class JsToolboxSettings {
   public void save() {
     properties.setValue(TEST_SUFFIX_PROP, testSuffix);
     properties.setValue(FILE_SUFFIX_PROP, fileSuffix);
-    properties.setValue(VIEW_SUFFIX_PROP, fileSuffix);
+    properties.setValue(VIEW_SUFFIX_PROP, viewSuffix);
   }
 
   public String getFileSuffix() {
