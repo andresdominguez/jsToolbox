@@ -22,14 +22,17 @@ public class JsToolboxSettings implements PersistentStateComponent<JsToolboxSett
 
   private String textSuffix;
 
-  public String getTextSuffix() {
+  public String getTestSuffix() {
     return textSuffix != null ? textSuffix : "spec";
+  }
+
+  public void setTextSuffix(String textSuffix) {
+    this.textSuffix = textSuffix;
   }
 
   public static JsToolboxSettings getInstance() {
     return ServiceManager.getService(JsToolboxSettings.class);
   }
-
 
   @Nullable
   @Override
