@@ -16,8 +16,7 @@ public class GoToTestAction extends MyAction {
     PsiFile file = e.getData(LangDataKeys.PSI_FILE);
 
     // Disable if dependencies are not met.
-    if (file == null || e.getProject() == null) {
-      e.getPresentation().setEnabled(false);
+    if (!canEnableAction(e)) {
       return;
     }
 
@@ -39,13 +38,5 @@ public class GoToTestAction extends MyAction {
       // From file to test.
       goToFile(e, fileSuffix, testSuffix);
     }
-  }
-
-  private void goToFile(AnActionEvent e, String fromSuffix, String toSuffix) {
-    String fileName = e.getData(LangDataKeys.PSI_FILE).getName();
-
-    String findFileName = fileName.replace(fromSuffix, toSuffix);
-
-    openFileInEditor(findFileName, e.getProject());
   }
 }
