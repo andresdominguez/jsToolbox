@@ -9,6 +9,7 @@ import com.intellij.openapi.roots.ContentIterator;
 import com.intellij.openapi.roots.ProjectRootManager;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.PsiManager;
+import com.karateca.jstoolbox.config.JsToolboxSettings;
 
 /**
  * @author andresdom@google.com (Andres Dominguez)
@@ -31,9 +32,15 @@ public class SwitchToViewAction extends AnAction {
 
     final String fileName = file.getName();
 
-    // Only process html and js.
-    boolean isJsFile = fileName.endsWith(".js");
-    boolean isHtmlFile = fileName.endsWith(".html");
+    JsToolboxSettings settings = new JsToolboxSettings();
+
+    String fileSuffix = settings.getFileSuffix();
+    String viewSuffix = settings.getViewSuffix();
+    String testSuffix = settings.getTestSuffix();
+
+    // Only process view and file type.
+    boolean isJsFile = fileName.endsWith(fileSuffix);
+    boolean isHtmlFile = fileName.endsWith(viewSuffix);
 
     if (!isJsFile && !isHtmlFile) {
       return;
@@ -41,14 +48,15 @@ public class SwitchToViewAction extends AnAction {
 
     String findFileName;
     if (isHtmlFile) {
-      findFileName = fileName.replace(".html", ".js");
+      findFileName = fileName.replace(viewSuffix, fileSuffix);
     } else {
-      String replace = ".js";
-      if (fileName.endsWith("-spec.js")) {
-        replace = "-spec.js";
+      String replace = fileSuffix;
+
+      if (fileName.endsWith(testSuffix)) {
+        replace = testSuffix;
       }
 
-      findFileName = fileName.replace(replace, ".html");
+      findFileName = fileName.replace(replace, viewSuffix);
     }
 
     ContentIterator fileIterator = new FindRelatedFileIterator(findFileName, PsiManager.getInstance(

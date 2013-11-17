@@ -9,6 +9,7 @@ import com.intellij.openapi.roots.ContentIterator;
 import com.intellij.openapi.roots.ProjectRootManager;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.PsiManager;
+import com.karateca.jstoolbox.config.JsToolboxSettings;
 
 /**
  * @author andresdom@google.com (Andres Dominguez)
@@ -29,18 +30,23 @@ public class GoToRelatedAction extends AnAction {
       return;
     }
 
+    JsToolboxSettings settings = new JsToolboxSettings();
+
     final String fileName = file.getName();
 
     // Ignore non-js files.
-    if (!fileName.endsWith(".js")) {
+    String fileSuffix = settings.getFileSuffix();
+    String testSuffix = settings.getTestSuffix();
+
+    if (!fileName.endsWith(fileSuffix)) {
       return;
     }
 
     String findFileName;
-    if (fileName.endsWith("-spec.js")) {
-      findFileName = fileName.replace("-spec.js", ".js");
+    if (fileName.endsWith(testSuffix)) {
+      findFileName = fileName.replace(testSuffix, fileSuffix);
     } else {
-      findFileName = fileName.replace(".js", "-spec.js");
+      findFileName = fileName.replace(fileSuffix, testSuffix);
     }
 
     ContentIterator fileIterator = new FindRelatedFileIterator(findFileName, PsiManager.getInstance(
