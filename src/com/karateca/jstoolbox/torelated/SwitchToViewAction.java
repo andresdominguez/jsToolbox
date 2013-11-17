@@ -16,7 +16,7 @@ public class SwitchToViewAction extends MyAction {
       return;
     }
 
-    final String fileName = getCurrentFileName(e);
+    String fileName = getCurrentFileName(e);
 
     JsToolboxSettings settings = new JsToolboxSettings();
     String fileSuffix = settings.getFileSuffix();

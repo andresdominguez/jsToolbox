@@ -20,10 +20,9 @@ public class GoToTestAction extends MyAction {
 
     JsToolboxSettings settings = new JsToolboxSettings();
     String fileSuffix = settings.getFileSuffix();
-    String testSuffix = settings.getTestSuffix();
     String viewSuffix = settings.getViewSuffix();
+    String testSuffix = settings.getTestSuffix();
 
-    // Ignore non-js files.
     if (fileName.endsWith(testSuffix)) {
       // From test to file.
       goToFile(e, testSuffix, fileSuffix);
