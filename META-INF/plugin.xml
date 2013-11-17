@@ -2,7 +2,7 @@
     <id>com.karateca.jstoolbox</id>
     <name>JS Toolbox</name>
     <version>1.0</version>
-    <vendor email="code@karateca.com" url="http://www.andresdominguez.com">YourCompany</vendor>
+    <vendor email="code@karateca.com" url="http://www.andresdominguez.com">www.andresdominguez.com</vendor>
 
     <description><![CDATA[
       An Intellij / Webstorm plugin that provides several tools for javascript development.<br>
@@ -30,11 +30,13 @@
     <actions>
         <!-- Add your actions here -->
         <action id="com.karateca.jstoolbox.joiner.JoinerAction"
-                class="com.karateca.jstoolbox.joiner.JoinerAction" text="Join" description="Joint stuff">
+                class="com.karateca.jstoolbox.joiner.JoinerAction" text="Join"
+                description="Joint a string or multiple variable declarations">
             <keyboard-shortcut keymap="$default" first-keystroke="shift ctrl meta J"/>
         </action>
         <action id="com.karateca.jstoolbox.toconstructor.GoToConstructorAction"
-                class="com.karateca.jstoolbox.toconstructor.GoToConstructorAction" text="Go to constructor"
+                class="com.karateca.jstoolbox.toconstructor.GoToConstructorAction"
+                text="Go to constructor"
                 description="Go to the constructor">
             <keyboard-shortcut keymap="$default" first-keystroke="shift ctrl meta G"/>
         </action>
