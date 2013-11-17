@@ -14,7 +14,7 @@
         </constraints>
         <properties>
           <labelFor value="58f4f"/>
-          <text value="Unit test suffix (e.g. my-component-spec.js would be &quot;-spec.js&quot;)"/>
+          <text value="&amp;Unit test suffix (e.g. my-component-spec.js would be &quot;-spec.js&quot;)"/>
         </properties>
       </component>
       <hspacer id="69478">
@@ -50,7 +50,7 @@
         </constraints>
         <properties>
           <labelFor value="5b44"/>
-          <text value="File suffix (e.g. my-component.js would be &quot;.js&quot;)"/>
+          <text value="&amp;File suffix (e.g. my-component.js would be &quot;.js&quot;)"/>
         </properties>
       </component>
       <component id="5b44" class="javax.swing.JTextField" binding="fileSuffix">
@@ -67,7 +67,7 @@
         </constraints>
         <properties>
           <labelFor value="f64e2"/>
-          <text value="View suffix (e.g. my-component.html would be &quot;.html&quot;)"/>
+          <text value="&amp;View suffix (e.g. my-component.html would be &quot;.html&quot;)"/>
         </properties>
       </component>
       <component id="f64e2" class="javax.swing.JTextField" binding="viewSuffix">
@@ -88,7 +88,7 @@
           <grid row="7" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="Reset to default values"/>
+          <text value="&amp;Reset to default values"/>
         </properties>
       </component>
     </children>

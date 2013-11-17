@@ -2,6 +2,7 @@ package com.karateca.jstoolbox.torelated;
 
 import com.intellij.openapi.roots.ContentIterator;
 import com.intellij.openapi.vfs.VirtualFile;
+import com.intellij.psi.PsiFile;
 import com.intellij.psi.PsiManager;
 
 /**
@@ -19,7 +20,10 @@ public class FindRelatedFileIterator implements ContentIterator {
 
   public boolean processFile(VirtualFile virtualFile) {
     if (fileName.equals(virtualFile.getName())) {
-      psiManager.findFile(virtualFile).navigate(true);
+      PsiFile file = psiManager.findFile(virtualFile);
+      if (file != null) {
+        file.navigate(true);
+      }
     }
     return true;
   }

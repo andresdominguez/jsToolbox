@@ -21,17 +21,13 @@ public abstract class MyAction extends AnAction {
     e.getPresentation().setEnabled(canEnableAction(e));
   }
 
-  public boolean canEnableAction(AnActionEvent e) {
+  protected boolean canEnableAction(AnActionEvent e) {
     Editor editor = e.getData(PlatformDataKeys.EDITOR);
     PsiFile file = e.getData(LangDataKeys.PSI_FILE);
-    if (editor == null || file == null || e.getProject() == null) {
-
-      return false;
-    }
-    return true;
+    return !(editor == null || file == null || e.getProject() == null);
   }
 
-  protected void openFileInEditor(String findFileName, Project project) {
+  void openFileInEditor(String findFileName, Project project) {
     ContentIterator fileIterator = new FindRelatedFileIterator(findFileName, PsiManager.getInstance(
         project));
 
@@ -40,12 +36,11 @@ public abstract class MyAction extends AnAction {
 
   protected String getCurrentFileName(AnActionEvent e) {
     PsiFile file = e.getData(LangDataKeys.PSI_FILE);
-
-    return file.getName();
+    return file == null ? "" : file.getName();
   }
 
   protected void goToFile(AnActionEvent e, String fromSuffix, String toSuffix) {
-    String fileName = e.getData(LangDataKeys.PSI_FILE).getName();
+    String fileName = getCurrentFileName(e);
 
     String findFileName = fileName.replace(fromSuffix, toSuffix);
 

@@ -1,8 +1,6 @@
 package com.karateca.jstoolbox.torelated;
 
 import com.intellij.openapi.actionSystem.AnActionEvent;
-import com.intellij.openapi.actionSystem.LangDataKeys;
-import com.intellij.psi.PsiFile;
 import com.karateca.jstoolbox.MyAction;
 import com.karateca.jstoolbox.config.JsToolboxSettings;
 
@@ -13,14 +11,12 @@ public class GoToTestAction extends MyAction {
 
   @Override
   public void actionPerformed(AnActionEvent e) {
-    PsiFile file = e.getData(LangDataKeys.PSI_FILE);
-
     // Disable if dependencies are not met.
     if (!canEnableAction(e)) {
       return;
     }
 
-    final String fileName = file.getName();
+    String fileName = getCurrentFileName(e);
 
     JsToolboxSettings settings = new JsToolboxSettings();
     String fileSuffix = settings.getFileSuffix();
