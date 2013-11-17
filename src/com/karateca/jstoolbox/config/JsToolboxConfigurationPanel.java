@@ -13,4 +13,12 @@ public class JsToolboxConfigurationPanel {
   }
 
   private JPanel myPanel;
+
+  public void setTestSuffix(String testSuffix) {
+    unitTestSuffix.setText(testSuffix);
+  }
+
+  public String getTestSuffix() {
+    return unitTestSuffix.getText();
+  }
 }
