@@ -10,7 +10,7 @@ import javax.swing.*;
 /**
  * @author Andres Dominguez.
  */
-public class Config implements Configurable {
+public class JsToolboxConfigurable implements Configurable {
   @Nls
   @Override
   public String getDisplayName() {
