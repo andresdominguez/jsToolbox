@@ -5,7 +5,7 @@
     <vendor email="code@karateca.com" url="http://www.andresdominguez.com">YourCompany</vendor>
 
     <description><![CDATA[
-      An Intellij / Webstrom plugin that provides several tools for javascript development.<br>
+      An Intellij / Webstorm plugin that provides several tools for javascript development.<br>
       ]]></description>
 
     <change-notes><![CDATA[
@@ -43,7 +43,5 @@
     <extensions defaultExtensionNs="com.intellij">
         <!-- Add your extensions here -->
         <applicationConfigurable instance="com.karateca.jstoolbox.config.JsToolboxConfigurable"/>
-        <applicationService serviceInterface="com.karateca.jstoolbox.config.JsToolboxSettings"
-                            serviceImplementation="com.karateca.jstoolbox.config.JsToolboxSettings"/>
     </extensions>
 </idea-plugin>
