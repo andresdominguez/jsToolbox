@@ -45,8 +45,9 @@ public class JsToolboxConfigurable implements Configurable {
     configurationPanel.getResetButton().addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent actionEvent) {
-        settings.resetDefaultValues();
-        setViewFromConfig();
+        configurationPanel.setTestSuffix(JsToolboxSettings.DEFAULT_TEST_SUFFIX);
+        configurationPanel.setViewSuffix(JsToolboxSettings.DEFAULT_VIEW_SUFFIX);
+        configurationPanel.setFileSuffix(JsToolboxSettings.DEFAULT_FILE_SUFFIX);
       }
     });
 
@@ -73,10 +74,6 @@ public class JsToolboxConfigurable implements Configurable {
   @Override
   public void reset() {
     settings.load();
-    setViewFromConfig();
-  }
-
-  private void setViewFromConfig() {
     configurationPanel.setTestSuffix(settings.getTestSuffix());
     configurationPanel.setViewSuffix(settings.getViewSuffix());
     configurationPanel.setFileSuffix(settings.getFileSuffix());

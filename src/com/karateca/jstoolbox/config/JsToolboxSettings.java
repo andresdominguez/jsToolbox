@@ -61,10 +61,4 @@ public class JsToolboxSettings {
   public void setViewSuffix(String viewSuffix) {
     this.viewSuffix = viewSuffix;
   }
-
-  public void resetDefaultValues() {
-    this.fileSuffix = DEFAULT_FILE_SUFFIX;
-    this.viewSuffix = DEFAULT_VIEW_SUFFIX;
-    this.testSuffix = DEFAULT_TEST_SUFFIX;
-  }
 }
