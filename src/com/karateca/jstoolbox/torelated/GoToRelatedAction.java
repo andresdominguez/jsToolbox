@@ -1,6 +1,5 @@
 package com.karateca.jstoolbox.torelated;
 
-import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.LangDataKeys;
 import com.intellij.openapi.actionSystem.PlatformDataKeys;
@@ -9,23 +8,21 @@ import com.intellij.openapi.roots.ContentIterator;
 import com.intellij.openapi.roots.ProjectRootManager;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.PsiManager;
+import com.karateca.jstoolbox.MyAction;
 import com.karateca.jstoolbox.config.JsToolboxSettings;
 
 /**
  * @author andresdom@google.com (Andres Dominguez)
  */
-public class GoToRelatedAction extends AnAction {
-
-  public void actionPerformed(AnActionEvent e) {
-  }
+public class GoToRelatedAction extends MyAction {
 
   @Override
-  public void update(AnActionEvent e) {
-    PsiFile file = e.getData(LangDataKeys.PSI_FILE);
+  public void actionPerformed(AnActionEvent e) {
     Editor editor = e.getData(PlatformDataKeys.EDITOR);
+    PsiFile file = e.getData(LangDataKeys.PSI_FILE);
 
-    // Disable the option if there is no file or editor.
-    if (file == null || editor == null || editor.getProject() == null) {
+    // Disable if dependencies are not met.
+    if (file == null || e.getProject() == null) {
       e.getPresentation().setEnabled(false);
       return;
     }
