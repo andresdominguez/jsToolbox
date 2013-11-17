@@ -2,8 +2,6 @@ package com.karateca.jstoolbox.torelated;
 
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.LangDataKeys;
-import com.intellij.openapi.actionSystem.PlatformDataKeys;
-import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.roots.ContentIterator;
 import com.intellij.openapi.roots.ProjectRootManager;
 import com.intellij.psi.PsiFile;
@@ -18,7 +16,6 @@ public class GoToRelatedAction extends MyAction {
 
   @Override
   public void actionPerformed(AnActionEvent e) {
-    Editor editor = e.getData(PlatformDataKeys.EDITOR);
     PsiFile file = e.getData(LangDataKeys.PSI_FILE);
 
     // Disable if dependencies are not met.
@@ -47,8 +44,8 @@ public class GoToRelatedAction extends MyAction {
     }
 
     ContentIterator fileIterator = new FindRelatedFileIterator(findFileName, PsiManager.getInstance(
-        editor.getProject()));
+        e.getProject()));
 
-    ProjectRootManager.getInstance(editor.getProject()).getFileIndex().iterateContent(fileIterator);
+    ProjectRootManager.getInstance(e.getProject()).getFileIndex().iterateContent(fileIterator);
   }
 }
