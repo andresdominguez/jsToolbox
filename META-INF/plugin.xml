@@ -29,14 +29,26 @@
 
     <actions>
         <!-- Add your actions here -->
-        <action id="com.karateca.joiner" class="com.karateca.jstoolbox.joiner.JoinerAction" text="Join" description="Joint stuff">
-            <add-to-group group-id="AnalyzeJavaMenu" anchor="first"/>
+        <action id="com.karateca.jstoolbox.joiner.JoinerAction"
+                class="com.karateca.jstoolbox.joiner.JoinerAction" text="Join" description="Joint stuff">
             <keyboard-shortcut keymap="$default" first-keystroke="shift ctrl meta J"/>
         </action>
-        <action id="goToConstructor" class="com.karateca.jstoolbox.toconstructor.GoToConstructorAction" text="Go to constructor"
+        <action id="com.karateca.jstoolbox.toconstructor.GoToConstructorAction"
+                class="com.karateca.jstoolbox.toconstructor.GoToConstructorAction" text="Go to constructor"
                 description="Go to the constructor">
-            <add-to-group group-id="GoToMenuEx" anchor="first"/>
             <keyboard-shortcut keymap="$default" first-keystroke="shift ctrl meta G"/>
+        </action>
+        <action id="com.karateca.jstoolbox.torelated.GoToRelatedAction"
+                class="com.karateca.jstoolbox.torelated.GoToRelatedAction"
+                text="Go to related ..."
+                description="Go to the related test of the file for the test">
+            <keyboard-shortcut keymap="$default" first-keystroke="alt T"/>
+        </action>
+        <action id="com.karateca.jstoolbox.torelated.SwitchToViewAction"
+                class="com.karateca.jstoolbox.torelated.SwitchToViewAction"
+                text="Go to view..."
+                description="Switch between the view and the controller">
+            <keyboard-shortcut keymap="$default" first-keystroke="alt V"/>
         </action>
     </actions>
 
