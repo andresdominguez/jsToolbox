@@ -1,8 +1,8 @@
 package com.karateca.jstoolbox.config;
 
-import com.intellij.ide.util.PropertiesComponent;
 import com.intellij.openapi.options.Configurable;
 import com.intellij.openapi.options.ConfigurationException;
+import org.apache.commons.lang.StringUtils;
 import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.Nullable;
 
@@ -13,13 +13,11 @@ import javax.swing.*;
  */
 public class JsToolboxConfigurable implements Configurable {
 
-  public static final String TEST_SUFFIX = "com.karateca.jstoolbox.unitTestSuffix";
-  public static final String DEFAULT_TEST_SUFFIX = "-spec";
-  private final PropertiesComponent propertiesComponent;
   private JsToolboxConfigurationPanel configurationPanel;
+  private final JsToolboxSettings settings;
 
   public JsToolboxConfigurable() {
-    propertiesComponent = PropertiesComponent.getInstance();
+    settings = new JsToolboxSettings();
   }
 
   @Nls
@@ -48,23 +46,25 @@ public class JsToolboxConfigurable implements Configurable {
 
   @Override
   public boolean isModified() {
-    return !getTestSuffix().equals(configurationPanel.getTestSuffix());
+    return !StringUtils.equals(settings.getTestSuffix(), configurationPanel.getTestSuffix()) ||
+        !StringUtils.equals(settings.getViewSuffix(), configurationPanel.getViewSuffix()) ||
+        !StringUtils.equals(settings.getFileSuffix(), configurationPanel.getFileSuffix());
   }
 
   @Override
   public void apply() throws ConfigurationException {
-    propertiesComponent.setValue(TEST_SUFFIX, configurationPanel.getTestSuffix());
+    settings.setTestSuffix(configurationPanel.getTestSuffix());
+    settings.setFileSuffix(configurationPanel.getFileSuffix());
+    settings.setViewSuffix(configurationPanel.getViewSuffix());
+    settings.save();
   }
 
   @Override
   public void reset() {
-
-    getTestSuffix();
-    configurationPanel.setTestSuffix(getTestSuffix());
-  }
-
-  private String getTestSuffix() {
-    return propertiesComponent.getValue(TEST_SUFFIX, DEFAULT_TEST_SUFFIX);
+    settings.load();
+    configurationPanel.setTestSuffix(settings.getTestSuffix());
+    configurationPanel.setViewSuffix(settings.getViewSuffix());
+    configurationPanel.setFileSuffix(settings.getFileSuffix());
   }
 
   @Override
