@@ -13,6 +13,8 @@ public class JsToolboxConfigurationPanel {
   }
 
   private JPanel myPanel;
+  private JTextField fileSuffix;
+  private JTextField viewSuffix;
 
   public void setTestSuffix(String testSuffix) {
     unitTestSuffix.setText(testSuffix);
@@ -20,5 +22,21 @@ public class JsToolboxConfigurationPanel {
 
   public String getTestSuffix() {
     return unitTestSuffix.getText();
+  }
+
+  public String getFileSuffix() {
+    return fileSuffix.getText();
+  }
+
+  public void setFileSuffix(String suffix) {
+    fileSuffix.setText(suffix);
+  }
+
+  public String getViewSuffix() {
+    return viewSuffix.getText();
+  }
+
+  public void setViewSuffix(String suffix) {
+    viewSuffix.setText(suffix);
   }
 }
