@@ -23,6 +23,7 @@ public class JsToolboxSettings {
 
   public JsToolboxSettings() {
     properties = PropertiesComponent.getInstance();
+    load();
   }
 
   public void load() {
@@ -35,12 +36,6 @@ public class JsToolboxSettings {
     properties.setValue(TEST_SUFFIX_PROP, testSuffix);
     properties.setValue(FILE_SUFFIX_PROP, fileSuffix);
     properties.setValue(VIEW_SUFFIX_PROP, fileSuffix);
-  }
-
-  public void resetToDefault() {
-    this.testSuffix = DEFAULT_TEST_SUFFIX;
-    this.fileSuffix = DEFAULT_FILE_SUFFIX;
-    this.viewSuffix = DEFAULT_VIEW_SUFFIX;
   }
 
   public String getFileSuffix() {
