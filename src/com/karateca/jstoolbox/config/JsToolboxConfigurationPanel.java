@@ -15,6 +15,7 @@ public class JsToolboxConfigurationPanel {
   private JPanel myPanel;
   private JTextField fileSuffix;
   private JTextField viewSuffix;
+  private JButton resetButton;
 
   public void setTestSuffix(String testSuffix) {
     unitTestSuffix.setText(testSuffix);
@@ -38,5 +39,9 @@ public class JsToolboxConfigurationPanel {
 
   public void setViewSuffix(String suffix) {
     viewSuffix.setText(suffix);
+  }
+
+  public JButton getResetButton() {
+    return resetButton;
   }
 }

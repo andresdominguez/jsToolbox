@@ -7,6 +7,8 @@ import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
  * @author Andres Dominguez.
@@ -39,6 +41,15 @@ public class JsToolboxConfigurable implements Configurable {
       configurationPanel = new JsToolboxConfigurationPanel();
     }
 
+    // Reset on click.
+    configurationPanel.getResetButton().addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent actionEvent) {
+        settings.resetDefaultValues();
+        setViewFromConfig();
+      }
+    });
+
     reset();
 
     return configurationPanel.getMyPanel();
@@ -62,6 +73,10 @@ public class JsToolboxConfigurable implements Configurable {
   @Override
   public void reset() {
     settings.load();
+    setViewFromConfig();
+  }
+
+  private void setViewFromConfig() {
     configurationPanel.setTestSuffix(settings.getTestSuffix());
     configurationPanel.setViewSuffix(settings.getViewSuffix());
     configurationPanel.setFileSuffix(settings.getFileSuffix());
