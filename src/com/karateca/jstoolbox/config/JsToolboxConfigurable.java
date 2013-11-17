@@ -14,6 +14,7 @@ import javax.swing.*;
 public class JsToolboxConfigurable implements Configurable {
 
   public static final String TEST_SUFFIX = "com.karateca.jstoolbox.unitTestSuffix";
+  public static final String DEFAULT_TEST_SUFFIX = "-spec";
   private final PropertiesComponent propertiesComponent;
   private JsToolboxConfigurationPanel configurationPanel;
 
@@ -63,7 +64,7 @@ public class JsToolboxConfigurable implements Configurable {
   }
 
   private String getTestSuffix() {
-    return propertiesComponent.getValue(TEST_SUFFIX, "spec");
+    return propertiesComponent.getValue(TEST_SUFFIX, DEFAULT_TEST_SUFFIX);
   }
 
   @Override
