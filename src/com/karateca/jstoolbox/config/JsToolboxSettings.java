@@ -7,9 +7,9 @@ import com.intellij.ide.util.PropertiesComponent;
  */
 public class JsToolboxSettings {
 
-  public static final String TEST_SUFFIX_PROP = "com.karateca.jstoolbox.testSuffix";
-  public static final String FILE_SUFFIX_PROP = "com.karateca.jstoolbox.fileSuffix";
-  public static final String VIEW_SUFFIX_PROP = "com.karateca.jstoolbox.viewSuffix";
+  private static final String TEST_SUFFIX_PROP = "com.karateca.jstoolbox.testSuffix";
+  private static final String FILE_SUFFIX_PROP = "com.karateca.jstoolbox.fileSuffix";
+  private static final String VIEW_SUFFIX_PROP = "com.karateca.jstoolbox.viewSuffix";
 
   public static final String DEFAULT_TEST_SUFFIX = "-spec.js";
   public static final String DEFAULT_FILE_SUFFIX = ".js";

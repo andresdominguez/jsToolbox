@@ -15,7 +15,7 @@ import com.karateca.jstoolbox.MyAction;
  */
 public class JoinerAction extends MyAction {
 
-  public static final String VAR_DECLARATION = "^\\s*var.*";
+  private static final String VAR_DECLARATION = "^\\s*var.*";
   private Document document;
   private Editor editor;
   private Project project;
