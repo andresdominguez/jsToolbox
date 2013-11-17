@@ -2,11 +2,7 @@ package com.karateca.jstoolbox.torelated;
 
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.LangDataKeys;
-import com.intellij.openapi.project.Project;
-import com.intellij.openapi.roots.ContentIterator;
-import com.intellij.openapi.roots.ProjectRootManager;
 import com.intellij.psi.PsiFile;
-import com.intellij.psi.PsiManager;
 import com.karateca.jstoolbox.MyAction;
 import com.karateca.jstoolbox.config.JsToolboxSettings;
 
@@ -39,23 +35,17 @@ public class GoToTestAction extends MyAction {
     } else if (fileName.endsWith(viewSuffix)) {
       // From view to test.
       goToFile(e, viewSuffix, testSuffix);
-    } else if(fileName.endsWith(fileSuffix)){
+    } else if (fileName.endsWith(fileSuffix)) {
       // From file to test.
       goToFile(e, fileSuffix, testSuffix);
     }
   }
 
   private void goToFile(AnActionEvent e, String fromSuffix, String toSuffix) {
-    PsiFile file = e.getData(LangDataKeys.PSI_FILE);
-    String fileName = file.getName();
-    Project project = e.getProject();
+    String fileName = e.getData(LangDataKeys.PSI_FILE).getName();
 
     String findFileName = fileName.replace(fromSuffix, toSuffix);
 
-    ContentIterator fileIterator = new FindRelatedFileIterator(findFileName, PsiManager.getInstance(
-        project));
-
-    ProjectRootManager.getInstance(project).getFileIndex().iterateContent(fileIterator);
+    openFileInEditor(findFileName, e.getProject());
   }
-
 }

@@ -1,26 +1,24 @@
 package com.karateca.jstoolbox.torelated;
 
-import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.LangDataKeys;
 import com.intellij.openapi.actionSystem.PlatformDataKeys;
 import com.intellij.openapi.editor.Editor;
+import com.intellij.openapi.project.Project;
 import com.intellij.openapi.roots.ContentIterator;
 import com.intellij.openapi.roots.ProjectRootManager;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.PsiManager;
+import com.karateca.jstoolbox.MyAction;
 import com.karateca.jstoolbox.config.JsToolboxSettings;
 
 /**
  * @author andresdom@google.com (Andres Dominguez)
  */
-public class SwitchToViewAction extends AnAction {
-
-  public void actionPerformed(AnActionEvent e) {
-  }
+public class SwitchToViewAction extends MyAction {
 
   @Override
-  public void update(AnActionEvent e) {
+  public void actionPerformed(AnActionEvent e) {
     PsiFile file = e.getData(LangDataKeys.PSI_FILE);
     Editor editor = e.getData(PlatformDataKeys.EDITOR);
 
@@ -59,9 +57,6 @@ public class SwitchToViewAction extends AnAction {
       findFileName = fileName.replace(replace, viewSuffix);
     }
 
-    ContentIterator fileIterator = new FindRelatedFileIterator(findFileName, PsiManager.getInstance(
-        editor.getProject()));
-
-    ProjectRootManager.getInstance(editor.getProject()).getFileIndex().iterateContent(fileIterator);
+    openFileInEditor(findFileName, editor.getProject());
   }
 }
