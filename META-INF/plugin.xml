@@ -1,12 +1,11 @@
 <idea-plugin version="2">
     <id>com.karateca.jstoolbox</id>
-    <name>An Intellij / Webstrom plugin that provides several tools for javascript development.</name>
+    <name>JS Toolbox</name>
     <version>1.0</version>
     <vendor email="code@karateca.com" url="http://www.andresdominguez.com">YourCompany</vendor>
 
     <description><![CDATA[
-      Enter short description for your plugin here.<br>
-      <small>most HTML tags may be used</small>
+      An Intellij / Webstrom plugin that provides several tools for javascript development.<br>
       ]]></description>
 
     <change-notes><![CDATA[
