@@ -42,6 +42,14 @@ abstract class GoToRelatedAction extends MyAction {
     }
   }
 
+  private void readConfig() {
+    JsToolboxSettings settings = new JsToolboxSettings();
+
+    fileSuffixList = Arrays.asList(settings.getFileSuffix().split(","));
+    viewSuffixList = Arrays.asList(settings.getViewSuffix().split(","));
+    testSuffixList = Arrays.asList(settings.getTestSuffix().split(","));
+  }
+
   String getDestinationMatch(String fileName) {
     return findMatch(fileName, getDestinationSuffixList());
   }
@@ -56,14 +64,6 @@ abstract class GoToRelatedAction extends MyAction {
 
   String getViewSuffixMatch(String fileName) {
     return findMatch(fileName, viewSuffixList);
-  }
-
-  private void readConfig() {
-    JsToolboxSettings settings = new JsToolboxSettings();
-
-    fileSuffixList = Arrays.asList(settings.getFileSuffix().split(","));
-    viewSuffixList = Arrays.asList(settings.getViewSuffix().split(","));
-    testSuffixList = Arrays.asList(settings.getTestSuffix().split(","));
   }
 
   boolean isInCodeFile(String fileName) {
