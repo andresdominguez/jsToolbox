@@ -1,6 +1,5 @@
 package com.karateca.jstoolbox.torelated;
 
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -10,6 +9,6 @@ public class GoToViewAction extends GoToRelatedAction {
 
   @Override
   List<String> getDestinationSuffixList() {
-    return Arrays.asList(viewSuffix);
+    return viewSuffixList;
   }
 }
