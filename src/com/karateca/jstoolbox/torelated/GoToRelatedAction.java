@@ -15,7 +15,7 @@ public abstract class GoToRelatedAction extends MyAction {
   private String fileSuffix;
   String viewSuffix;
   String testSuffix;
-  List<String> testSuffixes;
+  List<String> testSuffixList;
 
   @Override
   public void actionPerformed(AnActionEvent e) {
@@ -56,13 +56,13 @@ public abstract class GoToRelatedAction extends MyAction {
     JsToolboxSettings settings = new JsToolboxSettings();
 
     testSuffix = null;
-    testSuffixes = null;
+    testSuffixList = null;
 
     fileSuffix = settings.getFileSuffix();
     viewSuffix = settings.getViewSuffix();
     testSuffix = settings.getTestSuffix();
     if (testSuffix.contains(",")) {
-      testSuffixes = Arrays.asList(testSuffix.split(","));
+      testSuffixList = Arrays.asList(testSuffix.split(","));
     }
   }
 
@@ -75,7 +75,7 @@ public abstract class GoToRelatedAction extends MyAction {
   }
 
   boolean isTestFile(String fileName) {
-    return endsWithAnyOf(fileName, testSuffixes);
+    return endsWithAnyOf(fileName, testSuffixList);
   }
 
   boolean isInDestinationFile(String fileName) {

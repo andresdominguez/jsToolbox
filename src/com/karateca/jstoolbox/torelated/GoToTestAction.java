@@ -9,6 +9,6 @@ public class GoToTestAction extends GoToRelatedAction {
 
   @Override
   List<String> getDestinationSuffixList() {
-    return testSuffixes;
+    return testSuffixList;
   }
 }
