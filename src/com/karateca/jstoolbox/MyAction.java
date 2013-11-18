@@ -35,17 +35,13 @@ public abstract class MyAction extends AnAction {
   }
 
   protected void goToFiles(AnActionEvent e, String fromSuffix, List<String> toSuffixes) {
-    for (String suffix : toSuffixes) {
-      goToFile(e, fromSuffix, suffix);
-    }
-  }
-
-  void goToFile(AnActionEvent e, String fromSuffix, String toSuffix) {
     String fileName = getCurrentFileName(e);
 
-    String findFileName = fileName.replace(fromSuffix, toSuffix);
+    for (String suffix : toSuffixes) {
+      String goToFileName = fileName.replace(fromSuffix, suffix);
 
-    openFileInEditor(findFileName, e.getProject());
+      openFileInEditor(goToFileName, e.getProject());
+    }
   }
 
   void openFileInEditor(String findFileName, Project project) {
