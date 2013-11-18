@@ -9,17 +9,9 @@ import com.karateca.jstoolbox.config.JsToolboxSettings;
  */
 public abstract class GoToRelatedAction extends MyAction {
 
-  private final String fileSuffix;
-  final String viewSuffix;
-  final String testSuffix;
-
-  public GoToRelatedAction() {
-    JsToolboxSettings settings = new JsToolboxSettings();
-
-    fileSuffix = settings.getFileSuffix();
-    viewSuffix = settings.getViewSuffix();
-    testSuffix = settings.getTestSuffix();
-  }
+  private String fileSuffix;
+  String viewSuffix;
+  String testSuffix;
 
   @Override
   public void actionPerformed(AnActionEvent e) {
@@ -27,6 +19,8 @@ public abstract class GoToRelatedAction extends MyAction {
     if (!canEnableAction(e)) {
       return;
     }
+
+    readConfig();
 
     String fileName = getCurrentFileName(e);
 
@@ -45,6 +39,14 @@ public abstract class GoToRelatedAction extends MyAction {
       // Go from test to view.
       goToFile(e, testSuffix, viewSuffix);
     }
+  }
+
+  private void readConfig() {
+    JsToolboxSettings settings = new JsToolboxSettings();
+
+    fileSuffix = settings.getFileSuffix();
+    viewSuffix = settings.getViewSuffix();
+    testSuffix = settings.getTestSuffix();
   }
 
   boolean isFileFile(String fileName) {
