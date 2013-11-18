@@ -8,7 +8,7 @@ import java.util.List;
 public class GoToTestAction extends GoToRelatedAction {
 
   @Override
-  List<String> getDestinationSuffix() {
+  List<String> getDestinationSuffixList() {
     return testSuffixes;
   }
 }

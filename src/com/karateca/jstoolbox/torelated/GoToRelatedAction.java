@@ -33,7 +33,7 @@ public abstract class GoToRelatedAction extends MyAction {
       goToFile(e, getDestinationMatch(fileName), fileSuffix);
     } else if (isFileFile(fileName)) {
       // If I'm in file then go to destination.
-      goToFiles(e, fileSuffix, getDestinationSuffix());
+      goToFiles(e, fileSuffix, getDestinationSuffixList());
     } else if (isViewFile(fileName)) {
       // Go from view to test.
       goToFile(e, viewSuffix, testSuffix);
@@ -44,7 +44,7 @@ public abstract class GoToRelatedAction extends MyAction {
   }
 
   private String getDestinationMatch(String fileName) {
-    for (String suffix : getDestinationSuffix()) {
+    for (String suffix : getDestinationSuffixList()) {
       if (fileName.endsWith(suffix)) {
         return suffix;
       }
@@ -79,7 +79,7 @@ public abstract class GoToRelatedAction extends MyAction {
   }
 
   boolean isInDestinationFile(String fileName) {
-    return endsWithAnyOf(fileName, getDestinationSuffix());
+    return endsWithAnyOf(fileName, getDestinationSuffixList());
   }
 
   private boolean endsWithAnyOf(String fileName, List<String> destinationSuffix) {
@@ -91,5 +91,5 @@ public abstract class GoToRelatedAction extends MyAction {
     return false;
   }
 
-  abstract List<String> getDestinationSuffix();
+  abstract List<String> getDestinationSuffixList();
 }

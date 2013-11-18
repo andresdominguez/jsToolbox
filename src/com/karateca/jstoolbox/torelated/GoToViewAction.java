@@ -9,7 +9,7 @@ import java.util.List;
 public class GoToViewAction extends GoToRelatedAction {
 
   @Override
-  List<String> getDestinationSuffix() {
+  List<String> getDestinationSuffixList() {
     return Arrays.asList(viewSuffix);
   }
 }
