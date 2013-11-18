@@ -8,7 +8,7 @@ import com.intellij.psi.PsiManager;
 /**
  * @author andresdom@google.com (Andres Dominguez)
  */
-public class FindRelatedFileIterator implements ContentIterator {
+class FindRelatedFileIterator implements ContentIterator {
 
   private final String fileName;
   private final PsiManager psiManager;

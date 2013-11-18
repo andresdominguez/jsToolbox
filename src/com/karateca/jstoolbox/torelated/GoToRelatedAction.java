@@ -106,7 +106,7 @@ abstract class GoToRelatedAction extends MyAction {
     return false;
   }
 
-  protected void goToFiles(AnActionEvent e, String fromSuffix, List<String> toSuffixes) {
+  void goToFiles(AnActionEvent e, String fromSuffix, List<String> toSuffixes) {
     String fileName = getCurrentFileName(e);
 
     for (String suffix : toSuffixes) {
