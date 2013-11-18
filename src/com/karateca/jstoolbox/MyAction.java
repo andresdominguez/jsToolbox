@@ -12,6 +12,8 @@ import com.intellij.psi.PsiFile;
 import com.intellij.psi.PsiManager;
 import com.karateca.jstoolbox.torelated.FindRelatedFileIterator;
 
+import java.util.List;
+
 /**
  * @author Andres Dominguez.
  */
@@ -27,16 +29,15 @@ public abstract class MyAction extends AnAction {
     return !(editor == null || file == null || e.getProject() == null);
   }
 
-  void openFileInEditor(String findFileName, Project project) {
-    ContentIterator fileIterator = new FindRelatedFileIterator(findFileName, PsiManager.getInstance(
-        project));
-
-    ProjectRootManager.getInstance(project).getFileIndex().iterateContent(fileIterator);
-  }
-
   protected String getCurrentFileName(AnActionEvent e) {
     PsiFile file = e.getData(LangDataKeys.PSI_FILE);
     return file == null ? "" : file.getName();
+  }
+
+  protected void goToFiles(AnActionEvent e, String fromSuffix, List<String> toSuffixes) {
+    for (String suffix : toSuffixes) {
+      goToFile(e, fromSuffix, suffix);
+    }
   }
 
   protected void goToFile(AnActionEvent e, String fromSuffix, String toSuffix) {
@@ -45,5 +46,12 @@ public abstract class MyAction extends AnAction {
     String findFileName = fileName.replace(fromSuffix, toSuffix);
 
     openFileInEditor(findFileName, e.getProject());
+  }
+
+  void openFileInEditor(String findFileName, Project project) {
+    ContentIterator fileIterator = new FindRelatedFileIterator(findFileName, PsiManager.getInstance(
+        project));
+
+    ProjectRootManager.getInstance(project).getFileIndex().iterateContent(fileIterator);
   }
 }

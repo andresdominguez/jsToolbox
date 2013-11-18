@@ -1,12 +1,14 @@
 package com.karateca.jstoolbox.torelated;
 
+import java.util.List;
+
 /**
  * @author andresdom@google.com (Andres Dominguez)
  */
 public class GoToTestAction extends GoToRelatedAction {
 
   @Override
-  String getDestinationSuffix() {
-    return testSuffix;
+  List<String> getDestinationSuffix() {
+    return testSuffixes;
   }
 }

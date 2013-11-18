@@ -4,6 +4,9 @@ import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.karateca.jstoolbox.MyAction;
 import com.karateca.jstoolbox.config.JsToolboxSettings;
 
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * @author Andres Dominguez.
  */
@@ -12,6 +15,7 @@ public abstract class GoToRelatedAction extends MyAction {
   private String fileSuffix;
   String viewSuffix;
   String testSuffix;
+  List<String> testSuffixes;
 
   @Override
   public void actionPerformed(AnActionEvent e) {
@@ -24,14 +28,12 @@ public abstract class GoToRelatedAction extends MyAction {
 
     String fileName = getCurrentFileName(e);
 
-    String destinationSuffix = getDestinationSuffix();
-
     // Is it at destination? Go back to file.
-    if (fileName.endsWith(destinationSuffix)) {
-      goToFile(e, destinationSuffix, fileSuffix);
+    if (isInDestinationFile(fileName)) {
+      goToFile(e, getDestinationMatch(fileName), fileSuffix);
     } else if (isFileFile(fileName)) {
       // If I'm in file then go to destination.
-      goToFile(e, fileSuffix, getDestinationSuffix());
+      goToFiles(e, fileSuffix, getDestinationSuffix());
     } else if (isViewFile(fileName)) {
       // Go from view to test.
       goToFile(e, viewSuffix, testSuffix);
@@ -41,12 +43,27 @@ public abstract class GoToRelatedAction extends MyAction {
     }
   }
 
+  private String getDestinationMatch(String fileName) {
+    for (String suffix : getDestinationSuffix()) {
+      if (fileName.endsWith(suffix)) {
+        return suffix;
+      }
+    }
+    return null;
+  }
+
   private void readConfig() {
     JsToolboxSettings settings = new JsToolboxSettings();
+
+    testSuffix = null;
+    testSuffixes = null;
 
     fileSuffix = settings.getFileSuffix();
     viewSuffix = settings.getViewSuffix();
     testSuffix = settings.getTestSuffix();
+    if (testSuffix.contains(",")) {
+      testSuffixes = Arrays.asList(testSuffix.split(","));
+    }
   }
 
   boolean isFileFile(String fileName) {
@@ -58,8 +75,21 @@ public abstract class GoToRelatedAction extends MyAction {
   }
 
   boolean isTestFile(String fileName) {
-    return fileName.endsWith(testSuffix);
+    return endsWithAnyOf(fileName, testSuffixes);
   }
 
-  abstract String getDestinationSuffix();
+  boolean isInDestinationFile(String fileName) {
+    return endsWithAnyOf(fileName, getDestinationSuffix());
+  }
+
+  private boolean endsWithAnyOf(String fileName, List<String> destinationSuffix) {
+    for (String suffix : destinationSuffix) {
+      if (fileName.endsWith(suffix)) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  abstract List<String> getDestinationSuffix();
 }
