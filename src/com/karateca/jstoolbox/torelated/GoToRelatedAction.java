@@ -10,11 +10,10 @@ import java.util.List;
 /**
  * @author Andres Dominguez.
  */
-public abstract class GoToRelatedAction extends MyAction {
+abstract class GoToRelatedAction extends MyAction {
 
-  private String fileSuffix;
-  String viewSuffix;
-  String testSuffix;
+  List<String> fileSuffixList;
+  List<String> viewSuffixList;
   List<String> testSuffixList;
 
   @Override
@@ -30,21 +29,37 @@ public abstract class GoToRelatedAction extends MyAction {
 
     // Is it at destination? Go back to file.
     if (isInDestinationFile(fileName)) {
-      goToFile(e, getDestinationMatch(fileName), fileSuffix);
-    } else if (isFileFile(fileName)) {
+      goToFiles(e, getDestinationMatch(fileName), fileSuffixList);
+    } else if (isInCodeFile(fileName)) {
       // If I'm in file then go to destination.
-      goToFiles(e, fileSuffix, getDestinationSuffixList());
+      goToFiles(e, getCodeFileMatch(fileName), getDestinationSuffixList());
     } else if (isViewFile(fileName)) {
       // Go from view to test.
-      goToFile(e, viewSuffix, testSuffix);
+      goToFiles(e, getViewSuffixMatch(fileName), testSuffixList);
     } else if (isTestFile(fileName)) {
       // Go from test to view.
-      goToFile(e, testSuffix, viewSuffix);
+      goToFiles(e, getTestSuffixMatch(fileName), viewSuffixList);
     }
   }
 
-  private String getDestinationMatch(String fileName) {
-    for (String suffix : getDestinationSuffixList()) {
+  String getDestinationMatch(String fileName) {
+    return findMatch(fileName, getDestinationSuffixList());
+  }
+
+  String getCodeFileMatch(String fileName) {
+    return findMatch(fileName, fileSuffixList);
+  }
+
+  String getTestSuffixMatch(String fileName) {
+    return findMatch(fileName, testSuffixList);
+  }
+
+  String getViewSuffixMatch(String fileName) {
+    return findMatch(fileName, viewSuffixList);
+  }
+
+  private String findMatch(String fileName, List<String> suffixList) {
+    for (String suffix : suffixList) {
       if (fileName.endsWith(suffix)) {
         return suffix;
       }
@@ -55,23 +70,17 @@ public abstract class GoToRelatedAction extends MyAction {
   private void readConfig() {
     JsToolboxSettings settings = new JsToolboxSettings();
 
-    testSuffix = null;
-    testSuffixList = null;
-
-    fileSuffix = settings.getFileSuffix();
-    viewSuffix = settings.getViewSuffix();
-    testSuffix = settings.getTestSuffix();
-    if (testSuffix.contains(",")) {
-      testSuffixList = Arrays.asList(testSuffix.split(","));
-    }
+    fileSuffixList = Arrays.asList(settings.getFileSuffix().split(","));
+    viewSuffixList = Arrays.asList(settings.getViewSuffix().split(","));
+    testSuffixList = Arrays.asList(settings.getTestSuffix().split(","));
   }
 
-  boolean isFileFile(String fileName) {
+  boolean isInCodeFile(String fileName) {
     return !isTestFile(fileName) && !isViewFile(fileName);
   }
 
   boolean isViewFile(String fileName) {
-    return fileName.endsWith(viewSuffix);
+    return endsWithAnyOf(fileName, viewSuffixList);
   }
 
   boolean isTestFile(String fileName) {
