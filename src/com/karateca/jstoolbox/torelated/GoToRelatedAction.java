@@ -1,6 +1,10 @@
 package com.karateca.jstoolbox.torelated;
 
 import com.intellij.openapi.actionSystem.AnActionEvent;
+import com.intellij.openapi.project.Project;
+import com.intellij.openapi.roots.ContentIterator;
+import com.intellij.openapi.roots.ProjectRootManager;
+import com.intellij.psi.PsiManager;
 import com.karateca.jstoolbox.MyAction;
 import com.karateca.jstoolbox.config.JsToolboxSettings;
 
@@ -11,6 +15,8 @@ import java.util.List;
  * @author Andres Dominguez.
  */
 abstract class GoToRelatedAction extends MyAction {
+
+  abstract List<String> getDestinationSuffixList();
 
   List<String> fileSuffixList;
   List<String> viewSuffixList;
@@ -100,5 +106,20 @@ abstract class GoToRelatedAction extends MyAction {
     return false;
   }
 
-  abstract List<String> getDestinationSuffixList();
+  protected void goToFiles(AnActionEvent e, String fromSuffix, List<String> toSuffixes) {
+    String fileName = getCurrentFileName(e);
+
+    for (String suffix : toSuffixes) {
+      String goToFileName = fileName.replace(fromSuffix, suffix);
+
+      openFileInEditor(goToFileName, e.getProject());
+    }
+  }
+
+  void openFileInEditor(String findFileName, Project project) {
+    ContentIterator fileIterator = new FindRelatedFileIterator(findFileName, PsiManager.getInstance(
+        project));
+
+    ProjectRootManager.getInstance(project).getFileIndex().iterateContent(fileIterator);
+  }
 }
