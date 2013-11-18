@@ -32,13 +32,13 @@
         <action id="com.karateca.jstoolbox.joiner.JoinerAction"
                 class="com.karateca.jstoolbox.joiner.JoinerAction" text="Join"
                 description="Joint a string or multiple variable declarations">
-            <keyboard-shortcut keymap="$default" first-keystroke="shift ctrl meta J"/>
+            <keyboard-shortcut keymap="$default" first-keystroke="shift ctrl alt J"/>
         </action>
         <action id="com.karateca.jstoolbox.toconstructor.GoToConstructorAction"
                 class="com.karateca.jstoolbox.toconstructor.GoToConstructorAction"
                 text="Go to constructor"
                 description="Go to the constructor">
-            <keyboard-shortcut keymap="$default" first-keystroke="shift ctrl meta G"/>
+            <keyboard-shortcut keymap="$default" first-keystroke="alt G"/>
         </action>
         <action id="com.karateca.jstoolbox.torelated.GoToTestAction"
                 class="com.karateca.jstoolbox.torelated.GoToTestAction"
@@ -46,8 +46,8 @@
                 description="Go to the test file form the file of the view">
             <keyboard-shortcut keymap="$default" first-keystroke="alt T"/>
         </action>
-        <action id="com.karateca.jstoolbox.torelated.SwitchToViewAction"
-                class="com.karateca.jstoolbox.torelated.SwitchToViewAction"
+        <action id="com.karateca.jstoolbox.torelated.GoToViewAction"
+                class="com.karateca.jstoolbox.torelated.GoToViewAction"
                 text="Go to view..."
                 description="Switch between the view and the controller">
             <keyboard-shortcut keymap="$default" first-keystroke="alt V"/>

@@ -3,7 +3,7 @@ package com.karateca.jstoolbox.torelated;
 /**
  * @author andresdom@google.com (Andres Dominguez)
  */
-public class SwitchToViewAction extends GoToRelatedAction {
+public class GoToViewAction extends GoToRelatedAction {
 
   @Override
   String getDestinationSuffix() {

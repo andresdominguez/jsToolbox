@@ -7,13 +7,13 @@ import com.karateca.jstoolbox.config.JsToolboxSettings;
 /**
  * @author Andres Dominguez.
  */
-abstract class GoToRelatedAction extends MyAction {
+public abstract class GoToRelatedAction extends MyAction {
 
   private final String fileSuffix;
   final String viewSuffix;
   final String testSuffix;
 
-  GoToRelatedAction() {
+  public GoToRelatedAction() {
     JsToolboxSettings settings = new JsToolboxSettings();
 
     fileSuffix = settings.getFileSuffix();
