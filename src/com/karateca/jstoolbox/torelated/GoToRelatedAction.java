@@ -58,15 +58,6 @@ abstract class GoToRelatedAction extends MyAction {
     return findMatch(fileName, viewSuffixList);
   }
 
-  private String findMatch(String fileName, List<String> suffixList) {
-    for (String suffix : suffixList) {
-      if (fileName.endsWith(suffix)) {
-        return suffix;
-      }
-    }
-    return null;
-  }
-
   private void readConfig() {
     JsToolboxSettings settings = new JsToolboxSettings();
 
@@ -89,6 +80,15 @@ abstract class GoToRelatedAction extends MyAction {
 
   boolean isInDestinationFile(String fileName) {
     return endsWithAnyOf(fileName, getDestinationSuffixList());
+  }
+
+  private String findMatch(String fileName, List<String> suffixList) {
+    for (String suffix : suffixList) {
+      if (fileName.endsWith(suffix)) {
+        return suffix;
+      }
+    }
+    return null;
   }
 
   private boolean endsWithAnyOf(String fileName, List<String> destinationSuffix) {
