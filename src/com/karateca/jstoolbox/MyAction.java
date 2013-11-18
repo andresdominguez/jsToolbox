@@ -40,7 +40,7 @@ public abstract class MyAction extends AnAction {
     }
   }
 
-  protected void goToFile(AnActionEvent e, String fromSuffix, String toSuffix) {
+  void goToFile(AnActionEvent e, String fromSuffix, String toSuffix) {
     String fileName = getCurrentFileName(e);
 
     String findFileName = fileName.replace(fromSuffix, toSuffix);
