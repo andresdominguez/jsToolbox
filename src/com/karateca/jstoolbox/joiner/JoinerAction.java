@@ -20,8 +20,6 @@ public class JoinerAction extends MyAction {
   private static final String VAR_DECLARATION = "^\\s*var.*";
   private static final String MULTI_LINE_STRING = ".+\\+\\s*$";
   private static final String MULTI_LINE_STRING_SECOND_LINE = "^\\s*'.+";
-  public static final String END_OF_MULTI_LINE_STRING = "'\\s*\\+\\s*$";
-  public static final String BEGINNING_OF_MULTI_LINE_STRING = "^\\s*'";
   private Document document;
   private Editor editor;
   private Project project;
@@ -35,25 +33,30 @@ public class JoinerAction extends MyAction {
     project = getEventProject(actionEvent);
     document = editor.getDocument();
 
-    String currentLine = getLocForLineNumber(getLineNumberAtCaret());
-    String nextLine = getNextLine();
+    LineRange lineRange = getSelectedLineRange();
+    int firstSelectedLine = lineRange.getStart();
+
+    String firstLine = getLocForLineNumber(firstSelectedLine);
+    String nextLine = getLocForLineNumber(firstSelectedLine + 1);
 
     // Is the caret in a multi line string ('foo' +) and the next line is a
     // string?
-    if (currentLine.matches(MULTI_LINE_STRING) &&
+    if (firstLine.matches(MULTI_LINE_STRING) &&
         nextLine.matches(MULTI_LINE_STRING_SECOND_LINE)) {
-      if (isMultiLineSelection()) {
-        joinSelectedLines();
-      } else {
-        joinStringWithNextLine();
-      }
+      joinMultiLineString(lineRange);
       return;
     }
 
     // Is it a variable declaration?
-    if (currentLine.endsWith(";") && nextLine.matches(VAR_DECLARATION)) {
-      joinCurrentVariableDeclaration(currentLine);
+    if (firstLine.endsWith(";") && nextLine.matches(VAR_DECLARATION)) {
+      joinCurrentVariableDeclaration(firstLine);
     }
+  }
+
+  private void joinMultiLineString(LineRange lineRange) {
+    int endLine = Math.max(lineRange.getEnd(), lineRange.getStart() + 1);
+
+    joinStringGivenLineRange(lineRange.getStart(), endLine);
   }
 
   private void joinCurrentVariableDeclaration(final String currentLine) {
@@ -80,19 +83,19 @@ public class JoinerAction extends MyAction {
     });
   }
 
-  private void joinSelectedLines() {
+  private LineRange getSelectedLineRange() {
     SelectionModel selectionModel = editor.getSelectionModel();
     VisualPosition startPosition = selectionModel.getSelectionStartPosition();
     VisualPosition endPosition = selectionModel.getSelectionEndPosition();
 
     if (startPosition == null || endPosition == null) {
-      return;
+      return null;
     }
 
     int startLine = startPosition.getLine();
     int endLine = endPosition.getLine();
 
-    joinStringGivenLineRange(startLine, endLine);
+    return new LineRange(Math.min(startLine, endLine), Math.max(startLine, endLine));
   }
 
   private void joinStringGivenLineRange(int startLine, int endLine) {
@@ -106,25 +109,6 @@ public class JoinerAction extends MyAction {
     replaceString(s, startOffset, endOffset);
   }
 
-  private void joinStringWithNextLine() {
-    int lineNumber = getLineNumberAtCaret();
-    TextRange currentLineTextRange = getTextRange(lineNumber);
-
-    // Get the text for the next line.
-    TextRange nextLineTextRange = getTextRange(lineNumber + 1);
-    String nextLine = getTextForRange(nextLineTextRange);
-
-    // Merge the current line into the next line.
-    String lineAtCaret = getLocForLineNumber(getLineNumberAtCaret());
-    final String newLine = lineAtCaret.replaceAll(END_OF_MULTI_LINE_STRING, "") +
-        nextLine.replaceAll(BEGINNING_OF_MULTI_LINE_STRING, "");
-
-    final int start = currentLineTextRange.getStartOffset();
-    final int end = nextLineTextRange.getEndOffset();
-
-    replaceString(newLine, start, end);
-  }
-
   private void replaceString(final String replacementText, final int start, final int end) {
     runWriteActionInsideCommand(new Runnable() {
       @Override
@@ -132,13 +116,6 @@ public class JoinerAction extends MyAction {
         document.replaceString(start, end, replacementText);
       }
     });
-  }
-
-  private boolean isMultiLineSelection() {
-    SelectionModel selectionModel = editor.getSelectionModel();
-    return selectionModel.hasSelection() &&
-        selectionModel.getSelectionStartPosition().getLine() !=
-            selectionModel.getSelectionEndPosition().getLine();
   }
 
   private String getLocForLineNumber(int lineNumber) {
