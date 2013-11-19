@@ -16,6 +16,8 @@ import com.karateca.jstoolbox.MyAction;
 public class JoinerAction extends MyAction {
 
   private static final String VAR_DECLARATION = "^\\s*var.*";
+  private static final String MULTI_LINE_STRING = ".+\\+\\s*$";
+  private static final String MULTI_LINE_STRING_SECOND_LINE = "^\\s*'.+";
   private Document document;
   private Editor editor;
   private Project project;
@@ -30,15 +32,17 @@ public class JoinerAction extends MyAction {
     document = editor.getDocument();
 
     String currentLine = getLineAtCaret();
+    String nextLine = getNextLine();
 
-    // Does it end with "' +" ?
-    if (currentLine.endsWith("+")) {
+    // Is the caret in a multi line string ('foo' +) and the next line is a
+    // string?
+    if (currentLine.matches(MULTI_LINE_STRING) &&
+        nextLine.matches(MULTI_LINE_STRING_SECOND_LINE)) {
       joinStringWithNextLine();
       return;
     }
 
     // Is it a variable declaration?
-    String nextLine = getNextLine();
     if (currentLine.endsWith(";") && nextLine.matches(VAR_DECLARATION)) {
       joinCurrentVariableDeclaration(currentLine);
     }
@@ -77,7 +81,7 @@ public class JoinerAction extends MyAction {
     String nextLine = getLine(nextLineTextRange);
 
     // Merge the current line into the next line.
-    final String newLine = getLineAtCaret().replaceAll("' \\+", "") +
+    final String newLine = getLineAtCaret().replaceAll("'\\s*\\+\\s*$", "") +
         nextLine.replaceAll("^\\s*'", "");
 
     final int start = currentLineTextRange.getStartOffset();
