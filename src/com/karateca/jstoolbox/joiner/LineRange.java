@@ -7,16 +7,16 @@ class LineRange {
   private final int start;
   private final int end;
 
-  public LineRange(int start, int end) {
+  LineRange(int start, int end) {
     this.start = start;
     this.end = end;
   }
 
-  public int getStart() {
+  int getStart() {
     return start;
   }
 
-  public int getEnd() {
+  int getEnd() {
     return end;
   }
 }
