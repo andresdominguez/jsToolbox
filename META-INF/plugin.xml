@@ -1,16 +1,59 @@
 <idea-plugin version="2">
     <id>com.karateca.jstoolbox</id>
     <name>JS Toolbox</name>
-    <version>1.0</version>
+    <version>1.1</version>
     <vendor email="code@karateca.com" url="http://www.andresdominguez.com">www.andresdominguez.com</vendor>
 
     <description><![CDATA[
       An Intellij / Webstorm plugin that provides several tools for javascript development.<br>
+
+      <h2>Go to related (Alt V and Alt T)</h2>
+      <p>
+        Go to the test or the view and back with one shortcut. This new
+        version has a configuration panel under IDE Settings > JS Toolbox.
+      </p>
+      <ul>
+        <li>Go to test: Alt T, repeat to go back</li>
+        <li>Go to view: Alt V, repeat to go back</li>
+      </ul>
+
+      <h2>Go to constructor (Alt G)</h2>
+      <p>
+        Jump to the constructor of your javascript file.
+      </p>
+
+      <h2>Join (Ctrl SHIFT Alt J)</h2>
+      <p>
+        Join strings and variable declarations.
+      </p>
+      <pre>
+        To turn this:
+          var s = 'one, ' +
+              'two, ';
+
+        Into this:
+        var s = 'one, two, ';
+
+        Or turn this:
+          var foo = 1;
+          var bar = 2;
+
+        into this:
+          var foo = 1,
+              bar = 2;
+      </pre>
+
+      <h2>Open in browser</h2>
+      <p>
+        Open the current file in thr browser. Specify a search URL in the
+        configuration panel.
+      </p>
       ]]></description>
 
     <change-notes><![CDATA[
-      Add change notes here.<br>
-      <small>most HTML tags may be used</small>
+      <h2>1.1</h2>
+      <p>Added Open in browser</p>
+      <p>Added ability to select a block of code to join string.</p>
       ]]>
     </change-notes>
 
@@ -57,6 +100,7 @@
                 text="Open in browser"
                 description="Open the current file in browser">
             <keyboard-shortcut keymap="$default" first-keystroke="shift ctrl alt G"/>
+            <add-to-group group-id="EditorPopupMenu"/>
         </action>
     </actions>
 
