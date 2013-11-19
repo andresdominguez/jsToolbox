@@ -20,7 +20,7 @@ public class JoinerAction extends MyAction {
   private static final String VAR_DECLARATION = "^\\s*var.*";
   private static final String MULTI_LINE_STRING = ".+\\+\\s*$";
   private static final String MULTI_LINE_STRING_SECOND_LINE = "^\\s*'.+";
-  public static final String ENDS_WITH_SEMICOLON = ".*;\\s*$";
+  private static final String ENDS_WITH_SEMICOLON = ".*;\\s*$";
   private Document document;
   private Editor editor;
   private Project project;

@@ -32,7 +32,7 @@ public class JsToolboxSettings {
     }
   }
 
-  public static String FILE_NAME_TOKEN = "FILE_NAME";
+  public static final String FILE_NAME_TOKEN = "FILE_NAME";
 
   private final PropertiesComponent properties;
 
@@ -71,7 +71,7 @@ public class JsToolboxSettings {
     setValue(Property.FromPath, fromPath);
   }
 
-  public void setValue(Property property, String value) {
+  private void setValue(Property property, String value) {
     properties.setValue(property.getProperty(), value);
   }
 
