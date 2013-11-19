@@ -49,6 +49,8 @@ public class JsToolboxConfigurable implements Configurable {
         configurationPanel.setViewSuffix(JsToolboxSettings.DEFAULT_VIEW_SUFFIX);
         configurationPanel.setFileSuffix(JsToolboxSettings.DEFAULT_FILE_SUFFIX);
         configurationPanel.setSearchUrl(JsToolboxSettings.DEFAULT_SEARCH_URL);
+        configurationPanel.setUseFilePath(
+            JsToolboxSettings.DEFAULT_USE_FILE_PATH);
       }
     });
 
@@ -62,7 +64,8 @@ public class JsToolboxConfigurable implements Configurable {
     return !StringUtils.equals(settings.getTestSuffix(), configurationPanel.getTestSuffix()) ||
         !StringUtils.equals(settings.getViewSuffix(), configurationPanel.getViewSuffix()) ||
         !StringUtils.equals(settings.getFileSuffix(), configurationPanel.getFileSuffix()) ||
-        !StringUtils.equals(settings.getSearchUrl(), configurationPanel.getSearchUrl());
+        !StringUtils.equals(settings.getSearchUrl(), configurationPanel.getSearchUrl()) ||
+        settings.getUseFilePath() != configurationPanel.getUseFilePath();
   }
 
   @Override
@@ -71,6 +74,7 @@ public class JsToolboxConfigurable implements Configurable {
     settings.setFileSuffix(configurationPanel.getFileSuffix());
     settings.setViewSuffix(configurationPanel.getViewSuffix());
     settings.setSearchUrl(configurationPanel.getSearchUrl());
+    settings.setUseFilePath(configurationPanel.getUseFilePath());
     settings.save();
   }
 
@@ -81,6 +85,7 @@ public class JsToolboxConfigurable implements Configurable {
     configurationPanel.setViewSuffix(settings.getViewSuffix());
     configurationPanel.setFileSuffix(settings.getFileSuffix());
     configurationPanel.setSearchUrl(settings.getSearchUrl());
+    configurationPanel.setUseFilePath(settings.getUseFilePath());
   }
 
   @Override

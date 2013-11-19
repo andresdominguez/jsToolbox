@@ -1,5 +1,8 @@
 package com.karateca.jstoolbox.config;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.*;
 
 /**
@@ -7,6 +10,15 @@ import javax.swing.*;
  */
 public class JsToolboxConfigurationPanel {
   private JTextField unitTestSuffix;
+
+  public JsToolboxConfigurationPanel() {
+    useFilePath.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        usePathFromDir.setEnabled(useFilePath.isSelected());
+      }
+    });
+  }
 
   public JPanel getMyPanel() {
     return myPanel;
@@ -17,6 +29,8 @@ public class JsToolboxConfigurationPanel {
   private JTextField viewSuffix;
   private JButton resetButton;
   private JTextField searchUrl;
+  private JCheckBox useFilePath;
+  private JTextField usePathFromDir;
 
   public void setTestSuffix(String testSuffix) {
     unitTestSuffix.setText(testSuffix);
@@ -48,6 +62,23 @@ public class JsToolboxConfigurationPanel {
 
   public void setSearchUrl(String url) {
     searchUrl.setText(url);
+  }
+
+  public String getUsePathFromDir() {
+    return usePathFromDir.getText();
+  }
+
+  public void setUsePathFromDir(String dir) {
+    usePathFromDir.setText(dir);
+  }
+
+  public boolean getUseFilePath() {
+    return useFilePath.isSelected();
+  }
+
+  public void setUseFilePath(boolean selected) {
+    useFilePath.setSelected(selected);
+    usePathFromDir.setEnabled(selected);
   }
 
   public JButton getResetButton() {
