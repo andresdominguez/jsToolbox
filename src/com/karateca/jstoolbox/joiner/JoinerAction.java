@@ -54,8 +54,8 @@ public class JoinerAction extends MyAction {
   }
 
   private void joinMultiLineString(LineRange lineRange) {
+    // Join either one line with the next or multiple lines.
     int endLine = Math.max(lineRange.getEnd(), lineRange.getStart() + 1);
-
     joinStringGivenLineRange(lineRange.getStart(), endLine);
   }
 
