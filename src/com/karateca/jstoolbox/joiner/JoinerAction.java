@@ -20,6 +20,7 @@ public class JoinerAction extends MyAction {
   private static final String VAR_DECLARATION = "^\\s*var.*";
   private static final String MULTI_LINE_STRING = ".+\\+\\s*$";
   private static final String MULTI_LINE_STRING_SECOND_LINE = "^\\s*'.+";
+  public static final String ENDS_WITH_SEMICOLON = ".*;\\s*$";
   private Document document;
   private Editor editor;
   private Project project;
@@ -48,7 +49,7 @@ public class JoinerAction extends MyAction {
     }
 
     // Is it a variable declaration?
-    if (firstLine.endsWith(";") && nextLine.matches(VAR_DECLARATION)) {
+    if (firstLine.matches(ENDS_WITH_SEMICOLON) && nextLine.matches(VAR_DECLARATION)) {
       joinCurrentVariableDeclaration(firstLine);
     }
   }
@@ -75,7 +76,7 @@ public class JoinerAction extends MyAction {
             nextLineTextRange.getEndOffset(), newLine);
 
         // Replace ; from current line.
-        newLine = currentLine.replaceAll(";$", ",");
+        newLine = currentLine.replaceAll(";\\s*$", ",");
 
         document.replaceString(currentLineTextRange.getStartOffset(),
             currentLineTextRange.getEndOffset(), newLine);
