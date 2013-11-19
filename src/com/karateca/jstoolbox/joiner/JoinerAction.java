@@ -6,6 +6,8 @@ import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.command.CommandProcessor;
 import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.editor.Editor;
+import com.intellij.openapi.editor.SelectionModel;
+import com.intellij.openapi.editor.VisualPosition;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.TextRange;
 import com.karateca.jstoolbox.MyAction;
@@ -18,6 +20,8 @@ public class JoinerAction extends MyAction {
   private static final String VAR_DECLARATION = "^\\s*var.*";
   private static final String MULTI_LINE_STRING = ".+\\+\\s*$";
   private static final String MULTI_LINE_STRING_SECOND_LINE = "^\\s*'.+";
+  public static final String END_OF_MULTI_LINE_STRING = "'\\s*\\+\\s*$";
+  public static final String BEGINNING_OF_MULTI_LINE_STRING = "^\\s*'";
   private Document document;
   private Editor editor;
   private Project project;
@@ -31,14 +35,18 @@ public class JoinerAction extends MyAction {
     project = getEventProject(actionEvent);
     document = editor.getDocument();
 
-    String currentLine = getLineAtCaret();
+    String currentLine = getLocForLineNumber(getLineNumberAtCaret());
     String nextLine = getNextLine();
 
     // Is the caret in a multi line string ('foo' +) and the next line is a
     // string?
     if (currentLine.matches(MULTI_LINE_STRING) &&
         nextLine.matches(MULTI_LINE_STRING_SECOND_LINE)) {
-      joinStringWithNextLine();
+      if (isMultiLineSelection()) {
+        joinSelectedLines();
+      } else {
+        joinStringWithNextLine();
+      }
       return;
     }
 
@@ -72,39 +80,75 @@ public class JoinerAction extends MyAction {
     });
   }
 
+  private void joinSelectedLines() {
+    SelectionModel selectionModel = editor.getSelectionModel();
+    VisualPosition startPosition = selectionModel.getSelectionStartPosition();
+    VisualPosition endPosition = selectionModel.getSelectionEndPosition();
+
+    if (startPosition == null || endPosition == null) {
+      return;
+    }
+
+    int startLine = startPosition.getLine();
+    int endLine = endPosition.getLine();
+
+    joinStringGivenLineRange(startLine, endLine);
+  }
+
+  private void joinStringGivenLineRange(int startLine, int endLine) {
+    int startOffset = getTextRange(startLine).getStartOffset();
+    int endOffset = getTextRange(endLine).getEndOffset();
+
+    String textForRange = getTextForRange(new TextRange(startOffset, endOffset));
+
+    String s = textForRange.replaceAll("'\\s*\\+\\s*'", "");
+
+    replaceString(s, startOffset, endOffset);
+  }
+
   private void joinStringWithNextLine() {
     int lineNumber = getLineNumberAtCaret();
     TextRange currentLineTextRange = getTextRange(lineNumber);
 
     // Get the text for the next line.
     TextRange nextLineTextRange = getTextRange(lineNumber + 1);
-    String nextLine = getLine(nextLineTextRange);
+    String nextLine = getTextForRange(nextLineTextRange);
 
     // Merge the current line into the next line.
-    final String newLine = getLineAtCaret().replaceAll("'\\s*\\+\\s*$", "") +
-        nextLine.replaceAll("^\\s*'", "");
+    String lineAtCaret = getLocForLineNumber(getLineNumberAtCaret());
+    final String newLine = lineAtCaret.replaceAll(END_OF_MULTI_LINE_STRING, "") +
+        nextLine.replaceAll(BEGINNING_OF_MULTI_LINE_STRING, "");
 
     final int start = currentLineTextRange.getStartOffset();
     final int end = nextLineTextRange.getEndOffset();
 
+    replaceString(newLine, start, end);
+  }
+
+  private void replaceString(final String replacementText, final int start, final int end) {
     runWriteActionInsideCommand(new Runnable() {
       @Override
       public void run() {
-        document.replaceString(start, end, newLine);
+        document.replaceString(start, end, replacementText);
       }
     });
   }
 
-  private String getLineAtCaret() {
-    int lineNumber = getLineNumberAtCaret();
+  private boolean isMultiLineSelection() {
+    SelectionModel selectionModel = editor.getSelectionModel();
+    return selectionModel.hasSelection() &&
+        selectionModel.getSelectionStartPosition().getLine() !=
+            selectionModel.getSelectionEndPosition().getLine();
+  }
 
-    return getLine(getTextRange(lineNumber));
+  private String getLocForLineNumber(int lineNumber) {
+    return getTextForRange(getTextRange(lineNumber));
   }
 
   private String getNextLine() {
     int lineNumber = getLineNumberAtCaret();
 
-    return getLine(getTextRange(lineNumber + 1));
+    return getLocForLineNumber(lineNumber + 1);
   }
 
   private int getLineNumberAtCaret() {
@@ -112,7 +156,7 @@ public class JoinerAction extends MyAction {
     return document.getLineNumber(offset);
   }
 
-  private String getLine(TextRange range) {
+  private String getTextForRange(TextRange range) {
     return document.getText(range);
   }
 
