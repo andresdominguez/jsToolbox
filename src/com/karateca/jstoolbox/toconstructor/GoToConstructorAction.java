@@ -4,6 +4,7 @@ import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.PlatformDataKeys;
 import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.editor.Editor;
+import com.intellij.openapi.editor.ScrollType;
 import com.karateca.jstoolbox.MyAction;
 
 /**
@@ -26,5 +27,6 @@ public class GoToConstructorAction extends MyAction {
     offset = text.indexOf("function", offset);
 
     editor.getCaretModel().moveToOffset(offset);
+    editor.getScrollingModel().scrollToCaret(ScrollType.CENTER);
   }
 }
