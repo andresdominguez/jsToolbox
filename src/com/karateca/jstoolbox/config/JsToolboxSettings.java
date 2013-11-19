@@ -7,17 +7,30 @@ import com.intellij.ide.util.PropertiesComponent;
  */
 public class JsToolboxSettings {
 
-  private static final String TEST_SUFFIX_PROP = "com.karateca.jstoolbox.testSuffix";
-  private static final String FILE_SUFFIX_PROP = "com.karateca.jstoolbox.fileSuffix";
-  private static final String VIEW_SUFFIX_PROP = "com.karateca.jstoolbox.viewSuffix";
-  private static final String SEARCH_URL_PROP = "com.karateca.jstoolbox.searchUrl";
-  private static final String USE_FILE_PATH_PROP = "com.karateca.jstoolbox.useFilePath";
+  public enum Property {
+    TestSuffix("com.karateca.jstoolbox.testSuffix", "-spec.js"),
+    FileSuffix("com.karateca.jstoolbox.fileSuffix", ".js"),
+    ViewSuffix("com.karateca.jstoolbox.viewSuffix", ".html"),
+    SearchUrl("com.karateca.jstoolbox.searchUrl", "https://github.com/search?q=FILE_NAME"),
+    UseFilePath("com.karateca.jstoolbox.useFilePath", "false"),
+    FromPath("com.karateca.jstoolbox.fromPath", "");
 
-  public static final String DEFAULT_TEST_SUFFIX = "-spec.js";
-  public static final String DEFAULT_FILE_SUFFIX = ".js";
-  public static final String DEFAULT_VIEW_SUFFIX = ".html";
-  public static final String DEFAULT_SEARCH_URL = "https://github.com/search?q=%3CFILE_NAME%3E";
-  public static final boolean DEFAULT_USE_FILE_PATH = false;
+    private final String property;
+    private final String defaultValue;
+
+    private Property(String property, String defaultValue) {
+      this.property = property;
+      this.defaultValue = defaultValue;
+    }
+
+    public String getProperty() {
+      return property;
+    }
+
+    public String getDefaultValue() {
+      return defaultValue;
+    }
+  }
 
   public static String FILE_NAME_TOKEN = "FILE_NAME";
 
@@ -28,6 +41,7 @@ public class JsToolboxSettings {
   private String viewSuffix;
   private String searchUrl;
   private boolean useFilePath;
+  private String fromPath;
 
   public JsToolboxSettings() {
     properties = PropertiesComponent.getInstance();
@@ -35,20 +49,30 @@ public class JsToolboxSettings {
   }
 
   public void load() {
-    this.testSuffix = properties.getValue(TEST_SUFFIX_PROP, DEFAULT_TEST_SUFFIX);
-    this.fileSuffix = properties.getValue(FILE_SUFFIX_PROP, DEFAULT_FILE_SUFFIX);
-    this.viewSuffix = properties.getValue(VIEW_SUFFIX_PROP, DEFAULT_VIEW_SUFFIX);
-    this.searchUrl = properties.getValue(SEARCH_URL_PROP, DEFAULT_SEARCH_URL);
-    this.useFilePath = properties
-        .getBoolean(USE_FILE_PATH_PROP, DEFAULT_USE_FILE_PATH);
+    this.testSuffix = getValue(Property.TestSuffix);
+    this.fileSuffix = getValue(Property.FileSuffix);
+    this.viewSuffix = getValue(Property.ViewSuffix);
+    this.searchUrl = getValue(Property.SearchUrl);
+    this.useFilePath = Boolean.valueOf(getValue(Property.UseFilePath));
+    this.fromPath = getValue(Property.FromPath);
+  }
+
+  private String getValue(Property property) {
+    return properties.getValue(
+        property.getProperty(), Property.TestSuffix.getDefaultValue());
   }
 
   public void save() {
-    properties.setValue(TEST_SUFFIX_PROP, testSuffix);
-    properties.setValue(FILE_SUFFIX_PROP, fileSuffix);
-    properties.setValue(VIEW_SUFFIX_PROP, viewSuffix);
-    properties.setValue(SEARCH_URL_PROP, searchUrl);
-    properties.setValue(USE_FILE_PATH_PROP, String.valueOf(this.useFilePath));
+    setValue(Property.TestSuffix, testSuffix);
+    setValue(Property.FileSuffix, fileSuffix);
+    setValue(Property.ViewSuffix, viewSuffix);
+    setValue(Property.SearchUrl, searchUrl);
+    setValue(Property.UseFilePath, String.valueOf(this.useFilePath));
+    setValue(Property.FromPath, fromPath);
+  }
+
+  public void setValue(Property property, String value) {
+    properties.setValue(property.getProperty(), value);
   }
 
   public String getFileSuffix() {
@@ -89,5 +113,13 @@ public class JsToolboxSettings {
 
   public void setUseFilePath(boolean useFilePath) {
     this.useFilePath = useFilePath;
+  }
+
+  public String getFromPath() {
+    return fromPath;
+  }
+
+  public void setFromPath(String fromPath) {
+    this.fromPath = fromPath;
   }
 }
