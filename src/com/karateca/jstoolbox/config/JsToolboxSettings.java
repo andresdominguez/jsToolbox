@@ -16,6 +16,7 @@ public class JsToolboxSettings {
   public static final String DEFAULT_FILE_SUFFIX = ".js";
   public static final String DEFAULT_VIEW_SUFFIX = ".html";
   public static final String DEFAULT_SEARCH_URL = "https://github.com/search?q=%3CFILE_NAME%3E";
+  public static String FILE_NAME_TOKEN = "FILE_NAME";
 
   private final PropertiesComponent properties;
 

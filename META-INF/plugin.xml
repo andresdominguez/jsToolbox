@@ -52,6 +52,12 @@
                 description="Switch between the view and the controller">
             <keyboard-shortcut keymap="$default" first-keystroke="alt V"/>
         </action>
+        <action id="com.karateca.jstoolbox.tobrowser.ToBrowserAction"
+                class="com.karateca.jstoolbox.tobrowser.ToBrowserAction"
+                text="Open in browser"
+                description="Open the current file in browser">
+            <keyboard-shortcut keymap="$default" first-keystroke="shift ctrl alt G"/>
+        </action>
     </actions>
 
     <extensions defaultExtensionNs="com.intellij">

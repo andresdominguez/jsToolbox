@@ -48,6 +48,7 @@ public class JsToolboxConfigurable implements Configurable {
         configurationPanel.setTestSuffix(JsToolboxSettings.DEFAULT_TEST_SUFFIX);
         configurationPanel.setViewSuffix(JsToolboxSettings.DEFAULT_VIEW_SUFFIX);
         configurationPanel.setFileSuffix(JsToolboxSettings.DEFAULT_FILE_SUFFIX);
+        configurationPanel.setSearchUrl(JsToolboxSettings.DEFAULT_SEARCH_URL);
       }
     });
 
@@ -60,7 +61,8 @@ public class JsToolboxConfigurable implements Configurable {
   public boolean isModified() {
     return !StringUtils.equals(settings.getTestSuffix(), configurationPanel.getTestSuffix()) ||
         !StringUtils.equals(settings.getViewSuffix(), configurationPanel.getViewSuffix()) ||
-        !StringUtils.equals(settings.getFileSuffix(), configurationPanel.getFileSuffix());
+        !StringUtils.equals(settings.getFileSuffix(), configurationPanel.getFileSuffix()) ||
+        !StringUtils.equals(settings.getSearchUrl(), configurationPanel.getSearchUrl());
   }
 
   @Override
@@ -68,6 +70,7 @@ public class JsToolboxConfigurable implements Configurable {
     settings.setTestSuffix(configurationPanel.getTestSuffix());
     settings.setFileSuffix(configurationPanel.getFileSuffix());
     settings.setViewSuffix(configurationPanel.getViewSuffix());
+    settings.setSearchUrl(configurationPanel.getSearchUrl());
     settings.save();
   }
 
@@ -77,6 +80,7 @@ public class JsToolboxConfigurable implements Configurable {
     configurationPanel.setTestSuffix(settings.getTestSuffix());
     configurationPanel.setViewSuffix(settings.getViewSuffix());
     configurationPanel.setFileSuffix(settings.getFileSuffix());
+    configurationPanel.setSearchUrl(settings.getSearchUrl());
   }
 
   @Override
