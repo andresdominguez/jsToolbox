@@ -5,6 +5,7 @@ import com.intellij.find.FindModel;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.editor.Editor;
+import com.intellij.openapi.fileEditor.FileDocumentManager;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.roots.ContentIterator;
 import com.intellij.openapi.roots.ProjectRootManager;
@@ -118,22 +119,21 @@ public class ParentNamespaceFinder extends ClassFinder {
   /**
    * Search for the file providing the namespace.
    */
-  private boolean fileProvidesNamespace(VirtualFile virtualFile,
-      String parentNamespace) throws Exception {
-    String provideSearchLine = "goog.provide('" + parentNamespace;
-    String fileName = virtualFile.getName();
-
+  private boolean fileProvidesNamespace(
+      VirtualFile virtualFile, String namespace) throws Exception {
     // Ignore non-js files.
-    if (!fileName.endsWith(".js")) {
+    if (!virtualFile.getName().endsWith(".js")) {
       return false;
     }
 
+    String provideSearchLine = "goog.provide('" + namespace;
     String fileContents = getFileContents(virtualFile);
     return fileContents.contains(provideSearchLine);
   }
 
-  private String getFileContents(VirtualFile virtualFile) throws Exception {
-    return new String(virtualFile.contentsToByteArray());
+  private String getFileContents(VirtualFile virtualFile) {
+    Document doc = FileDocumentManager.getInstance().getDocument(virtualFile);
+    return doc != null ? doc.getText() : "";
   }
 
   private List<Function> getMethods(VirtualFile virtualFile)
