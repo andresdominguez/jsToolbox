@@ -117,7 +117,7 @@
     </action>
     <action id="com.karateca.jstoolbox.generatemethod.OverrideMethodAction"
             class="com.karateca.jstoolbox.generatemethod.OverrideMethodAction"
-            text="Generate javascript method"
+            text="Override javascript method"
             description="Override a method from the parent">
       <add-to-group group-id="GenerateGroup" anchor="last"/>
     </action>
