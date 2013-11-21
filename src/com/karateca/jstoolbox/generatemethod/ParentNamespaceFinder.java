@@ -63,6 +63,12 @@ public class ParentNamespaceFinder extends ClassFinder {
     ApplicationManager.getApplication().runReadAction(new Runnable() {
       @Override
       public void run() {
+        // First find the namespace for the current file.
+        currentNamespace = findNamespaceForCurrentFile();
+        if (currentNamespace == null) {
+          return;
+        }
+
         if (!findParentNamespace()) {
           return;
         }
@@ -153,14 +159,14 @@ public class ParentNamespaceFinder extends ClassFinder {
   }
 
   private TextRange getTextRange(int lineNumber) {
-      int lineStart = document.getLineStartOffset(lineNumber);
-      int lineEnd = document.getLineEndOffset(lineNumber);
+    int lineStart = document.getLineStartOffset(lineNumber);
+    int lineEnd = document.getLineEndOffset(lineNumber);
 
-      return new TextRange(lineStart, lineEnd);
-    }
+    return new TextRange(lineStart, lineEnd);
+  }
 
   private boolean findParentNamespace() {
-
+    // TODO: return the name, if found.
     String documentText = document.getText();
 
     // Find @extends.
@@ -175,9 +181,9 @@ public class ParentNamespaceFinder extends ClassFinder {
 
     // Remove the beginning of the line.
     line = line.replaceAll("[\\s\\*]*@extends\\s+", "");
+
+    // Remove the end of the line.
     parentNamespace = line.replaceAll("\\s*$", "");
-
-
 
     return true;
   }
