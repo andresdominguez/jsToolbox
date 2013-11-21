@@ -2,8 +2,6 @@ package com.karateca.jstoolbox.joiner;
 
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.PlatformDataKeys;
-import com.intellij.openapi.application.ApplicationManager;
-import com.intellij.openapi.command.CommandProcessor;
 import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.editor.SelectionModel;
@@ -66,7 +64,7 @@ public class JoinerAction extends MyAction {
     final TextRange currentLineTextRange = getTextRange(lineNumber);
     final TextRange nextLineTextRange = getTextRange(lineNumber + 1);
 
-    runWriteActionInsideCommand(new Runnable() {
+    runWriteActionInsideCommand(project, "Join", new Runnable() {
       @Override
       public void run() {
         // Replace var from next line.
@@ -111,7 +109,7 @@ public class JoinerAction extends MyAction {
   }
 
   private void replaceString(final String replacementText, final int start, final int end) {
-    runWriteActionInsideCommand(new Runnable() {
+    runWriteActionInsideCommand(project, "Join", new Runnable() {
       @Override
       public void run() {
         document.replaceString(start, end, replacementText);
@@ -149,19 +147,5 @@ public class JoinerAction extends MyAction {
     int lineEnd = document.getLineEndOffset(lineNumber);
 
     return new TextRange(lineStart, lineEnd);
-  }
-
-  /**
-   * Run a write operation within a command.
-   *
-   * @param action The action to run.
-   */
-  private void runWriteActionInsideCommand(final Runnable action) {
-    CommandProcessor.getInstance().executeCommand(project, new Runnable() {
-      @Override
-      public void run() {
-        ApplicationManager.getApplication().runWriteAction(action);
-      }
-    }, "Join", null);
   }
 }
