@@ -15,19 +15,17 @@ public class NamespaceFinder extends ClassFinder {
   private final EventDispatcher<ChangeListener> myEventDispatcher =
       EventDispatcher.create(ChangeListener.class);
 
-  private final Document document;
   private String namespaceFound;
 
   public NamespaceFinder(Document document) {
-    this.document = document;
+    super(document);
   }
 
   public void findNamespace() {
     ApplicationManager.getApplication().runReadAction(new Runnable() {
       @Override
       public void run() {
-        namespaceFound = findNamespaceForCurrentFile(
-            NamespaceFinder.this.document);
+        namespaceFound = findNamespaceForCurrentFile();
 
         // Did it find a namespace?
         if (namespaceFound != null) {

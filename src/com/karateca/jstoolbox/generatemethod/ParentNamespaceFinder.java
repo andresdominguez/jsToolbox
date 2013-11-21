@@ -40,6 +40,7 @@ public class ParentNamespaceFinder extends ClassFinder {
 
   public ParentNamespaceFinder(Project project, Document document,
       VirtualFile virtualFile, Editor editor) {
+    super(document);
     this.project = project;
     this.document = document;
     this.virtualFile = virtualFile;

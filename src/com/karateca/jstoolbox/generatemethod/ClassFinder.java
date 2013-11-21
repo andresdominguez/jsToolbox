@@ -4,7 +4,13 @@ import com.intellij.openapi.editor.Document;
 
 public class ClassFinder {
 
-  protected String findNamespaceForCurrentFile(Document document) {
+  protected final Document document;
+
+  public ClassFinder(Document document) {
+    this.document = document;
+  }
+
+  protected String findNamespaceForCurrentFile() {
     String text = document.getText();
 
     // Find the @constructor and then go to the first function.
