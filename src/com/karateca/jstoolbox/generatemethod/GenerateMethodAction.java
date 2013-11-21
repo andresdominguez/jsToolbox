@@ -4,7 +4,7 @@ import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.karateca.jstoolbox.MyAction;
 
 /**
- * @author andresdom@google.com (Andres Dominguez)
+ * @author Andres Dominguez
  */
 public class GenerateMethodAction extends MyAction {
 
