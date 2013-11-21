@@ -21,6 +21,7 @@ public class GenerateMethodAction extends MyAction {
   private DocumentImpl document;
   private NamespaceFinder namespaceFinder;
 
+  // TODO: Disable on non-js files.
   public void actionPerformed(AnActionEvent actionEvent) {
     if (!canEnableAction(actionEvent)) {
       return;
