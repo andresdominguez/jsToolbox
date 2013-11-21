@@ -133,7 +133,7 @@ public class ParentNamespaceFinder extends ClassFinder {
 
   private String getFileContents(VirtualFile virtualFile) {
     Document doc = FileDocumentManager.getInstance().getDocument(virtualFile);
-    return doc != null ? doc.getText() : "";
+    return doc == null ? "" : doc.getText();
   }
 
   private List<Function> getMethods(VirtualFile virtualFile)
