@@ -4,7 +4,7 @@ import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 
 /**
- * @author andresdom@google.com (Andres Dominguez)
+ * @author Andres Dominguez
  */
 public class OverrideMethodAction extends AnAction {
 
