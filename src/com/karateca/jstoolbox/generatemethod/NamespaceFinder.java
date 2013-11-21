@@ -26,7 +26,7 @@ public class NamespaceFinder extends ClassFinder {
     ApplicationManager.getApplication().runReadAction(new Runnable() {
       @Override
       public void run() {
-        namespaceFound = performFind();
+        namespaceFound = findNamespaceForCurrentFile();
 
         // Did it find a namespace?
         if (namespaceFound != null) {
@@ -46,7 +46,7 @@ public class NamespaceFinder extends ClassFinder {
     myEventDispatcher.addListener(changeListener);
   }
 
-  private String performFind() {
+  private String findNamespaceForCurrentFile() {
     String text = document.getText();
 
     // Find the @constructor and then go to the first function.
