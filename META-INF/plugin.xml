@@ -1,7 +1,7 @@
 <idea-plugin version="2">
     <id>com.karateca.jstoolbox</id>
     <name>JS Toolbox</name>
-    <version>1.1</version>
+    <version>1.2</version>
     <vendor email="code@karateca.com" url="http://www.andresdominguez.com">www.andresdominguez.com</vendor>
 
     <description><![CDATA[
@@ -48,12 +48,16 @@
         Open the current file in thr browser. Specify a search URL in the
         configuration panel.
       </p>
+      <h2>Generate method (Under generate menu)</h2>
+      <p>Add a method to the current javascript class.</p>
       ]]></description>
 
     <change-notes><![CDATA[
       <h2>1.1</h2>
       <p>Added Open in browser</p>
       <p>Added ability to select a block of code to join string.</p>
+      <h2>1.2</h2>
+      <p>Added generate method</p>
       ]]>
     </change-notes>
 
