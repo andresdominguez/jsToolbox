@@ -10,7 +10,7 @@ import javax.swing.event.ChangeListener;
 /**
  * @author Andres Dominguez
  */
-public class NamespaceFinder {
+public class NamespaceFinder extends ClassFinder {
 
   private final EventDispatcher<ChangeListener> myEventDispatcher =
       EventDispatcher.create(ChangeListener.class);
