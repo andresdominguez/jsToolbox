@@ -70,7 +70,8 @@ public class NamespaceFinder {
     }
 
     // And remove empty spaces.
-    return text.substring(closingJsDocOffset, indexOfEqual).replaceAll("\\s+", "");
+    return text.substring(closingJsDocOffset, indexOfEqual)
+        .replaceAll("\\s+", "");
   }
 
   public String getNamespaceFound() {
