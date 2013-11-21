@@ -8,7 +8,7 @@ import com.karateca.jstoolbox.MyAction;
 import com.karateca.jstoolbox.config.JsToolboxSettings;
 
 /**
- * @author andresdom@google.com (Andres Dominguez)
+ * @author Andres Dominguez
  */
 public class ToBrowserAction extends MyAction {
   @Override

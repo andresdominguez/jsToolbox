@@ -6,7 +6,7 @@ import com.intellij.psi.PsiFile;
 import com.intellij.psi.PsiManager;
 
 /**
- * @author andresdom@google.com (Andres Dominguez)
+ * @author Andres Dominguez
  */
 class FindRelatedFileIterator implements ContentIterator {
 
