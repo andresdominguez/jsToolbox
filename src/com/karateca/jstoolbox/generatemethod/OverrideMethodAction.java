@@ -23,7 +23,7 @@ public class OverrideMethodAction extends MyAction {
   private Project project;
   private Editor editor;
   private Document document;
-  private ParentNamespaceFinder2 namespaceFinder;
+  private ParentNamespaceFinder namespaceFinder;
 
   @Override
   public void actionPerformed(AnActionEvent actionEvent) {
@@ -36,7 +36,7 @@ public class OverrideMethodAction extends MyAction {
         .getData(PlatformDataKeys.VIRTUAL_FILE);
     document = editor.getDocument();
 
-    namespaceFinder = new ParentNamespaceFinder2(project, document, virtualFile, editor);
+    namespaceFinder = new ParentNamespaceFinder(project, document, virtualFile, editor);
 
     namespaceFinder.addResultsReadyListener(new ChangeListener() {
       @Override

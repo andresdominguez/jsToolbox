@@ -2,7 +2,6 @@ package com.karateca.jstoolbox.generatemethod;
 
 import com.intellij.find.FindManager;
 import com.intellij.find.FindModel;
-import com.intellij.find.FindResult;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.editor.Editor;
@@ -25,7 +24,7 @@ import javax.swing.event.ChangeListener;
 /**
  * @author Andres Dominguez
  */
-public class ParentNamespaceFinder2 {
+public class ParentNamespaceFinder extends ClassFinder {
 
   private final Project project;
   private final Document document;
@@ -39,7 +38,7 @@ public class ParentNamespaceFinder2 {
   private String parentNamespace;
   private List<Function> functionNames;
 
-  public ParentNamespaceFinder2(Project project, Document document,
+  public ParentNamespaceFinder(Project project, Document document,
       VirtualFile virtualFile, Editor editor) {
     this.project = project;
     this.document = document;
