@@ -15,7 +15,7 @@ public class JsToolboxConfigurationPanel {
     useFilePath.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
-        usePathFromDir.setEnabled(useFilePath.isSelected());
+        fromPath.setEnabled(useFilePath.isSelected());
       }
     });
   }
@@ -30,7 +30,7 @@ public class JsToolboxConfigurationPanel {
   private JButton resetButton;
   private JTextField searchUrl;
   private JCheckBox useFilePath;
-  private JTextField usePathFromDir;
+  private JTextField fromPath;
 
   public void setTestSuffix(String testSuffix) {
     unitTestSuffix.setText(testSuffix);
@@ -64,12 +64,12 @@ public class JsToolboxConfigurationPanel {
     searchUrl.setText(url);
   }
 
-  public String getUsePathFromDir() {
-    return usePathFromDir.getText();
+  public String getFromPath() {
+    return fromPath.getText();
   }
 
-  public void setUsePathFromDir(String dir) {
-    usePathFromDir.setText(dir);
+  public void setFromPath(String dir) {
+    fromPath.setText(dir);
   }
 
   public boolean getUseFilePath() {
@@ -78,7 +78,7 @@ public class JsToolboxConfigurationPanel {
 
   public void setUseFilePath(boolean selected) {
     useFilePath.setSelected(selected);
-    usePathFromDir.setEnabled(selected);
+    fromPath.setEnabled(selected);
   }
 
   public JButton getResetButton() {
