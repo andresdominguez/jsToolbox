@@ -2,10 +2,9 @@ package com.karateca.jstoolbox.generatemethod;
 
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.PlatformDataKeys;
-import com.intellij.openapi.editor.impl.DocumentImpl;
-import com.intellij.openapi.editor.impl.EditorImpl;
+import com.intellij.openapi.editor.Document;
+import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.project.Project;
-import com.intellij.openapi.vfs.VirtualFile;
 import com.karateca.jstoolbox.MyAction;
 
 import javax.swing.event.ChangeEvent;
@@ -17,8 +16,8 @@ import javax.swing.event.ChangeListener;
 public class GenerateMethodAction extends MyAction {
 
   private Project project;
-  private EditorImpl editor;
-  private DocumentImpl document;
+  private Editor editor;
+  private Document document;
   private NamespaceFinder namespaceFinder;
 
   // TODO: Disable on non-js files.
@@ -28,12 +27,10 @@ public class GenerateMethodAction extends MyAction {
     }
 
     project = actionEvent.getData(PlatformDataKeys.PROJECT);
-    editor = (EditorImpl) actionEvent.getData(PlatformDataKeys.EDITOR);
-    VirtualFile virtualFile = actionEvent
-        .getData(PlatformDataKeys.VIRTUAL_FILE);
-    document = (DocumentImpl) editor.getDocument();
+    editor = actionEvent.getData(PlatformDataKeys.EDITOR);
+    document = editor.getDocument();
 
-    namespaceFinder = new NamespaceFinder(project, document, virtualFile);
+    namespaceFinder = new NamespaceFinder(document);
 
     // Async callback to get the search results for it( and describe(
     namespaceFinder.addResultsReadyListener(new ChangeListener() {
@@ -50,7 +47,7 @@ public class GenerateMethodAction extends MyAction {
       }
     });
 
-    namespaceFinder.findText("goog.provide", false);
+    namespaceFinder.findNamespace();
   }
 
   private void addMethod(final String namespace) {
