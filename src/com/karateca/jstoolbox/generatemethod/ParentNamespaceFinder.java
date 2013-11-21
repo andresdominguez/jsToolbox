@@ -12,7 +12,6 @@ import com.intellij.openapi.util.TextRange;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.util.EventDispatcher;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -73,7 +72,7 @@ public class ParentNamespaceFinder extends ClassFinder {
           return;
         }
 
-        VirtualFile parentFile = findParentFile();
+        VirtualFile parentFile = findParentFile(parentNamespace);
         if (parentFile == null) {
           return;
         }
@@ -89,7 +88,7 @@ public class ParentNamespaceFinder extends ClassFinder {
     });
   }
 
-  private VirtualFile findParentFile() {
+  private VirtualFile findParentFile(final String namespace) {
     final VirtualFile[] parentFile = {null};
 
     ProjectRootManager.getInstance(editor.getProject()).getFileIndex()
@@ -98,9 +97,8 @@ public class ParentNamespaceFinder extends ClassFinder {
           public boolean processFile(VirtualFile virtualFile) {
             boolean parentFileFound = false;
             try {
-              parentFileFound = fileProvidesNamespace(virtualFile,
-                  parentNamespace);
-            } catch (IOException e) {
+              parentFileFound = fileProvidesNamespace(virtualFile, namespace);
+            } catch (Exception e) {
               System.err.println("Error reading file " + virtualFile.getName());
               e.printStackTrace(System.err);
             }
@@ -121,7 +119,7 @@ public class ParentNamespaceFinder extends ClassFinder {
    * Search for the file providing the namespace.
    */
   private boolean fileProvidesNamespace(VirtualFile virtualFile,
-      String parentNamespace) throws IOException {
+      String parentNamespace) throws Exception {
     String provideSearchLine = "goog.provide('" + parentNamespace;
     String fileName = virtualFile.getName();
 
@@ -134,12 +132,12 @@ public class ParentNamespaceFinder extends ClassFinder {
     return fileContents.contains(provideSearchLine);
   }
 
-  private String getFileContents(VirtualFile virtualFile) throws IOException {
+  private String getFileContents(VirtualFile virtualFile) throws Exception {
     return new String(virtualFile.contentsToByteArray());
   }
 
   private List<Function> getMethods(VirtualFile virtualFile)
-      throws IOException {
+      throws Exception {
     List<Function> result = new ArrayList<Function>();
 
     String fileContents = getFileContents(virtualFile);
@@ -183,7 +181,13 @@ public class ParentNamespaceFinder extends ClassFinder {
     line = line.replaceAll("[\\s\\*]*@extends\\s+", "");
 
     // Remove the end of the line.
-    parentNamespace = line.replaceAll("\\s*$", "");
+    line = line.replaceAll("\\s*$", "");
+
+    // TODO: Temporary fix
+    line = line.replace("{", "");
+    line = line.replace("}", "");
+
+    parentNamespace = line;
 
     return true;
   }
