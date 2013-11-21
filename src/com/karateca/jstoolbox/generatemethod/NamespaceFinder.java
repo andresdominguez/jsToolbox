@@ -26,7 +26,8 @@ public class NamespaceFinder extends ClassFinder {
     ApplicationManager.getApplication().runReadAction(new Runnable() {
       @Override
       public void run() {
-        namespaceFound = findNamespaceForCurrentFile();
+        namespaceFound = findNamespaceForCurrentFile(
+            NamespaceFinder.this.document);
 
         // Did it find a namespace?
         if (namespaceFound != null) {
@@ -44,34 +45,6 @@ public class NamespaceFinder extends ClassFinder {
    */
   public void addResultsReadyListener(ChangeListener changeListener) {
     myEventDispatcher.addListener(changeListener);
-  }
-
-  private String findNamespaceForCurrentFile() {
-    String text = document.getText();
-
-    // Find the @constructor and then go to the first function.
-    int constructorOffset = text.indexOf("@constructor");
-    if (constructorOffset < 0) {
-      return null;
-    }
-
-    // Find the closing jsdoc.
-    int closingJsDocOffset = text.indexOf("*/", constructorOffset);
-    if (closingJsDocOffset < 0) {
-      return null;
-    }
-
-    closingJsDocOffset += 2;
-
-    // Get the string until the first "=".
-    int indexOfEqual = text.indexOf("=", closingJsDocOffset);
-    if (indexOfEqual < 0) {
-      return null;
-    }
-
-    // And remove empty spaces.
-    return text.substring(closingJsDocOffset, indexOfEqual)
-        .replaceAll("\\s+", "");
   }
 
   public String getNamespaceFound() {
