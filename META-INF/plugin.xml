@@ -102,7 +102,12 @@
             <keyboard-shortcut keymap="$default" first-keystroke="shift ctrl alt G"/>
             <add-to-group group-id="EditorPopupMenu"/>
         </action>
-    </actions>
+      <action id="com.karateca.jstoolbox.generatemethod.GenerateMethodAction"
+              class="com.karateca.jstoolbox.generatemethod.GenerateMethodAction"
+              text="Generate method"
+              description="Generate a new method">
+          <add-to-group group-id="GenerateGroup" anchor="last"/>
+      </action>    </actions>
 
     <extensions defaultExtensionNs="com.intellij">
         <!-- Add your extensions here -->
