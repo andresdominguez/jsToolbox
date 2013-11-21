@@ -63,7 +63,7 @@ public class GenerateMethodAction extends MyAction {
             "};", namespace);
         document.replaceString(offset, offset, methodTemplate);
 
-        // Put the caret after "protoype."
+        // Put the caret after "prototype."
         editor.getCaretModel().moveToOffset(offset + namespace.length() + 11);
       }
     });
