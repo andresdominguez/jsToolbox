@@ -97,7 +97,6 @@ public class OverrideMethodAction extends MyAction {
         " * @override\n" +
         " */\n" +
         "%s = function(%s) {\n" +
-        "  // TODO: override function\n" +
         "  %s.call(this%s);\n" +
         "};\n", methodPrototype, arguments, parentMethodPrototype,
         callArguments);
