@@ -1,32 +1,35 @@
 <idea-plugin version="2">
-    <id>com.karateca.jstoolbox</id>
-    <name>JS Toolbox</name>
-    <version>1.1</version>
-    <vendor email="code@karateca.com" url="http://www.andresdominguez.com">www.andresdominguez.com</vendor>
+  <id>com.karateca.jstoolbox</id>
+  <name>JS Toolbox</name>
+  <version>1.2</version>
+  <vendor email="code@karateca.com" url="http://www.andresdominguez.com">
+    www.andresdominguez.com
+  </vendor>
 
-    <description><![CDATA[
-      An Intellij / Webstorm plugin that provides several tools for javascript development.<br>
+  <description><![CDATA[
+    An Intellij / Webstorm plugin that provides several tools for javascript development.
+    <br>
 
-      <h2>Go to related (Alt V and Alt T)</h2>
-      <p>
-        Go to the test or the view and back with one shortcut. This new
-        version has a configuration panel under IDE Settings > JS Toolbox.
-      </p>
-      <ul>
-        <li>Go to test: Alt T, repeat to go back</li>
-        <li>Go to view: Alt V, repeat to go back</li>
-      </ul>
+    <h2>Go to related (Alt V and Alt T)</h2>
+    <p>
+      Go to the test or the view and back with one shortcut. This new
+      version has a configuration panel under IDE Settings > JS Toolbox.
+    </p>
+    <ul>
+      <li>Go to test: Alt T, repeat to go back</li>
+      <li>Go to view: Alt V, repeat to go back</li>
+    </ul>
 
-      <h2>Go to constructor (Alt G)</h2>
-      <p>
-        Jump to the constructor of your javascript file.
-      </p>
+    <h2>Go to constructor (Alt G)</h2>
+    <p>
+      Jump to the constructor of your javascript file.
+    </p>
 
-      <h2>Join (Ctrl SHIFT Alt J)</h2>
-      <p>
-        Join strings and variable declarations.
-      </p>
-      <pre>
+    <h2>Join (Ctrl SHIFT Alt J)</h2>
+    <p>
+      Join strings and variable declarations.
+    </p>
+    <pre>
         To turn this:
           var s = 'one, ' +
               'two, ';
@@ -43,69 +46,86 @@
               bar = 2;
       </pre>
 
-      <h2>Open in browser</h2>
-      <p>
-        Open the current file in thr browser. Specify a search URL in the
-        configuration panel.
-      </p>
-      ]]></description>
+    <h2>Open in browser</h2>
+    <p>
+      Open the current file in thr browser. Specify a search URL in the
+      configuration panel.
+    </p>
+    <h2>Generate method (Under generate menu)</h2>
+    <p>Add a method to the current javascript class.</p>
+    ]]></description>
 
-    <change-notes><![CDATA[
-      <h2>1.1</h2>
-      <p>Added Open in browser</p>
-      <p>Added ability to select a block of code to join string.</p>
-      ]]>
+  <change-notes><![CDATA[
+    <h2>1.1</h2>
+    <p>Added Open in browser</p>
+    <p>Added ability to select a block of code to join string.</p>
+    <h2>1.2</h2>
+    <p>Added generate method</p>
+    ]]>
     </change-notes>
 
-    <!-- please see http://confluence.jetbrains.net/display/IDEADEV/Build+Number+Ranges for description -->
-    <idea-version since-build="107.105"/>
+  <!-- please see http://confluence.jetbrains.net/display/IDEADEV/Build+Number+Ranges for description -->
+  <idea-version since-build="107.105"/>
 
-    <depends>com.intellij.modules.lang</depends>
+  <depends>com.intellij.modules.lang</depends>
 
-    <application-components>
-        <!-- Add your application components here -->
-    </application-components>
+  <application-components>
+    <!-- Add your application components here -->
+  </application-components>
 
-    <project-components>
-        <!-- Add your project components here -->
-    </project-components>
+  <project-components>
+    <!-- Add your project components here -->
+  </project-components>
 
-    <actions>
-        <!-- Add your actions here -->
-        <action id="com.karateca.jstoolbox.joiner.JoinerAction"
-                class="com.karateca.jstoolbox.joiner.JoinerAction" text="Join"
-                description="Joint a string or multiple variable declarations">
-            <keyboard-shortcut keymap="$default" first-keystroke="shift ctrl alt J"/>
-        </action>
-        <action id="com.karateca.jstoolbox.toconstructor.GoToConstructorAction"
-                class="com.karateca.jstoolbox.toconstructor.GoToConstructorAction"
-                text="Go to constructor"
-                description="Go to the constructor">
-            <keyboard-shortcut keymap="$default" first-keystroke="alt G"/>
-        </action>
-        <action id="com.karateca.jstoolbox.torelated.GoToTestAction"
-                class="com.karateca.jstoolbox.torelated.GoToTestAction"
-                text="Go to test"
-                description="Go to the test file form the file of the view">
-            <keyboard-shortcut keymap="$default" first-keystroke="alt T"/>
-        </action>
-        <action id="com.karateca.jstoolbox.torelated.GoToViewAction"
-                class="com.karateca.jstoolbox.torelated.GoToViewAction"
-                text="Go to view..."
-                description="Switch between the view and the controller">
-            <keyboard-shortcut keymap="$default" first-keystroke="alt V"/>
-        </action>
-        <action id="com.karateca.jstoolbox.tobrowser.ToBrowserAction"
-                class="com.karateca.jstoolbox.tobrowser.ToBrowserAction"
-                text="Open in browser"
-                description="Open the current file in browser">
-            <keyboard-shortcut keymap="$default" first-keystroke="shift ctrl alt G"/>
-            <add-to-group group-id="EditorPopupMenu"/>
-        </action>
-    </actions>
+  <actions>
+    <!-- Add your actions here -->
+    <action id="com.karateca.jstoolbox.joiner.JoinerAction"
+            class="com.karateca.jstoolbox.joiner.JoinerAction" text="Join"
+            description="Joint a string or multiple variable declarations">
+      <keyboard-shortcut keymap="$default" first-keystroke="shift ctrl alt J"/>
+    </action>
+    <action id="com.karateca.jstoolbox.toconstructor.GoToConstructorAction"
+            class="com.karateca.jstoolbox.toconstructor.GoToConstructorAction"
+            text="Go to constructor"
+            description="Go to the constructor">
+      <keyboard-shortcut keymap="$default" first-keystroke="alt G"/>
+    </action>
+    <action id="com.karateca.jstoolbox.torelated.GoToTestAction"
+            class="com.karateca.jstoolbox.torelated.GoToTestAction"
+            text="Go to test"
+            description="Go to the test file form the file of the view">
+      <keyboard-shortcut keymap="$default" first-keystroke="alt T"/>
+    </action>
+    <action id="com.karateca.jstoolbox.torelated.GoToViewAction"
+            class="com.karateca.jstoolbox.torelated.GoToViewAction"
+            text="Go to view..."
+            description="Switch between the view and the controller">
+      <keyboard-shortcut keymap="$default" first-keystroke="alt V"/>
+    </action>
+    <action id="com.karateca.jstoolbox.tobrowser.ToBrowserAction"
+            class="com.karateca.jstoolbox.tobrowser.ToBrowserAction"
+            text="Open in browser"
+            description="Open the current file in browser">
+      <keyboard-shortcut keymap="$default" first-keystroke="shift ctrl alt G"/>
+      <add-to-group group-id="EditorPopupMenu"/>
+    </action>
+    <action id="com.karateca.jstoolbox.generatemethod.GenerateMethodAction"
+            class="com.karateca.jstoolbox.generatemethod.GenerateMethodAction"
+            text="Generate javascript method"
+            description="Generate a new method">
+      <add-to-group group-id="GenerateGroup" anchor="last"/>
+    </action>
+    <action id="com.karateca.jstoolbox.generatemethod.OverrideMethodAction"
+            class="com.karateca.jstoolbox.generatemethod.OverrideMethodAction"
+            text="Override javascript method"
+            description="Override a method from the parent">
+      <add-to-group group-id="GenerateGroup" anchor="last"/>
+    </action>
+  </actions>
 
-    <extensions defaultExtensionNs="com.intellij">
-        <!-- Add your extensions here -->
-        <applicationConfigurable instance="com.karateca.jstoolbox.config.JsToolboxConfigurable"/>
-    </extensions>
+  <extensions defaultExtensionNs="com.intellij">
+    <!-- Add your extensions here -->
+    <applicationConfigurable
+            instance="com.karateca.jstoolbox.config.JsToolboxConfigurable"/>
+  </extensions>
 </idea-plugin>
