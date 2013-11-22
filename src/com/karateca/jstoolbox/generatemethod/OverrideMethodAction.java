@@ -36,7 +36,7 @@ public class OverrideMethodAction extends MyAction {
         .getData(PlatformDataKeys.VIRTUAL_FILE);
     document = editor.getDocument();
 
-    namespaceFinder = new ParentNamespaceFinder(project, document, virtualFile, editor);
+    namespaceFinder = new ParentNamespaceFinder(document, virtualFile, editor);
 
     namespaceFinder.addResultsReadyListener(new ChangeListener() {
       @Override

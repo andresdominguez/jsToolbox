@@ -1,12 +1,9 @@
 package com.karateca.jstoolbox.generatemethod;
 
-import com.intellij.find.FindManager;
-import com.intellij.find.FindModel;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.fileEditor.FileDocumentManager;
-import com.intellij.openapi.project.Project;
 import com.intellij.openapi.roots.ContentIterator;
 import com.intellij.openapi.roots.ProjectRootManager;
 import com.intellij.openapi.util.TextRange;
@@ -26,22 +23,19 @@ import javax.swing.event.ChangeListener;
  */
 public class ParentNamespaceFinder extends ClassFinder {
 
-  private final Project project;
   private final Document document;
   private final VirtualFile virtualFile;
   private final Editor editor;
   private final EventDispatcher<ChangeListener> myEventDispatcher =
       EventDispatcher.create(ChangeListener.class);
 
-  private FindManager findManager;
   private String currentNamespace;
   private String parentNamespace;
   private List<Function> functionNames;
 
-  public ParentNamespaceFinder(Project project, Document document,
-      VirtualFile virtualFile, Editor editor) {
+  public ParentNamespaceFinder(Document document, VirtualFile virtualFile,
+      Editor editor) {
     super(document);
-    this.project = project;
     this.document = document;
     this.virtualFile = virtualFile;
     this.editor = editor;
@@ -178,34 +172,14 @@ public class ParentNamespaceFinder extends ClassFinder {
     String line = document.getText(getTextRange(lineNumber));
 
     // Remove the beginning of the line.
-    line = line.replaceAll("[\\s\\*]*@extends\\s+", "");
+    line = line.replaceAll("[\\s\\*]*@extends\\s*\\{?", "");
 
     // Remove the end of the line.
-    line = line.replaceAll("\\s*$", "");
-
-    // TODO: Temporary fix
-    line = line.replace("{", "");
-    line = line.replace("}", "");
+    line = line.replaceAll("\\}?\\s*$", "");
 
     parentNamespace = line;
 
     return true;
-  }
-
-  private FindModel createFindModel() {
-    findManager = FindManager.getInstance(project);
-    FindModel clone = (FindModel) findManager.getFindInFileModel().clone();
-    clone.setFindAll(true);
-    clone.setFromCursor(true);
-    clone.setForward(true);
-    clone.setMultiline(true);
-    clone.setRegularExpressions(true);
-    clone.setWholeWordsOnly(false);
-    clone.setCaseSensitive(true);
-    clone.setSearchHighlighters(true);
-    clone.setPreserveCase(false);
-
-    return clone;
   }
 
   private void broadcastEvent(String eventName) {
