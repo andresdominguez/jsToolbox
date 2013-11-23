@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * @author Andres Dominguez.
  */
-public class HierarchyFinder {
+class HierarchyFinder {
   private final Project project;
   private final Document startingDocument;
 
@@ -22,7 +22,7 @@ public class HierarchyFinder {
     this.startingDocument = startingDocument;
   }
 
-  public List<Document> findParents() {
+  public HierarchyResults findParents() {
     final List<Document> hierarchy = new ArrayList<Document>();
 
     ClassFinder finder = new ClassFinder(startingDocument);
@@ -32,7 +32,7 @@ public class HierarchyFinder {
     final String parentNamespace = finder.getParentClassName();
 
     if (currentNamespace == null || parentNamespace == null) {
-      return hierarchy;
+      return null;
     }
 
     // Iterate through the project files until the parent is found.
@@ -51,7 +51,7 @@ public class HierarchyFinder {
       }
     });
 
-    return hierarchy;
+    return new HierarchyResults(hierarchy, parentNamespace, currentNamespace);
   }
 
   private void iterateFiles(ContentIterator iterator) {

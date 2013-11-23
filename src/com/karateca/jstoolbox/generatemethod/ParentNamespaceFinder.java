@@ -19,28 +19,26 @@ class ParentNamespaceFinder {
   private final EventDispatcher<ChangeListener> myEventDispatcher =
       EventDispatcher.create(ChangeListener.class);
   private final Project project;
-
+  private List<Function> functionNames;
   private String currentNamespace;
   private String parentNamespace;
-  private List<Function> functionNames;
+
+  List<Function> getFunctionNames() {
+    return functionNames;
+  }
+
+  String getCurrentNamespace() {
+    return currentNamespace;
+  }
+
+  String getParentNamespace() {
+    return parentNamespace;
+  }
 
   public ParentNamespaceFinder(Document document, Project project) {
     this.document = document;
     this.project = project;
   }
-
-  public String getCurrentNamespace() {
-    return currentNamespace;
-  }
-
-  public String getParentNamespace() {
-    return parentNamespace;
-  }
-
-  public List<Function> getFunctionNames() {
-    return functionNames;
-  }
-
 
   public void findParentClass() {
     ApplicationManager.getApplication().runReadAction(new Runnable() {
@@ -49,20 +47,23 @@ class ParentNamespaceFinder {
         functionNames = new ArrayList<Function>();
 
         HierarchyFinder hierarchyFinder = new HierarchyFinder(project, document);
-        List<Document> parents = hierarchyFinder.findParents();
+        HierarchyResults parents = hierarchyFinder.findParents();
 
-        for (Document doc : parents) {
+        for (Document doc : parents.getHierarchy()) {
           ClassFinder finder = new ClassFinder(doc);
           functionNames.addAll(finder.getMethods());
         }
 
-        broadcastEvent();
+        currentNamespace = parents.getCurrentClass();
+        parentNamespace = parents.getParentClass();
+        functionNames = getFunctionNames();
+
+        broadcastReady();
       }
     });
   }
 
-
-  private void broadcastEvent() {
+  private void broadcastReady() {
     myEventDispatcher.getMulticaster().stateChanged(new ChangeEvent("ParentNamespaceFound"));
   }
 
