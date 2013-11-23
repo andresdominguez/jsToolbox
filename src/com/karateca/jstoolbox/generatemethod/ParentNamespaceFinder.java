@@ -89,6 +89,7 @@ class ParentNamespaceFinder {
   }
 
   private void iterateFiles(ContentIterator iterator) {
+    // TODO: find a way to iterate js files only.
     ProjectRootManager.getInstance(project).getFileIndex().iterateContent(iterator);
   }
 
