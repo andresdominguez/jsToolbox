@@ -17,7 +17,7 @@ import java.util.List;
 /**
  * @author Andres Dominguez
  */
-public class ParentNamespaceFinder extends ClassFinder {
+class ParentNamespaceFinder extends ClassFinder {
 
   private final Document document;
   private final Editor editor;
@@ -105,7 +105,7 @@ public class ParentNamespaceFinder extends ClassFinder {
           functionNames.addAll(finder.getMethods());
         }
 
-        broadcastEvent("ParentNamespaceFound");
+        broadcastEvent();
       }
     });
   }
@@ -114,8 +114,8 @@ public class ParentNamespaceFinder extends ClassFinder {
     return FileDocumentManager.getInstance().getDocument(virtualFile);
   }
 
-  private void broadcastEvent(String eventName) {
-    myEventDispatcher.getMulticaster().stateChanged(new ChangeEvent(eventName));
+  private void broadcastEvent() {
+    myEventDispatcher.getMulticaster().stateChanged(new ChangeEvent("ParentNamespaceFound"));
   }
 
   /**

@@ -10,7 +10,7 @@ import java.util.regex.Pattern;
 
 public class ClassFinder {
 
-  protected final Document document;
+  private final Document document;
   private final String documentText;
 
   public ClassFinder(Document document) {
