@@ -3,6 +3,11 @@ package com.karateca.jstoolbox.generatemethod;
 import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.util.TextRange;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class ClassFinder {
 
   protected final Document document;
@@ -64,5 +69,26 @@ public class ClassFinder {
     int lineEnd = document.getLineEndOffset(lineNumber);
 
     return new TextRange(lineStart, lineEnd);
+  }
+
+  public List<Function> getMethods() {
+    List<Function> result = new ArrayList<Function>();
+
+    String className = getClassName();
+
+    String regexp = "(%s.prototype.)([\\w]+)(\\s*=\\s*function\\s*\\()" +
+        "([\\w\\s\\n,]*)(\\))";
+    String methodPattern = String.format(regexp, className);
+
+    Pattern pattern = Pattern.compile(methodPattern, Pattern.MULTILINE);
+    Matcher matcher = pattern.matcher(documentText);
+
+    while (matcher.find()) {
+      String name = matcher.group(2);
+      String arguments = matcher.group(4);
+      result.add(new Function(name, arguments));
+    }
+
+    return result;
   }
 }
