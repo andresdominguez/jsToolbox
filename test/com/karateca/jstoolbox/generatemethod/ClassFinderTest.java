@@ -4,6 +4,8 @@ import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.fileEditor.FileDocumentManager;
 import com.intellij.openapi.vfs.VirtualFile;
 
+import java.util.List;
+
 /**
  * @author Andres Dominguez.
  */
@@ -53,6 +55,17 @@ public class ClassFinderTest extends BaseTestCase {
 
     // Then ensure it is null.
     assertNull(parentClassName);
+  }
+
+  public void testFindMethods() {
+    // Given a file with functions.
+    givenAFile("child.js");
+
+    // When you get the functions.
+    List<Function> methods = classFinder.getMethods();
+
+    // Then ensure all the functions were found.
+    assertEquals(4, methods.size());
   }
 
   private void givenAFile(String fileName) {
