@@ -6,14 +6,12 @@ import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.popup.JBPopupFactory;
-import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.ui.components.JBList;
 import com.karateca.jstoolbox.MyAction;
 
-import java.util.List;
-
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import java.util.List;
 
 /**
  * @author Andres Dominguez
@@ -32,11 +30,9 @@ public class OverrideMethodAction extends MyAction {
     }
     project = actionEvent.getData(PlatformDataKeys.PROJECT);
     editor = actionEvent.getData(PlatformDataKeys.EDITOR);
-    VirtualFile virtualFile = actionEvent
-        .getData(PlatformDataKeys.VIRTUAL_FILE);
     document = editor.getDocument();
 
-    namespaceFinder = new ParentNamespaceFinder(document, virtualFile, editor);
+    namespaceFinder = new ParentNamespaceFinder(document, editor);
 
     namespaceFinder.addResultsReadyListener(new ChangeListener() {
       @Override
@@ -82,10 +78,8 @@ public class OverrideMethodAction extends MyAction {
    */
   private void addNewMethod(Function function) {
     String fnNameFormat = "%s.prototype." + function.getName();
-    String methodPrototype = String
-        .format(fnNameFormat, namespaceFinder.getCurrentNamespace());
-    String parentMethodPrototype = String
-        .format(fnNameFormat, namespaceFinder.getParentNamespace());
+    String methodPrototype = String.format(fnNameFormat, namespaceFinder.getCurrentNamespace());
+    String parentMethodPrototype = String.format(fnNameFormat, namespaceFinder.getParentNamespace());
 
     String arguments = function.getArguments();
     String callArguments = arguments;

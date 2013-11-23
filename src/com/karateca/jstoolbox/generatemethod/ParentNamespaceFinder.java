@@ -6,17 +6,13 @@ import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.fileEditor.FileDocumentManager;
 import com.intellij.openapi.roots.ContentIterator;
 import com.intellij.openapi.roots.ProjectRootManager;
-import com.intellij.openapi.util.TextRange;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.util.EventDispatcher;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Andres Dominguez
@@ -24,7 +20,6 @@ import javax.swing.event.ChangeListener;
 public class ParentNamespaceFinder extends ClassFinder {
 
   private final Document document;
-  private final VirtualFile virtualFile;
   private final Editor editor;
   private final EventDispatcher<ChangeListener> myEventDispatcher =
       EventDispatcher.create(ChangeListener.class);
@@ -33,11 +28,9 @@ public class ParentNamespaceFinder extends ClassFinder {
   private String parentNamespace;
   private List<Function> functionNames;
 
-  public ParentNamespaceFinder(Document document, VirtualFile virtualFile,
-      Editor editor) {
+  public ParentNamespaceFinder(Document document, Editor editor) {
     super(document);
     this.document = document;
-    this.virtualFile = virtualFile;
     this.editor = editor;
   }
 
@@ -53,133 +46,72 @@ public class ParentNamespaceFinder extends ClassFinder {
     return functionNames;
   }
 
-  public void findParentClass() {
-    ApplicationManager.getApplication().runReadAction(new Runnable() {
+  List<Document> findParents() {
+    final ArrayList<Document> hierarchy = new ArrayList<Document>();
+
+    ClassFinder finder = new ClassFinder(document);
+
+    // Get the ns.
+    currentNamespace = finder.getClassName();
+    parentNamespace = finder.getParentClassName();
+
+    if (currentNamespace == null || parentNamespace == null) {
+      return hierarchy;
+    }
+
+    // Iterate through the project files until the parent is found.
+    iterateFiles(new ContentIterator() {
       @Override
-      public void run() {
-        // First find the namespace for the current file.
-        currentNamespace = findNamespaceForCurrentFile();
-        if (currentNamespace == null) {
-          return;
+      public boolean processFile(VirtualFile fileOrDir) {
+        boolean continueSearch = true;
+
+        if (fileContainsClass(fileOrDir, parentNamespace)) {
+          // Stop the search.
+          continueSearch = false;
+          hierarchy.add(getDocument(fileOrDir));
         }
 
-        if (!findParentNamespace()) {
-          return;
-        }
-
-        VirtualFile parentFile = findParentFile(parentNamespace);
-        if (parentFile == null) {
-          return;
-        }
-
-        try {
-          functionNames = getMethods(parentFile);
-          broadcastEvent("ParentNamespaceFound");
-        } catch (Exception e) {
-          System.err.println("Error reading file " + virtualFile.getName());
-          e.printStackTrace(System.err);
-        }
+        return continueSearch;
       }
     });
+
+    return hierarchy;
   }
 
-  private VirtualFile findParentFile(final String namespace) {
-    final VirtualFile[] parentFile = {null};
-
-    ProjectRootManager.getInstance(editor.getProject()).getFileIndex()
-        .iterateContent(new ContentIterator() {
-          @Override
-          public boolean processFile(VirtualFile virtualFile) {
-            boolean parentFileFound = false;
-            try {
-              parentFileFound = fileProvidesNamespace(virtualFile, namespace);
-            } catch (Exception e) {
-              System.err.println("Error reading file " + virtualFile.getName());
-              e.printStackTrace(System.err);
-            }
-
-            if (parentFileFound) {
-              parentFile[0] = virtualFile;
-            }
-
-            // Stop the search.
-            return !parentFileFound;
-          }
-        });
-
-    return parentFile[0];
-  }
-
-  /**
-   * Search for the file providing the namespace.
-   */
-  private boolean fileProvidesNamespace(
-      VirtualFile virtualFile, String namespace) throws Exception {
-    // Ignore non-js files.
+  private boolean fileContainsClass(VirtualFile virtualFile, String className) {
     if (!virtualFile.getName().endsWith(".js")) {
       return false;
     }
 
-    String provideSearchLine = "goog.provide('" + namespace;
-    String fileContents = getFileContents(virtualFile);
-    return fileContents.contains(provideSearchLine);
+    Document document = getDocument(virtualFile);
+    ClassFinder classFinder = new ClassFinder(document);
+
+    return className.equals(classFinder.getClassName());
   }
 
-  private String getFileContents(VirtualFile virtualFile) {
-    Document doc = FileDocumentManager.getInstance().getDocument(virtualFile);
-    return doc == null ? "" : doc.getText();
+  private void iterateFiles(ContentIterator iterator) {
+    ProjectRootManager.getInstance(editor.getProject()).getFileIndex().iterateContent(iterator);
   }
 
-  private List<Function> getMethods(VirtualFile virtualFile)
-      throws Exception {
-    List<Function> result = new ArrayList<Function>();
+  public void findParentClass() {
+    ApplicationManager.getApplication().runReadAction(new Runnable() {
+      @Override
+      public void run() {
+        functionNames = new ArrayList<Function>();
 
-    String fileContents = getFileContents(virtualFile);
-    String regexp = "(%s.prototype.)([\\w]+)(\\s*=\\s*function\\s*\\()" +
-        "([\\w\\s\\n,]*)(\\))";
-    String methodPattern = String.format(regexp, parentNamespace);
+        List<Document> parents = findParents();
+        for (Document doc : parents) {
+          ClassFinder finder = new ClassFinder(doc);
+          functionNames.addAll(finder.getMethods());
+        }
 
-    Pattern pattern = Pattern.compile(methodPattern, Pattern.MULTILINE);
-    Matcher matcher = pattern.matcher(fileContents);
-    while (matcher.find()) {
-      String name = matcher.group(2);
-      String arguments = matcher.group(4);
-      result.add(new Function(name, arguments));
-    }
-
-    return result;
+        broadcastEvent("ParentNamespaceFound");
+      }
+    });
   }
 
-  private TextRange getTextRange(int lineNumber) {
-    int lineStart = document.getLineStartOffset(lineNumber);
-    int lineEnd = document.getLineEndOffset(lineNumber);
-
-    return new TextRange(lineStart, lineEnd);
-  }
-
-  private boolean findParentNamespace() {
-    // TODO: return the name, if found.
-    String documentText = document.getText();
-
-    // Find @extends.
-    int extendsOffset = documentText.indexOf("@extends");
-    if (extendsOffset < 0) {
-      return false;
-    }
-
-    // Find the next "*".
-    int lineNumber = document.getLineNumber(extendsOffset);
-    String line = document.getText(getTextRange(lineNumber));
-
-    // Remove the beginning of the line.
-    line = line.replaceAll("[\\s\\*]*@extends\\s*\\{?", "");
-
-    // Remove the end of the line.
-    line = line.replaceAll("\\}?\\s*$", "");
-
-    parentNamespace = line;
-
-    return true;
+  private Document getDocument(VirtualFile virtualFile) {
+    return FileDocumentManager.getInstance().getDocument(virtualFile);
   }
 
   private void broadcastEvent(String eventName) {
