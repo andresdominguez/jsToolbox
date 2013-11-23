@@ -2,11 +2,7 @@ package com.karateca.jstoolbox.generatemethod;
 
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.editor.Document;
-import com.intellij.openapi.fileEditor.FileDocumentManager;
 import com.intellij.openapi.project.Project;
-import com.intellij.openapi.roots.ContentIterator;
-import com.intellij.openapi.roots.ProjectRootManager;
-import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.util.EventDispatcher;
 
 import javax.swing.event.ChangeEvent;
@@ -45,53 +41,6 @@ class ParentNamespaceFinder {
     return functionNames;
   }
 
-  List<Document> findParents() {
-    final ArrayList<Document> hierarchy = new ArrayList<Document>();
-
-    ClassFinder finder = new ClassFinder(document);
-
-    // Get the ns.
-    currentNamespace = finder.getClassName();
-    parentNamespace = finder.getParentClassName();
-
-    if (currentNamespace == null || parentNamespace == null) {
-      return hierarchy;
-    }
-
-    // Iterate through the project files until the parent is found.
-    iterateFiles(new ContentIterator() {
-      @Override
-      public boolean processFile(VirtualFile fileOrDir) {
-        boolean continueSearch = true;
-
-        if (fileContainsClass(fileOrDir, parentNamespace)) {
-          // Stop the search.
-          continueSearch = false;
-          hierarchy.add(getDocument(fileOrDir));
-        }
-
-        return continueSearch;
-      }
-    });
-
-    return hierarchy;
-  }
-
-  private boolean fileContainsClass(VirtualFile virtualFile, String className) {
-    if (!virtualFile.getName().endsWith(".js")) {
-      return false;
-    }
-
-    Document document = getDocument(virtualFile);
-    ClassFinder classFinder = new ClassFinder(document);
-
-    return className.equals(classFinder.getClassName());
-  }
-
-  private void iterateFiles(ContentIterator iterator) {
-    // TODO: find a way to iterate js files only.
-    ProjectRootManager.getInstance(project).getFileIndex().iterateContent(iterator);
-  }
 
   public void findParentClass() {
     ApplicationManager.getApplication().runReadAction(new Runnable() {
@@ -99,7 +48,9 @@ class ParentNamespaceFinder {
       public void run() {
         functionNames = new ArrayList<Function>();
 
-        List<Document> parents = findParents();
+        HierarchyFinder hierarchyFinder = new HierarchyFinder(project, document);
+        List<Document> parents = hierarchyFinder.findParents();
+
         for (Document doc : parents) {
           ClassFinder finder = new ClassFinder(doc);
           functionNames.addAll(finder.getMethods());
@@ -110,9 +61,6 @@ class ParentNamespaceFinder {
     });
   }
 
-  private Document getDocument(VirtualFile virtualFile) {
-    return FileDocumentManager.getInstance().getDocument(virtualFile);
-  }
 
   private void broadcastEvent() {
     myEventDispatcher.getMulticaster().stateChanged(new ChangeEvent("ParentNamespaceFound"));
