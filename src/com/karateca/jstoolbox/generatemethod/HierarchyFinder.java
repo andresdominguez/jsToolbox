@@ -14,6 +14,8 @@ import java.util.List;
  * @author Andres Dominguez.
  */
 class HierarchyFinder {
+  // The maximum number of files visited before giving up.
+  public static final int MAX_HIERARCHY_DEPTH = 10;
   private final Project project;
   private final Document startingDocument;
 
@@ -36,7 +38,13 @@ class HierarchyFinder {
     Document document = startingDocument;
 
     // Go up the chain until no more parents are found.
+    int depth = 0;
     while (true) {
+      // Avoid circular dependencies.
+      if (depth++ >= MAX_HIERARCHY_DEPTH) {
+        break;
+      }
+
       finder = new ClassFinder(document);
       String parentClassName = finder.getParentClassName();
       if (parentClassName == null) {
