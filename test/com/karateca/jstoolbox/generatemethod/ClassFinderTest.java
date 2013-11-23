@@ -9,12 +9,13 @@ import com.intellij.openapi.vfs.VirtualFile;
  */
 public class ClassFinderTest extends BaseTestCase {
 
+  private ClassFinder classFinder;
+
   public void testGetClassNameClassFound() {
     // Given a file with a constructor.
     givenAFile("child.js");
 
     // When you get the class name.
-    ClassFinder classFinder = new ClassFinder(getDocument(virtualFile));
     String className = classFinder.getClassName();
 
     // Then ensure the class name was found.
@@ -26,15 +27,26 @@ public class ClassFinderTest extends BaseTestCase {
     givenAFile("noConstructor.js");
 
     // When you get the class name.
-    ClassFinder classFinder = new ClassFinder(getDocument(virtualFile));
     String className = classFinder.getClassName();
 
     // Then ensure the class name was not found.
     assertNull(className);
   }
 
+  public void testGetParentClassName() {
+    // Given a file with extends annotation.
+    givenAFile("child.js");
+
+    // When you get the parent class name.
+    String parentClassName = classFinder.getParentClassName();
+
+    // Then ensure the name was found.
+    assertEquals("Yo.parent", parentClassName);
+  }
+
   private void givenAFile(String fileName) {
     prepareScenarioWithTestFile(fileName);
+    classFinder = new ClassFinder(getDocument(virtualFile));
   }
 
   private Document getDocument(VirtualFile virtualFile) {
