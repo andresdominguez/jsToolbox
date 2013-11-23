@@ -32,7 +32,7 @@ public class OverrideMethodAction extends MyAction {
     editor = actionEvent.getData(PlatformDataKeys.EDITOR);
     document = editor.getDocument();
 
-    namespaceFinder = new ParentNamespaceFinder(document, editor);
+    namespaceFinder = new ParentNamespaceFinder(document, project);
 
     namespaceFinder.addResultsReadyListener(new ChangeListener() {
       @Override
