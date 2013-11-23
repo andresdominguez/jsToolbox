@@ -22,7 +22,14 @@ public abstract class MyAction extends AnAction {
   protected boolean canEnableAction(AnActionEvent e) {
     Editor editor = e.getData(PlatformDataKeys.EDITOR);
     PsiFile file = e.getData(LangDataKeys.PSI_FILE);
-    return !(editor == null || file == null || e.getProject() == null);
+
+    // Need the following objects.
+    if (editor == null || file == null || e.getProject() == null) {
+      return false;
+    }
+
+    // Is it a js file?
+    return file.getName().endsWith(".js");
   }
 
   protected String getCurrentFileName(AnActionEvent e) {
