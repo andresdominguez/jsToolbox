@@ -10,22 +10,23 @@ import javax.swing.event.ChangeListener;
 /**
  * @author Andres Dominguez
  */
-public class NamespaceFinder extends ClassFinder {
+public class NamespaceFinder {
 
   private final EventDispatcher<ChangeListener> myEventDispatcher =
       EventDispatcher.create(ChangeListener.class);
+  private final Document document;
 
   private String namespaceFound;
 
   public NamespaceFinder(Document document) {
-    super(document);
+    this.document = document;
   }
 
   public void findNamespace() {
     ApplicationManager.getApplication().runReadAction(new Runnable() {
       @Override
       public void run() {
-        namespaceFound = findNamespaceForCurrentFile();
+        namespaceFound = getClassName();
 
         // Did it find a namespace?
         if (namespaceFound != null) {
@@ -34,6 +35,11 @@ public class NamespaceFinder extends ClassFinder {
         }
       }
     });
+  }
+
+  private String getClassName() {
+    ClassFinder classFinder = new ClassFinder(document);
+    return classFinder.getClassName();
   }
 
   /**
