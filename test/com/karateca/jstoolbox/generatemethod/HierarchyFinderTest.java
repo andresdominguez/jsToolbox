@@ -38,7 +38,7 @@ public class HierarchyFinderTest extends LightCodeInsightFixtureTestCase {
     HierarchyResults parents = hierarchyFinder.findParents();
 
     List<Document> hierarchy = parents.getHierarchy();
-    assertEquals(3, hierarchy.size());
+    assertEquals(2, hierarchy.size());
   }
 
   private List<VirtualFile> prepareScenarioWithTestFiles(String... fileNames) throws IOException {

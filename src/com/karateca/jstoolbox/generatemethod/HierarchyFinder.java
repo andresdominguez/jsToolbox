@@ -23,25 +23,51 @@ class HierarchyFinder {
   }
 
   public HierarchyResults findParents() {
-    final List<Document> hierarchy = new ArrayList<Document>();
+    final List<Document> hierarchyChain = new ArrayList<Document>();
 
     ClassFinder finder = new ClassFinder(startingDocument);
-
-    // Get the ns.
     String currentNamespace = finder.getClassName();
-    final String parentNamespace = finder.getParentClassName();
+    String parentNamespace = finder.getParentClassName();
 
     if (currentNamespace == null || parentNamespace == null) {
       return null;
     }
 
-    // Iterate through the project files until the parent is found.
+    Document document = startingDocument;
+
+    // Go up the chain until no more parents are found.
+    while (true) {
+      finder = new ClassFinder(document);
+      String parentClassName = finder.getParentClassName();
+      if (parentClassName == null) {
+        break;
+      }
+
+      document = findFileDeclaringClass(parentClassName);
+      if (document == null) {
+        break;
+      }
+      hierarchyChain.add(document);
+    }
+
+    return new HierarchyResults(hierarchyChain, parentNamespace, currentNamespace);
+  }
+
+  /**
+   * Iterate through the project files until the file declaring the namespace is found.
+   *
+   * @param namespace The class name you are looking for.
+   * @return The document declaring the namespace.
+   */
+  private Document findFileDeclaringClass(final String namespace) {
+    final List<Document> hierarchy = new ArrayList<Document>();
+
     iterateFiles(new ContentIterator() {
       @Override
       public boolean processFile(VirtualFile fileOrDir) {
         boolean continueSearch = true;
 
-        if (fileContainsClass(fileOrDir, parentNamespace)) {
+        if (fileContainsClass(fileOrDir, namespace)) {
           // Stop the search.
           continueSearch = false;
           hierarchy.add(getDocument(fileOrDir));
@@ -51,7 +77,7 @@ class HierarchyFinder {
       }
     });
 
-    return new HierarchyResults(hierarchy, parentNamespace, currentNamespace);
+    return hierarchy.size() > 0 ? hierarchy.get(0) : null;
   }
 
   private void iterateFiles(ContentIterator iterator) {
