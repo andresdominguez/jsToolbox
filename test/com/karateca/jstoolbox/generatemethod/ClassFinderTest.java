@@ -44,6 +44,17 @@ public class ClassFinderTest extends BaseTestCase {
     assertEquals("Yo.parent", parentClassName);
   }
 
+  public void testGetParentClassNameNotFound() {
+    // Given a class without a parent.
+    givenAFile("grandpa.js");
+
+    // When you get the parent class name.
+    String parentClassName = classFinder.getParentClassName();
+
+    // Then ensure it is null.
+    assertNull(parentClassName);
+  }
+
   private void givenAFile(String fileName) {
     prepareScenarioWithTestFile(fileName);
     classFinder = new ClassFinder(getDocument(virtualFile));
