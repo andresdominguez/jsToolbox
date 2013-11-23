@@ -3,6 +3,7 @@ package com.karateca.jstoolbox.tobrowser;
 import com.intellij.ide.BrowserUtil;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.LangDataKeys;
+import com.intellij.psi.PsiDirectory;
 import com.intellij.psi.PsiFile;
 import com.karateca.jstoolbox.MyAction;
 import com.karateca.jstoolbox.config.JsToolboxSettings;
@@ -17,16 +18,24 @@ public class ToBrowserAction extends MyAction {
       return;
     }
 
+    PsiFile file = actionEvent.getData(LangDataKeys.PSI_FILE);
+    if (file == null) {
+      return;
+    }
+
     JsToolboxSettings settings = new JsToolboxSettings();
 
-    PsiFile file = actionEvent.getData(LangDataKeys.PSI_FILE);
     String fileName = getCurrentFileName(actionEvent);
 
     if (settings.getUseFilePath()) {
       // Get the directory.
-      String directory = file.getContainingDirectory().toString();
+      PsiDirectory containingDirectory = file.getContainingDirectory();
+      if (containingDirectory == null) {
+        return;
+      }
+
       String fromPath = settings.getFromPath();
-      fileName = directory.replaceFirst("^.*" + fromPath, fromPath) +
+      fileName = containingDirectory.toString().replaceFirst("^.*" + fromPath, fromPath) +
           System.getProperty("file.separator") + fileName;
     }
 
