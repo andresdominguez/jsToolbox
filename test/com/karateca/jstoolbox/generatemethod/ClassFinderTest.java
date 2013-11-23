@@ -66,6 +66,17 @@ public class ClassFinderTest extends BaseTestCase {
 
     // Then ensure all the functions were found.
     assertEquals(4, methods.size());
+    assertEquals("plainMethod", methods.get(0).getName());
+    assertEquals("", methods.get(0).getArguments());
+
+    assertEquals("withArguments", methods.get(1).getName());
+    assertEquals("one, two", methods.get(1).getArguments());
+
+    assertEquals("withManyLines", methods.get(2).getName());
+    assertEquals("one, two,\n              three", methods.get(2).getArguments());
+
+    assertEquals("withJsDoc", methods.get(3).getName());
+    assertEquals("one, two, three", methods.get(3).getArguments());
   }
 
   private void givenAFile(String fileName) {
