@@ -70,7 +70,7 @@ class HierarchyFinder {
     return className.equals(classFinder.getClassName());
   }
 
-  private Document getDocument(VirtualFile virtualFile) {
+  protected Document getDocument(VirtualFile virtualFile) {
     return FileDocumentManager.getInstance().getDocument(virtualFile);
   }
 }
