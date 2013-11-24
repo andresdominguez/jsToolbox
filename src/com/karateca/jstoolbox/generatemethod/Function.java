@@ -27,6 +27,10 @@ public class Function {
     return jsDoc;
   }
 
+  public String getExtendedJsDoc() {
+    return null;
+  }
+
   @Override
   public String toString() {
     return name;
