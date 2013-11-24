@@ -29,6 +29,9 @@ public class GenerateMethodAction extends MyAction {
 
     project = actionEvent.getData(PlatformDataKeys.PROJECT);
     editor = actionEvent.getData(PlatformDataKeys.EDITOR);
+    if (project == null || editor == null) {
+      return;
+    }
     document = editor.getDocument();
 
     namespaceFinder = new NamespaceFinder(document);

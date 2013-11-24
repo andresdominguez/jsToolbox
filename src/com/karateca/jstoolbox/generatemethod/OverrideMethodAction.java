@@ -22,7 +22,7 @@ public class OverrideMethodAction extends MyAction {
   private Editor editor;
   private Document document;
   private ParentNamespaceFinder namespaceFinder;
-  public static final String DEFAULT_JS_DOC = "/**\n" +
+  private static final String DEFAULT_JS_DOC = "/**\n" +
       " * @override\n" +
       " */";
 
@@ -31,8 +31,12 @@ public class OverrideMethodAction extends MyAction {
     if (!canEnableAction(actionEvent)) {
       return;
     }
+
     project = actionEvent.getData(PlatformDataKeys.PROJECT);
     editor = actionEvent.getData(PlatformDataKeys.EDITOR);
+    if (project == null || editor == null) {
+      return;
+    }
     document = editor.getDocument();
 
     namespaceFinder = new ParentNamespaceFinder(document, project);
