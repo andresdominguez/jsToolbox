@@ -41,6 +41,8 @@ public class Function {
       return jsDoc;
     }
 
+    // Put the @override before the first param or at the end when
+    // there aren't any params.
     String replace = jsDoc.contains("@param") ? " \\* @param" : " \\*/";
 
     return jsDoc.replaceFirst(replace, " * @override\n" + replace);
