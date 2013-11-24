@@ -52,6 +52,6 @@ public class Function {
 
   @Override
   public String toString() {
-    return name;
+    return className + "." + name;
   }
 }
