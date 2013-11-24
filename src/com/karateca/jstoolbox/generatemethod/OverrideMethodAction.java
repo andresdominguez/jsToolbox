@@ -22,6 +22,9 @@ public class OverrideMethodAction extends MyAction {
   private Editor editor;
   private Document document;
   private ParentNamespaceFinder namespaceFinder;
+  public static final String DEFAULT_JS_DOC = "/**\n" +
+      " * @override\n" +
+      " */";
 
   @Override
   public void actionPerformed(AnActionEvent actionEvent) {
@@ -81,18 +84,20 @@ public class OverrideMethodAction extends MyAction {
     String methodPrototype = String.format(fnNameFormat, namespaceFinder.getCurrentNamespace());
     String parentMethodPrototype = String.format(fnNameFormat, namespaceFinder.getParentNamespace());
 
+    String jsDoc = function.getJsDoc();
+    if (jsDoc == null) {
+      jsDoc = DEFAULT_JS_DOC;
+    }
+
     String arguments = function.getArguments();
     String callArguments = arguments;
     if (callArguments.trim().length() > 0) {
       callArguments = ", " + callArguments;
     }
 
-    final String methodTemplate = String.format("/**\n" +
-        " * @override\n" +
-        " */\n" +
-        "%s = function(%s) {\n" +
+    final String methodTemplate = String.format("%s\n%s = function(%s) {\n" +
         "  %s.call(this%s);\n" +
-        "};\n", methodPrototype, arguments, parentMethodPrototype,
+        "};\n", jsDoc, methodPrototype, arguments, parentMethodPrototype,
         callArguments);
 
     runWriteActionInsideCommand(project, "Override method", new Runnable() {

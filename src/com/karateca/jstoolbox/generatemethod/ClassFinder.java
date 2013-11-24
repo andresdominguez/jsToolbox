@@ -106,7 +106,7 @@ public class ClassFinder {
       return null;
     }
 
-    int endOffset = substring.indexOf("*/");
+    int endOffset = substring.lastIndexOf("*/");
     if (endOffset < 0) {
       return null;
     }
