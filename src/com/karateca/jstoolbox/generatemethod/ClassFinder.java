@@ -116,7 +116,7 @@ public class ClassFinder {
 
     // Is this the constructor?
     String jsDoc = substring.substring(startOffset, endOffset);
-    if (jsDoc.contains("@constructor")) {
+    if (from == 0 && jsDoc.contains("@constructor")) {
       return null;
     }
 
