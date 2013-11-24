@@ -67,9 +67,6 @@ public class OverrideMethodAction extends MyAction {
         .setFilteringEnabled(new com.intellij.util.Function<Object, String>() {
           @Override
           public String fun(Object o) {
-            if (o instanceof Function) {
-              return ((Function)o).getName();
-            }
             return o.toString();
           }
         })
