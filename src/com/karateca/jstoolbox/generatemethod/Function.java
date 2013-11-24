@@ -36,6 +36,7 @@ public class Function {
       return DEFAULT_JS_DOC;
     }
 
+    // Do not add override twice.
     if (jsDoc.contains("@override")) {
       return jsDoc;
     }
