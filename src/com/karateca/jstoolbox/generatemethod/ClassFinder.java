@@ -101,7 +101,7 @@ public class ClassFinder {
   private String getJsDoc(int from, int to) {
     String substring = documentText.substring(from, to);
 
-    int startOffset = substring.indexOf("/**");
+    int startOffset = substring.lastIndexOf("/**");
     if (startOffset < 0) {
       return null;
     }
@@ -111,6 +111,15 @@ public class ClassFinder {
       return null;
     }
 
-    return substring.substring(startOffset, endOffset + 2);
+    // Add two characters for the closing tag "*/".
+    endOffset += 2;
+
+    // Is this the constructor?
+    String jsDoc = substring.substring(startOffset, endOffset);
+    if (jsDoc.contains("@constructor")) {
+      return null;
+    }
+
+    return jsDoc;
   }
 }
