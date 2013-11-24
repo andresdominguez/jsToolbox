@@ -21,10 +21,7 @@ public class OverrideMethodAction extends MyAction {
   private Project project;
   private Editor editor;
   private Document document;
-  private ParentNamespaceFinder namespaceFinder;
-  private static final String DEFAULT_JS_DOC = "/**\n" +
-      " * @override\n" +
-      " */";
+  private ParentNamespaceFinder finder;
 
   @Override
   public void actionPerformed(AnActionEvent actionEvent) {
@@ -39,9 +36,9 @@ public class OverrideMethodAction extends MyAction {
     }
     document = editor.getDocument();
 
-    namespaceFinder = new ParentNamespaceFinder(document, project);
+    finder = new ParentNamespaceFinder(document, project);
 
-    namespaceFinder.addResultsReadyListener(new ChangeListener() {
+    finder.addResultsReadyListener(new ChangeListener() {
       @Override
       public void stateChanged(ChangeEvent changeEvent) {
         if (changeEvent.getSource().equals("ParentNamespaceFound")) {
@@ -51,14 +48,14 @@ public class OverrideMethodAction extends MyAction {
       }
     });
 
-    namespaceFinder.findParentClass();
+    finder.findParentClass();
   }
 
   /**
    * Show the dialog to select the method to override.
    */
   private void showDialog() {
-    List<Function> functionNames = namespaceFinder.getFunctionNames();
+    List<Function> functionNames = finder.getFunctionNames();
 
     // Select the closest element found from the current position.
     final JBList jbList = new JBList(functionNames.toArray());
@@ -85,13 +82,10 @@ public class OverrideMethodAction extends MyAction {
    */
   private void addNewMethod(Function function) {
     String fnNameFormat = "%s.prototype." + function.getName();
-    String methodPrototype = String.format(fnNameFormat, namespaceFinder.getCurrentNamespace());
-    String parentMethodPrototype = String.format(fnNameFormat, namespaceFinder.getParentNamespace());
+    String methodPrototype = String.format(fnNameFormat, finder.getCurrentNamespace());
+    String parentMethodPrototype = String.format(fnNameFormat, finder.getParentNamespace());
 
-    String jsDoc = function.getJsDoc();
-    if (jsDoc == null) {
-      jsDoc = DEFAULT_JS_DOC;
-    }
+    String jsDoc = function.getExtendedJsDoc();
 
     String arguments = function.getArguments();
     String callArguments = arguments;
