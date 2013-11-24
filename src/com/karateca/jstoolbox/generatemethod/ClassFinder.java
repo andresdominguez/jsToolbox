@@ -4,6 +4,8 @@ import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.util.TextRange;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -69,6 +71,17 @@ public class ClassFinder {
     int lineEnd = document.getLineEndOffset(lineNumber);
 
     return new TextRange(lineStart, lineEnd);
+  }
+
+  public List<Function> getSortedMethods() {
+    List<Function> methods = getMethods();
+    Collections.sort(methods, new Comparator<Function>() {
+      @Override
+      public int compare(Function left, Function right) {
+        return left.getName().compareTo(right.getName());
+      }
+    });
+    return methods;
   }
 
   public List<Function> getMethods() {

@@ -57,7 +57,7 @@ public class ClassFinderTest extends BaseTestCase {
     assertNull(parentClassName);
   }
 
-  public void testFindMethods() {
+  public void testGetMethods() {
     // Given a file with functions.
     givenAFile("child.js");
 
@@ -91,6 +91,20 @@ public class ClassFinderTest extends BaseTestCase {
         " * @param two\n" +
         " * @param three\n" +
         " */", withJsDoc.getJsDoc());
+  }
+
+  public void testGeSortedMethods() {
+    // Given a file with functions.
+    givenAFile("child.js");
+
+    // When you get the methods.
+    List<Function> methods = classFinder.getSortedMethods();
+
+    // Then ensure the methods are sorted.
+    assertEquals("plainMethod", methods.get(0).getName());
+    assertEquals("withArguments", methods.get(1).getName());
+    assertEquals("withJsDoc", methods.get(2).getName());
+    assertEquals("withManyLines", methods.get(3).getName());
   }
 
   private void givenAFile(String fileName) {
