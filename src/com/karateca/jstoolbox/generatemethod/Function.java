@@ -7,10 +7,12 @@ public class Function {
 
   private final String name;
   private final String arguments;
+  private final String jsDoc;
 
-  public Function(String name, String arguments) {
+  public Function(String name, String arguments, String jsDoc) {
     this.name = name;
     this.arguments = arguments;
+    this.jsDoc = jsDoc;
   }
 
   public String getName() {
@@ -19,6 +21,10 @@ public class Function {
 
   public String getArguments() {
     return arguments;
+  }
+
+  public String getJsDoc() {
+    return jsDoc;
   }
 
   @Override
