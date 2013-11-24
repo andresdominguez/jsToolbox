@@ -73,6 +73,7 @@ public class ClassFinder {
 
   public List<Function> getMethods() {
     List<Function> result = new ArrayList<Function>();
+    int previousMatch = 0;
 
     String className = getClassName();
 
@@ -86,9 +87,30 @@ public class ClassFinder {
     while (matcher.find()) {
       String name = matcher.group(2);
       String arguments = matcher.group(4);
-      result.add(new Function(name, arguments));
+
+      // Find the jsdoc.
+      String jsDoc = getJsDoc(previousMatch, matcher.start());
+      previousMatch = matcher.start();
+
+      result.add(new Function(name, arguments, jsDoc));
     }
 
     return result;
+  }
+
+  private String getJsDoc(int from, int to) {
+    String substring = documentText.substring(from, to);
+
+    int startOffset = substring.indexOf("/**");
+    if (startOffset < 0) {
+      return null;
+    }
+
+    int endOffset = substring.indexOf("*/");
+    if (endOffset < 0) {
+      return null;
+    }
+
+    return substring.substring(startOffset, endOffset + 2);
   }
 }
