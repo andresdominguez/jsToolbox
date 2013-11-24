@@ -92,7 +92,14 @@ public class ClassFinder {
       String jsDoc = getJsDoc(previousMatch, matcher.start());
       previousMatch = matcher.start();
 
-      result.add(new Function(name, arguments, jsDoc, className));
+      Function function = new FunctionBuilder()
+          .setName(name)
+          .setArguments(arguments)
+          .setJsDoc(jsDoc)
+          .setClassName(className)
+          .createFunction();
+
+      result.add(function);
     }
 
     return result;

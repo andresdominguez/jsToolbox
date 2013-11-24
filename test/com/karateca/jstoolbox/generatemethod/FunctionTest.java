@@ -69,7 +69,13 @@ public class FunctionTest {
   }
 
   private String getExtendedJs(String jsDoc) {
-    Function function = new Function(null, null, jsDoc, null);
+    Function function = new FunctionBuilder()
+        .setName(null)
+        .setArguments(null)
+        .setJsDoc(jsDoc)
+        .setClassName(null)
+        .createFunction();
+
     return function.getExtendedJsDoc();
   }
 }
