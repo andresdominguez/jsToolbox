@@ -64,6 +64,15 @@ public class OverrideMethodAction extends MyAction {
     JBPopupFactory.getInstance()
         .createListPopupBuilder(jbList)
         .setTitle("Select the method to override")
+        .setFilteringEnabled(new com.intellij.util.Function<Object, String>() {
+          @Override
+          public String fun(Object o) {
+            if (o instanceof Function) {
+              return ((Function)o).getName();
+            }
+            return o.toString();
+          }
+        })
         .setItemChoosenCallback(new Runnable() {
           public void run() {
             if (jbList.getSelectedValue() != null) {
