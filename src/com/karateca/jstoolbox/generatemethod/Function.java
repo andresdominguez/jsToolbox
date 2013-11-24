@@ -5,6 +5,10 @@ package com.karateca.jstoolbox.generatemethod;
  */
 public class Function {
 
+  private static final String DEFAULT_JS_DOC = "/**\n" +
+      " * @override\n" +
+      " */";
+
   private final String name;
   private final String arguments;
   private final String jsDoc;
@@ -28,7 +32,17 @@ public class Function {
   }
 
   public String getExtendedJsDoc() {
-    return null;
+    if (jsDoc == null) {
+      return DEFAULT_JS_DOC;
+    }
+
+    if (jsDoc.contains("@override")) {
+      return jsDoc;
+    }
+
+    String replace = jsDoc.contains("@param") ? " \\* @param" : " \\*/";
+
+    return jsDoc.replaceFirst(replace, " * @override\n" + replace);
   }
 
   @Override
