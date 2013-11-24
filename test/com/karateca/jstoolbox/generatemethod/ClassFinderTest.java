@@ -66,17 +66,31 @@ public class ClassFinderTest extends BaseTestCase {
 
     // Then ensure all the functions were found.
     assertEquals(4, methods.size());
-    assertEquals("plainMethod", methods.get(0).getName());
-    assertEquals("", methods.get(0).getArguments());
+    Function plainMethod = methods.get(0);
+    assertEquals("plainMethod", plainMethod.getName());
+    assertEquals("", plainMethod.getArguments());
+    assertNull(plainMethod.getJsDoc());
 
-    assertEquals("withArguments", methods.get(1).getName());
-    assertEquals("one, two", methods.get(1).getArguments());
+    Function withArguments = methods.get(1);
+    assertEquals("withArguments", withArguments.getName());
+    assertEquals("one, two", withArguments.getArguments());
+    assertNull(withArguments.getJsDoc());
 
-    assertEquals("withManyLines", methods.get(2).getName());
-    assertEquals("one, two,\n              three", methods.get(2).getArguments());
+    Function withManyLines = methods.get(2);
+    assertEquals("withManyLines", withManyLines.getName());
+    assertEquals("one, two,\n" +
+        "              three", withManyLines.getArguments());
+    assertNull(withManyLines.getJsDoc());
 
-    assertEquals("withJsDoc", methods.get(3).getName());
-    assertEquals("one, two, three", methods.get(3).getArguments());
+    Function withJsDoc = methods.get(3);
+    assertEquals("withJsDoc", withJsDoc.getName());
+    assertEquals("one, two, three", withJsDoc.getArguments());
+    assertEquals("/**\n" +
+        " *\n" +
+        " * @param one\n" +
+        " * @param two\n" +
+        " * @param three\n" +
+        " */", withJsDoc.getJsDoc());
   }
 
   private void givenAFile(String fileName) {
