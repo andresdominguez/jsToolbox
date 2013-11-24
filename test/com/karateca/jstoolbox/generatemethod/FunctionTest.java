@@ -12,13 +12,13 @@ public class FunctionTest {
   @Test
   public void testGetExtendedJsDocNullDoc() throws Exception {
     // Given a function without js doc.
-    Function function = new Function("", "", null);
-
     // When you the the extended js doc.
+    String extendedJsDoc = getExtendedJs(null);
+
     // Then ensure it contains the default jsdoc.
     assertEquals("/**\n" +
         " * @override\n" +
-        " */", function.getExtendedJsDoc());
+        " */", extendedJsDoc);
   }
 
   @Test
@@ -30,7 +30,7 @@ public class FunctionTest {
         " * @param {string} c The a.\n" +
         " */\n";
 
-    Function function = new Function(null, null, jsDoc);
+    String extendedJsDoc = getExtendedJs(jsDoc);
 
     assertEquals("/**\n" +
         " * Do the.\n" +
@@ -38,7 +38,7 @@ public class FunctionTest {
         " * @param {string} a The a.\n" +
         " * @param {string} b The a.\n" +
         " * @param {string} c The a.\n" +
-        " */\n", function.getExtendedJsDoc());
+        " */\n", extendedJsDoc);
   }
 
   @Test
@@ -47,12 +47,12 @@ public class FunctionTest {
         " * Hey.\n" +
         " */\n";
 
-    Function function = new Function(null, null, jsDoc);
+    String extendedJsDoc = getExtendedJs(jsDoc);
 
     assertEquals("/**\n" +
         " * Hey.\n" +
         " * @override\n" +
-        " */\n", function.getExtendedJsDoc());
+        " */\n", extendedJsDoc);
   }
 
   @Test
@@ -61,11 +61,15 @@ public class FunctionTest {
         " * @override\n" +
         " */\n";
 
-    Function function = new Function(null, null, jsDoc);
-
+    String extendedJsDoc = getExtendedJs(jsDoc);
 
     assertEquals("/**\n" +
         " * @override\n" +
-        " */\n", function.getExtendedJsDoc());
+        " */\n", extendedJsDoc);
+  }
+
+  private String getExtendedJs(String jsDoc) {
+    Function function = new Function(null, null, jsDoc, null);
+    return function.getExtendedJsDoc();
   }
 }

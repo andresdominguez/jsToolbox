@@ -9,11 +9,13 @@ public class Function {
       " * @override\n" +
       " */";
 
+  private final String className;
   private final String name;
   private final String arguments;
   private final String jsDoc;
 
-  public Function(String name, String arguments, String jsDoc) {
+  public Function(String name, String arguments, String jsDoc, String className) {
+    this.className = className;
     this.name = name;
     this.arguments = arguments;
     this.jsDoc = jsDoc;
