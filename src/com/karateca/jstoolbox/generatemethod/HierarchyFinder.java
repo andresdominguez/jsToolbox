@@ -15,7 +15,7 @@ import java.util.List;
  */
 class HierarchyFinder {
   // The maximum number of files visited before giving up.
-  public static final int MAX_HIERARCHY_DEPTH = 10;
+  private static final int MAX_HIERARCHY_DEPTH = 10;
   private final Project project;
   private final Document startingDocument;
 
