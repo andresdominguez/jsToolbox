@@ -51,7 +51,7 @@ class ParentNamespaceFinder {
 
         for (Document doc : parents.getHierarchy()) {
           ClassFinder finder = new ClassFinder(doc);
-          functionNames.addAll(finder.getMethods());
+          functionNames.addAll(finder.getSortedMethods());
         }
 
         currentNamespace = parents.getCurrentClass();
