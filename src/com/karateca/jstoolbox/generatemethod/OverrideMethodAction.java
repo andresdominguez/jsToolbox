@@ -16,7 +16,7 @@ import java.util.List;
 /**
  * @author Andres Dominguez
  */
-public class OverrideMethodAction extends MyAction {
+public class OverrideMethodAction extends GenerateAction {
 
   private Project project;
   private Editor editor;

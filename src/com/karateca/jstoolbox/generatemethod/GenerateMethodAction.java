@@ -13,7 +13,7 @@ import javax.swing.event.ChangeListener;
 /**
  * @author Andres Dominguez
  */
-public class GenerateMethodAction extends MyAction {
+public class GenerateMethodAction extends GenerateAction {
 
   private Project project;
   private Editor editor;

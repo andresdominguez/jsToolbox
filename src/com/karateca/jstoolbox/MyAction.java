@@ -32,6 +32,12 @@ public abstract class MyAction extends AnAction {
     return file == null ? "" : file.getName();
   }
 
+  protected boolean isJsFile(AnActionEvent e) {
+    PsiFile file = e.getData(LangDataKeys.PSI_FILE);
+
+    return file != null && file.getName().endsWith(".js");
+  }
+
   /**
    * Run a write operation within a command.
    *
