@@ -28,53 +28,56 @@
       <li>From Tools &gt; JS Toolbox</li>
       <li>From the editor, right click &gt; JS Toolbox</li>
     </ul>
-    <h3>Go to test (Alt T)</h3>
 
-    <pre>
+    <h3>Go to test (Alt T)</h3>
+    <p>
       Jump between a javascript file and its unit test. You can configure the
       file name patterns under:
+    </p>
+    <p>Settings > JS Toolbox</p>
+    <p>
+      And set values for <strong>Unit test suffix</strong> and
+      <strong>File suffix</strong>
+    </p>
+    <p>
+      If you need multiple patterns use comma. For example:<br><br>
 
-      Settings > JS Toolbox
+      Unit test suffix: "Spec.js,-spec.js"<br>
+      File suffix: "-controller.js,.js"<br><br>
 
-      And set values for **Unit test suffix** and **File suffix**
+      With this configuration the action will take you from:<br><br>
 
-      If you need multiple patterns use comma. For example:
+      "my-component.js" or "my-component-controller.js"<br><br>
 
-      Unit test suffix: "Spec.js,-spec.js"
-      File suffix: "-controller.js,.js"
-
-      With this configuration the action will take you from:
-
-      "my-component.js" or "my-component-controller.js"
-
-      to
+      to<br><br>
 
       "my-componentSpec.js" or "my-component-spec.js"
-    </pre>
+    </p>
 
     <h3>Go to view (Alt V)</h3>
+    <p>
+      Jump between a javascript file and its associated view. You can
+      configure the file name patterns under:
+    </p>
+    <p>
+      Settings > JS Toolbox<br><br>
 
-    <pre>
-      Jump between a javascript file and its associated view. You can configure the
-      file name patterns under:
+      And set values for <strong>View suffix</strong> and
+      <strong>File suffix</strong><br><br>
 
-      Settings > JS Toolbox
+      If you need multiple patterns use comma. For example:<br><br>
 
-      And set values for **View suffix** and **File suffix**
+      File suffix: "-controller.js,.js"<br>
+      View suffix: "-view.html,.html"<br><br>
 
-      If you need multiple patterns use comma. For example:
+      With this configuration the action will take you from:<br><br>
 
-      File suffix: "-controller.js,.js"
-      View suffix: "-view.html,.html"
+      "my-component.js" or "my-component-controller.js"<br><br>
 
-      With this configuration the action will take you from:
-
-      "my-component.js" or "my-component-controller.js"
-
-      to
+      to<br><br>
 
       "my-component.html" or "my-component-view.html"
-    </pre>
+    </p>
 
     <h3>Join multi-line strings and variable declarations (Ctrl SHIFT Alt J)</h3>
 
