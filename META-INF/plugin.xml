@@ -171,7 +171,7 @@
     </action>
     <action id="com.karateca.jstoolbox.torelated.GoToViewAction"
             class="com.karateca.jstoolbox.torelated.GoToViewAction"
-            text="Go to view..."
+            text="Go to view"
             description="Switch between the view and the controller">
       <keyboard-shortcut keymap="$default" first-keystroke="alt V"/>
     </action>
