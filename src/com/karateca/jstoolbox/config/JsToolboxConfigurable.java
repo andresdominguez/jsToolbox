@@ -10,6 +10,8 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import static com.karateca.jstoolbox.config.JsToolboxSettings.Property;
+
 /**
  * @author Andres Dominguez.
  */
@@ -46,18 +48,18 @@ public class JsToolboxConfigurable implements Configurable {
       @Override
       public void actionPerformed(ActionEvent actionEvent) {
         configurationPanel.setTestSuffix(
-            JsToolboxSettings.Property.TestSuffix.getDefaultValue());
+            Property.TestSuffix.getDefaultValue());
         configurationPanel.setViewSuffix(
-            JsToolboxSettings.Property.ViewSuffix.getDefaultValue());
+            Property.ViewSuffix.getDefaultValue());
         configurationPanel.setFileSuffix(
-            JsToolboxSettings.Property.FileSuffix.getDefaultValue());
+            Property.FileSuffix.getDefaultValue());
         configurationPanel.setSearchUrl(
-            JsToolboxSettings.Property.SearchUrl.getDefaultValue());
+            Property.SearchUrl.getDefaultValue());
         configurationPanel.setUseFilePath(
             Boolean.parseBoolean(
-                JsToolboxSettings.Property.UseFilePath.getDefaultValue()));
+                Property.UseFilePath.getDefaultValue()));
         configurationPanel.setFromPath(
-            JsToolboxSettings.Property.FromPath.getDefaultValue());
+            Property.FromPath.getDefaultValue());
       }
     });
 
