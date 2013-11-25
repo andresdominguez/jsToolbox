@@ -17,7 +17,7 @@ import static com.karateca.jstoolbox.config.JsToolboxSettings.Property;
  */
 public class JsToolboxConfigurable implements Configurable {
 
-  private JsToolboxConfigurationPanel configurationPanel;
+  private ConfigurationView view;
   private final JsToolboxSettings settings;
 
   public JsToolboxConfigurable() {
@@ -39,69 +39,69 @@ public class JsToolboxConfigurable implements Configurable {
   @Nullable
   @Override
   public JComponent createComponent() {
-    if (configurationPanel == null) {
-      configurationPanel = new JsToolboxConfigurationPanel();
+    if (view == null) {
+      view = new ConfigurationView();
     }
 
     // Reset on click.
-    configurationPanel.getResetButton().addActionListener(new ActionListener() {
+    view.getResetButton().addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent actionEvent) {
-        configurationPanel.setTestSuffix(
+        view.setTestSuffix(
             Property.TestSuffix.getDefaultValue());
-        configurationPanel.setViewSuffix(
+        view.setViewSuffix(
             Property.ViewSuffix.getDefaultValue());
-        configurationPanel.setFileSuffix(
+        view.setFileSuffix(
             Property.FileSuffix.getDefaultValue());
-        configurationPanel.setSearchUrl(
+        view.setSearchUrl(
             Property.SearchUrl.getDefaultValue());
-        configurationPanel.setUseFilePath(
+        view.setUseFilePath(
             Boolean.parseBoolean(
                 Property.UseFilePath.getDefaultValue()));
-        configurationPanel.setFromPath(
+        view.setFromPath(
             Property.FromPath.getDefaultValue());
       }
     });
 
     reset();
 
-    return configurationPanel.getMyPanel();
+    return view.getMyPanel();
   }
 
   @Override
   public boolean isModified() {
-    return !StringUtils.equals(settings.getTestSuffix(), configurationPanel.getTestSuffix()) ||
-        !StringUtils.equals(settings.getViewSuffix(), configurationPanel.getViewSuffix()) ||
-        !StringUtils.equals(settings.getFileSuffix(), configurationPanel.getFileSuffix()) ||
-        !StringUtils.equals(settings.getSearchUrl(), configurationPanel.getSearchUrl()) ||
-        !StringUtils.equals(settings.getFromPath(), configurationPanel.getFromPath()) ||
-        settings.getUseFilePath() != configurationPanel.getUseFilePath();
+    return !StringUtils.equals(settings.getTestSuffix(), view.getTestSuffix()) ||
+        !StringUtils.equals(settings.getViewSuffix(), view.getViewSuffix()) ||
+        !StringUtils.equals(settings.getFileSuffix(), view.getFileSuffix()) ||
+        !StringUtils.equals(settings.getSearchUrl(), view.getSearchUrl()) ||
+        !StringUtils.equals(settings.getFromPath(), view.getFromPath()) ||
+        settings.getUseFilePath() != view.getUseFilePath();
   }
 
   @Override
   public void apply() throws ConfigurationException {
-    settings.setTestSuffix(configurationPanel.getTestSuffix());
-    settings.setFileSuffix(configurationPanel.getFileSuffix());
-    settings.setViewSuffix(configurationPanel.getViewSuffix());
-    settings.setSearchUrl(configurationPanel.getSearchUrl());
-    settings.setUseFilePath(configurationPanel.getUseFilePath());
-    settings.setFromPath(configurationPanel.getFromPath());
+    settings.setTestSuffix(view.getTestSuffix());
+    settings.setFileSuffix(view.getFileSuffix());
+    settings.setViewSuffix(view.getViewSuffix());
+    settings.setSearchUrl(view.getSearchUrl());
+    settings.setUseFilePath(view.getUseFilePath());
+    settings.setFromPath(view.getFromPath());
     settings.save();
   }
 
   @Override
   public void reset() {
     settings.load();
-    configurationPanel.setTestSuffix(settings.getTestSuffix());
-    configurationPanel.setViewSuffix(settings.getViewSuffix());
-    configurationPanel.setFileSuffix(settings.getFileSuffix());
-    configurationPanel.setSearchUrl(settings.getSearchUrl());
-    configurationPanel.setUseFilePath(settings.getUseFilePath());
-    configurationPanel.setFromPath(settings.getFromPath());
+    view.setTestSuffix(settings.getTestSuffix());
+    view.setViewSuffix(settings.getViewSuffix());
+    view.setFileSuffix(settings.getFileSuffix());
+    view.setSearchUrl(settings.getSearchUrl());
+    view.setUseFilePath(settings.getUseFilePath());
+    view.setFromPath(settings.getFromPath());
   }
 
   @Override
   public void disposeUIResources() {
-    configurationPanel = null;
+    view = null;
   }
 }
