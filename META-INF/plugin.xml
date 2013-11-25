@@ -162,18 +162,21 @@
             text="Go to constructor"
             description="Go to the constructor">
       <keyboard-shortcut keymap="$default" first-keystroke="alt G"/>
+      <keyboard-shortcut keymap="$default" first-keystroke="ctrl meta G"/>
     </action>
     <action id="com.karateca.jstoolbox.torelated.GoToTestAction"
             class="com.karateca.jstoolbox.torelated.GoToTestAction"
             text="Go to test"
             description="Go to the test file form the file of the view">
       <keyboard-shortcut keymap="$default" first-keystroke="alt T"/>
+      <keyboard-shortcut keymap="$default" first-keystroke="ctrl meta T"/>
     </action>
     <action id="com.karateca.jstoolbox.torelated.GoToViewAction"
             class="com.karateca.jstoolbox.torelated.GoToViewAction"
             text="Go to view"
             description="Switch between the view and the controller">
       <keyboard-shortcut keymap="$default" first-keystroke="alt V"/>
+      <keyboard-shortcut keymap="$default" first-keystroke="ctrl meta V"/>
     </action>
     <action id="com.karateca.jstoolbox.tobrowser.ToBrowserAction"
             class="com.karateca.jstoolbox.tobrowser.ToBrowserAction"
