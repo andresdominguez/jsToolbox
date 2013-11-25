@@ -49,6 +49,10 @@ class ParentNamespaceFinder {
         HierarchyFinder hierarchyFinder = new HierarchyFinder(project, document);
         HierarchyResults parents = hierarchyFinder.findParents();
 
+        if (parents == null) {
+          return;
+        }
+
         for (Document doc : parents.getHierarchy()) {
           ClassFinder finder = new ClassFinder(doc);
           functionNames.addAll(finder.getSortedMethods());
