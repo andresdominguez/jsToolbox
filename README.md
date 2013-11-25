@@ -1,7 +1,7 @@
 JS Toolbox
 ==========
 
-An Intellij / Webstrom plugin that provides several tools for javascript development.
+An Intellij / Webstorm plugin that provides several tools for javascript development.
 
 Here is a list of available actions:
 
