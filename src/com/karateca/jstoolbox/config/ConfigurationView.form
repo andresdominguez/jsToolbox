@@ -24,7 +24,8 @@
             </constraints>
             <properties>
               <font style="1"/>
-              <text value="Unit test suffix"/>
+              <labelFor value="d225d"/>
+              <text value="&amp;Unit test suffix"/>
             </properties>
           </component>
           <component id="d225d" class="javax.swing.JTextField" binding="unitTestSuffix">
@@ -50,7 +51,8 @@
             </constraints>
             <properties>
               <font style="1"/>
-              <text value="File suffix"/>
+              <labelFor value="1a716"/>
+              <text value="&amp;File suffix"/>
             </properties>
           </component>
           <component id="1a716" class="javax.swing.JTextField" binding="fileSuffix">
@@ -76,7 +78,8 @@
             </constraints>
             <properties>
               <font style="1"/>
-              <text value="View suffix"/>
+              <labelFor value="c73fa"/>
+              <text value="&amp;View suffix"/>
             </properties>
           </component>
           <component id="c73fa" class="javax.swing.JTextField" binding="viewSuffix">
@@ -116,7 +119,8 @@
             </constraints>
             <properties>
               <font style="1"/>
-              <text value="Search URL"/>
+              <labelFor value="1c224"/>
+              <text value="&amp;Search URL"/>
             </properties>
           </component>
           <component id="1c224" class="javax.swing.JTextField" binding="searchUrl">
@@ -150,7 +154,8 @@
             </constraints>
             <properties>
               <font style="1"/>
-              <text value="Root directory"/>
+              <labelFor value="8a9de"/>
+              <text value="Root &amp;directory"/>
             </properties>
           </component>
           <component id="8a9de" class="javax.swing.JTextField" binding="fromPath">
