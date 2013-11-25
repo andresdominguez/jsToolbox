@@ -8,7 +8,7 @@ Here is a list of available actions:
 * Go to test [Alt T], [Ctrl Command T] on a Mac
 * Go to view [Alt V], [Ctrl Command V] on a Mac
 * Go to constructor [Alt G], [Ctrl Command G] on a mac
-* Join multi-line strings and variable declarations [Ctrl SHIFT Alt J], [SHIFT Option Command J] on a Mac
+* Join multi-line strings and variable declarations [Ctrl SHIFT Alt J], [Ctrl Command J] on a Mac
 * Open current file in browser [Ctrl SHIFT Alt G], [SHIFT Option Command G] on a Mac
 * Generate a method for the current javascript class
 * Override a method from the parent javascript class
@@ -66,7 +66,7 @@ to
 
 Jump to the constructor of the current javascript file.
 
-### Join multi-line strings and variable declarations [Ctrl SHIFT Alt J], [SHIFT Option Command J] on a Mac
+### Join multi-line strings and variable declarations [Ctrl SHIFT Alt J], [Ctrl Command J] on a Mac
 
 Join strings and variable declarations
 

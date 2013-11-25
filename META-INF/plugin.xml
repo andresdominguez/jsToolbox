@@ -17,7 +17,7 @@
       <li>Go to test [Alt T], [Ctrl Command T] on a Mac</li>
       <li>Go to view [Alt V], [Ctrl Command V] on a Mac</li>
       <li>Go to constructor [Alt G], [Ctrl Command G] on a mac</li>
-      <li>Join multi-line strings and variable declarations [Ctrl SHIFT Alt J], [SHIFT Option Command J] on a Mac</li>
+      <li>Join multi-line strings and variable declarations [Ctrl SHIFT Alt J], [Ctrl Command J] on a Mac</li>
       <li>Open current file in browser [Ctrl SHIFT Alt G], [SHIFT Option Command G] on a Mac</li>
       <li>Generate a method for the current javascript class</li>
       <li>Override a method from the parent javascript class</li>
@@ -156,6 +156,7 @@
             class="com.karateca.jstoolbox.joiner.JoinerAction" text="Join"
             description="Joint a string or multiple variable declarations">
       <keyboard-shortcut keymap="$default" first-keystroke="shift ctrl alt J"/>
+      <keyboard-shortcut keymap="$default" first-keystroke="ctrl meta J"/>
     </action>
     <action id="com.karateca.jstoolbox.toconstructor.GoToConstructorAction"
             class="com.karateca.jstoolbox.toconstructor.GoToConstructorAction"
