@@ -10,12 +10,18 @@ Here is a list of available actions:
 * Go to constructor (Alt G)
 * Join string or multiple vars into a single var (Ctrl SHIFT Alt J)
 * Open current file in browser (Ctrl SHIFT Alt G)
-* Generate a method for the current javascript class.
+* Generate a method for the current javascript class
 * Override a method from a parent javascript class
+
+See all the JS Toolbox actions from two locations:
+
+* From Tools > JS Toolbox
+* From the editor, right click > JS Toolbox
 
 ### Go to test (Alt T)
 
-Jump between the javascript file and the unit test. You can configure the patterns under:
+Jump between the javascript file and the unit test. You can configure the
+patterns under:
 
 Settings > JS Tollbox
 
@@ -25,7 +31,8 @@ If you need multiple patterns use comma. For example: **Spec.js,-spec.js**
 
 ### Go to view (Alt V)
 
-Jump between the javascript file and the view. You can configura the patterns under:
+Jump between the javascript file and the view. You can configure the patterns
+under:
 
 Settings > JS Tollbox
 
@@ -39,8 +46,8 @@ Jump to the constructor of the current javascript file.
 
 Join strings and variable declarations
 
-Turn a mulit-line string into a single string. Press Ctrl SHIFT Alt J on any of the 
-string lines or select a block of text and join.
+Turn a multi-line string into a single string. Press Ctrl SHIFT Alt J on any
+of the string lines or select a block of text and join.
 
 ```javascript
 var s = 'one ' +
