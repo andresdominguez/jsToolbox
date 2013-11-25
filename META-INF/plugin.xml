@@ -120,9 +120,10 @@
       <add-to-group group-id="GenerateGroup" anchor="last"/>
     </action>
 
+    <!-- Add everything under tools -->
     <group id="TestActionGroup"
-           text="Test Group"
-           description="Group with test actions"
+           text="JS Toolbox"
+           description="JS Toolbox"
            popup="true">
       <reference ref="com.karateca.jstoolbox.joiner.JoinerAction"/>
       <reference ref="com.karateca.jstoolbox.toconstructor.GoToConstructorAction"/>
@@ -131,7 +132,7 @@
       <reference ref="com.karateca.jstoolbox.tobrowser.ToBrowserAction"/>
       <reference ref="com.karateca.jstoolbox.generatemethod.GenerateMethodAction"/>
       <reference ref="com.karateca.jstoolbox.generatemethod.OverrideMethodAction"/>
-      <add-to-group group-id="GenerateGroup"/>
+      <add-to-group group-id="ToolsMenu" anchor="first"/>
     </group>
   </actions>
 
