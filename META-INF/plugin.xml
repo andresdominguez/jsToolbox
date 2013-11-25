@@ -7,53 +7,96 @@
   </vendor>
 
   <description><![CDATA[
-    <p>
-      An Intellij / Webstorm plugin that provides several tools for javascript development.
-    </p>
+    <h1>JS Toolbox </h1>
 
-    <h2>Go to related (Alt V and Alt T)</h2>
-    <p>
-      Go to the test or the view and back with one shortcut. This new
-      version has a configuration panel under IDE Settings > JS Toolbox.
-    </p>
+    <p>An Intellij / Webstorm plugin that provides several tools for javascript development.</p>
+
+    <p>Here is a list of available actions:</p>
+
     <ul>
-      <li>Go to test: Alt T, repeat to go back</li>
-      <li>Go to view: Alt V, repeat to go back</li>
+      <li>Go to test (Alt T)</li>
+      <li>Go to view (Alt V)</li>
+      <li>Go to constructor (Alt G)</li>
+      <li>Join string or multiple vars into a single var (Ctrl SHIFT Alt J)</li>
+      <li>Open current file in browser (Ctrl SHIFT Alt G)</li>
+      <li>Generate a method for the current javascript class</li>
+      <li>Override a method from the parent javascript class</li>
     </ul>
+    <p>See all the JS Toolbox actions from two locations:</p>
 
-    <h2>Go to constructor (Alt G)</h2>
-    <p>
-      Jump to the constructor of your javascript file.
-    </p>
+    <ul>
+      <li>From Tools &gt; JS Toolbox</li>
+      <li>From the editor, right click &gt; JS Toolbox</li>
+    </ul>
+    <h3>Go to test (Alt T)</h3>
 
-    <h2>Join (Ctrl SHIFT Alt J)</h2>
-    <p>
-      Join strings and variable declarations.
-    </p>
+    <p>Jump between the javascript file and the unit test. You can configure the patterns under:</p>
+
+    <p>Settings &gt; JS Tollbox</p>
+
+    <p>And set values for <strong>Unit test suffix</strong> and <strong>File suffix</strong></p>
+
+    <p>If you need multiple patterns use comma. For example: <strong>Spec.js,-spec.js</strong></p>
+
+    <h3>Go to view (Alt V)</h3>
+
+    <p>Jump between the javascript file and the view. You can configure the patterns under:</p>
+
+    <p>Settings &gt; JS Tollbox</p>
+
+    <p>And set values for <strong>View suffix</strong> and <strong>File suffix</strong></p>
+
+    <h3>Go to constructor (Alt G)</h3>
+
+    <p>Jump to the constructor of the current javascript file.</p>
+
+    <h3>Join multi-line strings and variable declarations (Ctrl SHIFT Alt J)</h3>
+
+    <p>Join strings and variable declarations</p>
+
+    <p>Turn a multi-line string into a single string. Press Ctrl SHIFT Alt J on any of the string lines or select a block of text and join.</p>
+
     <pre>
-        To turn this:
-          var s = 'one, ' +
-              'two, ';
+    var s = 'one ' +
+        'two ' +
+        'three';
+    </pre>
 
-        Into this:
-        var s = 'one, two, ';
+    <p>Into a single string:</p>
 
-        Or turn this:
-          var foo = 1;
-          var bar = 2;
+    <pre>
+    var s = 'one two three';
+    </pre>
 
-        into this:
-          var foo = 1,
-              bar = 2;
-      </pre>
+    <p>Join multiple vars into a single var:</p>
 
-    <h2>Open in browser</h2>
-    <p>
-      Open the current file in thr browser. Specify a search URL in the
-      configuration panel.
-    </p>
-    <h2>Generate method (Under generate menu)</h2>
-    <p>Add a method to the current javascript class.</p>
+    <pre>
+    var foo = 1;
+    var bar = 2;
+    </pre>
+
+    <p>Into a single var declaration:</p>
+
+    <pre>
+    var foo = 1,
+        bar = 2;
+    </pre>
+
+    <h3>Open current file in browser (Ctrl SHIFT Alt G)</h3>
+
+    <p>Open the current file in the browser. Configure the URL that you want to use when opening the browser under Settings &gt; JS Toolbox.</p>
+
+    <h3>Generate a method for the current javascript class (Under generate menu)</h3>
+
+    <p>Add a new method to the current javascript class. </p>
+
+    <p>You need to use the @constructor annotation to mark the constructor of the class.</p>
+
+    <h3>Override a method from the parent javascript class (Under generate menu)</h3>
+
+    <p>Override a parent method in the current javascript class. </p>
+
+    <p>You need to annotate the classes with the @constructor and @extends annotations, otherwise the plugin cannot find the class hierarchy.</p>
     ]]></description>
 
   <change-notes><![CDATA[
