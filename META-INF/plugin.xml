@@ -105,7 +105,6 @@
             text="Open in browser"
             description="Open the current file in browser">
       <keyboard-shortcut keymap="$default" first-keystroke="shift ctrl alt G"/>
-      <add-to-group group-id="EditorPopupMenu"/>
     </action>
     <action id="com.karateca.jstoolbox.generatemethod.GenerateMethodAction"
             class="com.karateca.jstoolbox.generatemethod.GenerateMethodAction"
@@ -133,6 +132,7 @@
       <reference ref="com.karateca.jstoolbox.generatemethod.GenerateMethodAction"/>
       <reference ref="com.karateca.jstoolbox.generatemethod.OverrideMethodAction"/>
       <add-to-group group-id="ToolsMenu" anchor="first"/>
+      <add-to-group group-id="EditorPopupMenu"/>
     </group>
   </actions>
 
