@@ -17,7 +17,7 @@
       <li>Go to test [Alt T], [Ctrl Command T] on a Mac</li>
       <li>Go to view [Alt V], [Ctrl Command V] on a Mac</li>
       <li>Go to constructor [Alt G], [Ctrl Command G] on a mac</li>
-      <li>Join string or multiple vars into a single var [Ctrl SHIFT Alt J]</li>
+      <li>Join multi-line strings and variable declarations [Ctrl SHIFT Alt J], [SHIFT Option Command J] on a Mac</li>
       <li>Open current file in browser [Ctrl SHIFT Alt G], [SHIFT Option Command G] on a Mac</li>
       <li>Generate a method for the current javascript class</li>
       <li>Override a method from the parent javascript class</li>

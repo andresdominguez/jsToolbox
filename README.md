@@ -5,11 +5,11 @@ An Intellij / Webstorm plugin that provides several tools for javascript develop
 
 Here is a list of available actions:
 
-* Go to test (Alt T)
-* Go to view (Alt V)
-* Go to constructor (Alt G)
-* Join string or multiple vars into a single var (Ctrl SHIFT Alt J)
-* Open current file in browser (Ctrl SHIFT Alt G)
+* Go to test [Alt T], [Ctrl Command T] on a Mac
+* Go to view [Alt V], [Ctrl Command V] on a Mac
+* Go to constructor [Alt G], [Ctrl Command G] on a mac
+* Join multi-line strings and variable declarations [Ctrl SHIFT Alt J], [SHIFT Option Command J] on a Mac
+* Open current file in browser [Ctrl SHIFT Alt G], [SHIFT Option Command G] on a Mac
 * Generate a method for the current javascript class
 * Override a method from the parent javascript class
 
@@ -18,7 +18,7 @@ See all the JS Toolbox actions from two locations:
 * From Tools > JS Toolbox
 * From the editor, right click > JS Toolbox
 
-### Go to test (Alt T)
+### Go to test [Alt T], [Ctrl Command T] on a Mac
 
 Jump between a javascript file and its unit test. You can configure the
 file name patterns under:
@@ -40,7 +40,7 @@ to
 
 ``my-componentSpec.js`` or ``my-component-spec.js``
 
-### Go to view (Alt V)
+### Go to view [Alt V], [Ctrl Command V] on a Mac
 
 Jump between a javascript file and its associated view. You can configure the
 file name patterns under:
@@ -62,11 +62,11 @@ to
 
 ``my-component.html`` or ``my-component-view.html``
 
-### Go to constructor (Alt G)
+### Go to constructor [Alt G], [Ctrl Command G] on a mac
 
 Jump to the constructor of the current javascript file.
 
-### Join multi-line strings and variable declarations (Ctrl SHIFT Alt J)
+### Join multi-line strings and variable declarations [Ctrl SHIFT Alt J], [SHIFT Option Command J] on a Mac
 
 Join strings and variable declarations
 
@@ -96,7 +96,7 @@ var foo = 1,
     bar = 2;
 ```
 
-### Open current file in browser (Ctrl SHIFT Alt G)
+### Open current file in browser [Ctrl SHIFT Alt G], [SHIFT Option Command G] on a Mac
 
 Open the current file in the browser. Configure the URL that you want to
 use when opening the browser under Settings > JS Toolbox.
