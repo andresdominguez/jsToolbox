@@ -35,11 +35,13 @@ And set values for **View suffix** and **File suffix**
 
 Jump to the constructor of the current javascript file.
 
-### Join a string and multiple variables into a single var (Ctrl SHIFT Alt J)
+### Join multi-line strings and variable declarations (Ctrl SHIFT Alt J)
 
 Join strings and variable declarations
 
-Turn this mulit-line string:
+Turn a mulit-line string into a single string. Press Ctrl SHIFT Alt J on any of the 
+string lines or select a block of text and join.
+
 ```javascript
 var s = 'one ' +
     'two ' +
@@ -50,10 +52,15 @@ Into a single string:
 ```javascript
 var s = 'one two three';
 ```
-        Or turn this:
-          var foo = 1;
-          var bar = 2;
 
-        into this:
-          var foo = 1,
-              bar = 2;
+Join multiple vars into a single var:
+```javascript
+var foo = 1;
+var bar = 2;
+```
+
+Into a single var declaration:
+```javascript
+var foo = 1,
+    bar = 2;
+```
