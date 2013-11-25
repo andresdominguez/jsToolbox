@@ -1,14 +1,15 @@
 <idea-plugin version="2">
   <id>com.karateca.jstoolbox</id>
   <name>JS Toolbox</name>
-  <version>1.2</version>
+  <version>1.0</version>
   <vendor email="code@karateca.com" url="http://www.andresdominguez.com">
     www.andresdominguez.com
   </vendor>
 
   <description><![CDATA[
-    An Intellij / Webstorm plugin that provides several tools for javascript development.
-    <br>
+    <p>
+        An Intellij / Webstorm plugin that provides several tools for javascript development.
+    </p>
 
     <h2>Go to related (Alt V and Alt T)</h2>
     <p>
@@ -56,11 +57,8 @@
     ]]></description>
 
   <change-notes><![CDATA[
-    <h2>1.1</h2>
-    <p>Added Open in browser</p>
-    <p>Added ability to select a block of code to join string.</p>
-    <h2>1.2</h2>
-    <p>Added generate method</p>
+    <h2>1.0</h2>
+    <p>Initial version</p>
     ]]>
     </change-notes>
 
