@@ -24,12 +24,7 @@ public abstract class MyAction extends AnAction {
     PsiFile file = e.getData(LangDataKeys.PSI_FILE);
 
     // Need the following objects.
-    if (editor == null || file == null || e.getProject() == null) {
-      return false;
-    }
-
-    // Is it a js file?
-    return file.getName().endsWith(".js");
+    return editor != null && file != null && e.getProject() != null;
   }
 
   protected String getCurrentFileName(AnActionEvent e) {
