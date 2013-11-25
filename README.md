@@ -11,7 +11,7 @@ Here is a list of available actions:
 * Join string or multiple vars into a single var (Ctrl SHIFT Alt J)
 * Open current file in browser (Ctrl SHIFT Alt G)
 * Generate a method for the current javascript class
-* Override a method from a parent javascript class
+* Override a method from the parent javascript class
 
 See all the JS Toolbox actions from two locations:
 
@@ -71,3 +71,22 @@ Into a single var declaration:
 var foo = 1,
     bar = 2;
 ```
+
+### Open current file in browser (Ctrl SHIFT Alt G)
+
+Open the current file in the browser. Configure the URL that you want to
+use when opening the browser under Settings > JS Toolbox.
+
+### Generate a method for the current javascript class (Under generate menu)
+
+Add a new method to the current javascript class.
+
+You need to use the @constructor annotation to mark the constructor of the
+class.
+
+### Override a method from the parent javascript class (Under generate menu)
+
+Override a parent method in the current javascript class.
+
+You need to annotate the classes with the @constructor and @extends
+annotations, otherwise the plugin cannot find the class hierarchy.
