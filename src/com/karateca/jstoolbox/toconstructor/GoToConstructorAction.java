@@ -26,6 +26,10 @@ public class GoToConstructorAction extends MyAction {
     int offset = text.indexOf("@constructor");
     offset = text.indexOf("function", offset);
 
+    if (offset < 0) {
+      return;
+    }
+
     editor.getCaretModel().moveToOffset(offset);
     editor.getScrollingModel().scrollToCaret(ScrollType.CENTER);
   }
