@@ -20,23 +20,47 @@ See all the JS Toolbox actions from two locations:
 
 ### Go to test (Alt T)
 
-Jump between the javascript file and the unit test. You can configure the
-patterns under:
+Jump between a javascript file and its unit test. You can configure the
+file name patterns under:
 
-Settings > JS Tollbox
+Settings > JS Toolbox
 
 And set values for **Unit test suffix** and **File suffix**
 
-If you need multiple patterns use comma. For example: **Spec.js,-spec.js**
+If you need multiple patterns use comma. For example:
+
+Unit test suffix: ``Spec.js,-spec.js``
+File suffix: ``-controller.js,.js``
+
+With this configuration the action will take you from:
+
+``my-component.js`` or ``my-component-controller.js``
+
+to
+
+``my-componentSpec.js`` or ``my-component-spec.js``
 
 ### Go to view (Alt V)
 
-Jump between the javascript file and the view. You can configure the patterns
-under:
+Jump between a javascript file and its associated view. You can configure the
+file name patterns under:
 
-Settings > JS Tollbox
+Settings > JS Toolbox
 
 And set values for **View suffix** and **File suffix**
+
+If you need multiple patterns use comma. For example:
+
+File suffix: ``-controller.js,.js``
+View suffix: ``-view.html,.html``
+
+With this configuration the action will take you from:
+
+``my-component.js`` or ``my-component-controller.js``
+
+to
+
+``my-component.html`` or ``my-component-view.html``
 
 ### Go to constructor (Alt G)
 

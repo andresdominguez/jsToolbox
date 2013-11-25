@@ -31,6 +31,30 @@
     <h3>Go to test (Alt T)</h3>
 
     <pre>
+      Jump between a javascript file and its unit test. You can configure the
+      file name patterns under:
+
+      Settings > JS Toolbox
+
+      And set values for **Unit test suffix** and **File suffix**
+
+      If you need multiple patterns use comma. For example:
+
+      Unit test suffix: "Spec.js,-spec.js"
+      File suffix: "-controller.js,.js"
+
+      With this configuration the action will take you from:
+
+      "my-component.js" or "my-component-controller.js"
+
+      to
+
+      "my-componentSpec.js" or "my-component-spec.js"
+    </pre>
+
+    <h3>Go to view (Alt V)</h3>
+
+    <pre>
       Jump between a javascript file and its associated view. You can configure the
       file name patterns under:
 
@@ -51,18 +75,6 @@
 
       "my-component.html" or "my-component-view.html"
     </pre>
-
-    <h3>Go to view (Alt V)</h3>
-
-    <p>Jump between the javascript file and the view. You can configure the patterns under:</p>
-
-    <p>Settings &gt; JS Toolbox</p>
-
-    <p>And set values for <strong>View suffix</strong> and <strong>File suffix</strong></p>
-
-    <h3>Go to constructor (Alt G)</h3>
-
-    <p>Jump to the constructor of the current javascript file.</p>
 
     <h3>Join multi-line strings and variable declarations (Ctrl SHIFT Alt J)</h3>
 
