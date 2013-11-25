@@ -30,19 +30,33 @@
     </ul>
     <h3>Go to test (Alt T)</h3>
 
-    <p>Jump between the javascript file and the unit test. You can configure the patterns under:</p>
+    <pre>
+      Jump between a javascript file and its associated view. You can configure the
+      file name patterns under:
 
-    <p>Settings &gt; JS Tollbox</p>
+      Settings > JS Toolbox
 
-    <p>And set values for <strong>Unit test suffix</strong> and <strong>File suffix</strong></p>
+      And set values for **View suffix** and **File suffix**
 
-    <p>If you need multiple patterns use comma. For example: <strong>Spec.js,-spec.js</strong></p>
+      If you need multiple patterns use comma. For example:
+
+      File suffix: "-controller.js,.js"
+      View suffix: "-view.html,.html"
+
+      With this configuration the action will take you from:
+
+      "my-component.js" or "my-component-controller.js"
+
+      to
+
+      "my-component.html" or "my-component-view.html"
+    </pre>
 
     <h3>Go to view (Alt V)</h3>
 
     <p>Jump between the javascript file and the view. You can configure the patterns under:</p>
 
-    <p>Settings &gt; JS Tollbox</p>
+    <p>Settings &gt; JS Toolbox</p>
 
     <p>And set values for <strong>View suffix</strong> and <strong>File suffix</strong></p>
 
@@ -54,7 +68,8 @@
 
     <p>Join strings and variable declarations</p>
 
-    <p>Turn a multi-line string into a single string. Press Ctrl SHIFT Alt J on any of the string lines or select a block of text and join.</p>
+    <p>Turn a multi-line string into a single string. Press Ctrl SHIFT Alt J on any of the string lines or select a
+      block of text and join.</p>
 
     <pre>
     var s = 'one ' +
@@ -84,7 +99,8 @@
 
     <h3>Open current file in browser (Ctrl SHIFT Alt G)</h3>
 
-    <p>Open the current file in the browser. Configure the URL that you want to use when opening the browser under Settings &gt; JS Toolbox.</p>
+    <p>Open the current file in the browser. Configure the URL that you want to use when opening the browser under
+      Settings &gt; JS Toolbox.</p>
 
     <h3>Generate a method for the current javascript class (Under generate menu)</h3>
 
@@ -96,7 +112,8 @@
 
     <p>Override a parent method in the current javascript class. </p>
 
-    <p>You need to annotate the classes with the @constructor and @extends annotations, otherwise the plugin cannot find the class hierarchy.</p>
+    <p>You need to annotate the classes with the @constructor and @extends annotations, otherwise the plugin cannot find
+      the class hierarchy.</p>
     ]]></description>
 
   <change-notes><![CDATA[
