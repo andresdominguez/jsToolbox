@@ -8,7 +8,7 @@
 
   <description><![CDATA[
     <p>
-        An Intellij / Webstorm plugin that provides several tools for javascript development.
+      An Intellij / Webstorm plugin that provides several tools for javascript development.
     </p>
 
     <h2>Go to related (Alt V and Alt T)</h2>
@@ -124,6 +124,6 @@
   <extensions defaultExtensionNs="com.intellij">
     <!-- Add your extensions here -->
     <applicationConfigurable
-            instance="com.karateca.jstoolbox.config.JsToolboxConfigurable"/>
+        instance="com.karateca.jstoolbox.config.JsToolboxConfigurable"/>
   </extensions>
 </idea-plugin>
