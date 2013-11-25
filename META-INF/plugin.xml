@@ -29,7 +29,7 @@
       <li>From the editor, right click &gt; JS Toolbox</li>
     </ul>
 
-    <h3>Go to test (Alt T)</h3>
+    <h3>Go to test [Alt T], [Ctrl Command T] on a Mac</h3>
     <p>
       Jump between a javascript file and its unit test. You can configure the
       file name patterns under:
@@ -54,7 +54,7 @@
       "my-componentSpec.js" or "my-component-spec.js"
     </p>
 
-    <h3>Go to view (Alt V)</h3>
+    <h3>Go to view [Alt V], [Ctrl Command V] on a Mac</h3>
     <p>
       Jump between a javascript file and its associated view. You can
       configure the file name patterns under:
@@ -79,7 +79,12 @@
       "my-component.html" or "my-component-view.html"
     </p>
 
-    <h3>Join multi-line strings and variable declarations (Ctrl SHIFT Alt J)</h3>
+    <h3>Go to constructor [Alt G], [Ctrl Command G] on a mac</h3>
+    <p>
+      Jump to the constructor of the current javascript file.
+    </p>
+
+    <h3>Join multi-line strings and variable declarations [Ctrl SHIFT Alt J], [Ctrl Command J] on a Mac</h3>
 
     <p>Join strings and variable declarations</p>
 
@@ -112,7 +117,7 @@
         bar = 2;
     </pre>
 
-    <h3>Open current file in browser (Ctrl SHIFT Alt G)</h3>
+    <h3>Open current file in browser [Ctrl SHIFT Alt G], [SHIFT Option Command G] on a Mac</h3>
 
     <p>Open the current file in the browser. Configure the URL that you want to use when opening the browser under
       Settings &gt; JS Toolbox.</p>
