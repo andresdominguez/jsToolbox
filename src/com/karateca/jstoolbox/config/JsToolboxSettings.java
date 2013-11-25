@@ -59,7 +59,7 @@ public class JsToolboxSettings {
 
   private String getValue(Property property) {
     return properties.getValue(
-        property.getProperty(), Property.TestSuffix.getDefaultValue());
+        property.getProperty(), property.getDefaultValue());
   }
 
   public void save() {
