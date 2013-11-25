@@ -119,6 +119,20 @@
             description="Override a method from the parent">
       <add-to-group group-id="GenerateGroup" anchor="last"/>
     </action>
+
+    <group id="TestActionGroup"
+           text="Test Group"
+           description="Group with test actions"
+           popup="true">
+      <reference ref="com.karateca.jstoolbox.joiner.JoinerAction"/>
+      <reference ref="com.karateca.jstoolbox.toconstructor.GoToConstructorAction"/>
+      <reference ref="com.karateca.jstoolbox.torelated.GoToTestAction"/>
+      <reference ref="com.karateca.jstoolbox.torelated.GoToViewAction"/>
+      <reference ref="com.karateca.jstoolbox.tobrowser.ToBrowserAction"/>
+      <reference ref="com.karateca.jstoolbox.generatemethod.GenerateMethodAction"/>
+      <reference ref="com.karateca.jstoolbox.generatemethod.OverrideMethodAction"/>
+      <add-to-group group-id="GenerateGroup"/>
+    </group>
   </actions>
 
   <extensions defaultExtensionNs="com.intellij">
