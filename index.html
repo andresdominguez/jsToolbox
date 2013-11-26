@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8' />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <meta name="description" content="JS Toolbox : An Intellij / Webstrom plugin that provides several tools for javascript development" />
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>JS Toolbox</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/andresdominguez/jsToolbox">View on GitHub</a>
+
+          <h1 id="project_title">JS Toolbox</h1>
+          <h2 id="project_tagline">An Intellij / Webstrom plugin that provides several tools for javascript development</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/andresdominguez/jsToolbox/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/andresdominguez/jsToolbox/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h1>
+<a name="js-toolbox" class="anchor" href="#js-toolbox"><span class="octicon octicon-link"></span></a>JS Toolbox</h1>
+
+<p>An Intellij / Webstorm plugin that provides several tools for javascript development.</p>
+
+<p>Here is a list of available actions:</p>
+
+<ul>
+<li>Go to test [Alt T], [Ctrl Command T] on a Mac</li>
+<li>Go to view [Alt V], [Ctrl Command V] on a Mac</li>
+<li>Go to constructor [Alt G], [Ctrl Command G] on a mac</li>
+<li>Join multi-line strings and variable declarations [Ctrl SHIFT Alt J], [Ctrl Command J] on a Mac</li>
+<li>Open current file in browser [Ctrl SHIFT Alt G], [SHIFT Option Command G] on a Mac</li>
+<li>Generate a method for the current javascript class</li>
+<li>Override a method from the parent javascript class</li>
+</ul><p>See all the JS Toolbox actions from two locations:</p>
+
+<ul>
+<li>From Tools &gt; JS Toolbox</li>
+<li>From the editor, right click &gt; JS Toolbox</li>
+</ul><h3>
+<a name="go-to-test-alt-t-ctrl-command-t-on-a-mac" class="anchor" href="#go-to-test-alt-t-ctrl-command-t-on-a-mac"><span class="octicon octicon-link"></span></a>Go to test [Alt T], [Ctrl Command T] on a Mac</h3>
+
+<p>Jump between a javascript file and its unit test. You can configure the
+file name patterns under:</p>
+
+<p>Settings &gt; JS Toolbox</p>
+
+<p>And set values for <strong>Unit test suffix</strong> and <strong>File suffix</strong></p>
+
+<p>If you need multiple patterns use comma. For example:</p>
+
+<p>Unit test suffix: <code>Spec.js,-spec.js</code>
+File suffix: <code>-controller.js,.js</code></p>
+
+<p>With this configuration the action will take you from:</p>
+
+<p><code>my-component.js</code> or <code>my-component-controller.js</code></p>
+
+<p>to</p>
+
+<p><code>my-componentSpec.js</code> or <code>my-component-spec.js</code></p>
+
+<h3>
+<a name="go-to-view-alt-v-ctrl-command-v-on-a-mac" class="anchor" href="#go-to-view-alt-v-ctrl-command-v-on-a-mac"><span class="octicon octicon-link"></span></a>Go to view [Alt V], [Ctrl Command V] on a Mac</h3>
+
+<p>Jump between a javascript file and its associated view. You can configure the
+file name patterns under:</p>
+
+<p>Settings &gt; JS Toolbox</p>
+
+<p>And set values for <strong>View suffix</strong> and <strong>File suffix</strong></p>
+
+<p>If you need multiple patterns use comma. For example:</p>
+
+<p>File suffix: <code>-controller.js,.js</code>
+View suffix: <code>-view.html,.html</code></p>
+
+<p>With this configuration the action will take you from:</p>
+
+<p><code>my-component.js</code> or <code>my-component-controller.js</code></p>
+
+<p>to</p>
+
+<p><code>my-component.html</code> or <code>my-component-view.html</code></p>
+
+<h3>
+<a name="go-to-constructor-alt-g-ctrl-command-g-on-a-mac" class="anchor" href="#go-to-constructor-alt-g-ctrl-command-g-on-a-mac"><span class="octicon octicon-link"></span></a>Go to constructor [Alt G], [Ctrl Command G] on a mac</h3>
+
+<p>Jump to the constructor of the current javascript file.</p>
+
+<h3>
+<a name="join-multi-line-strings-and-variable-declarations-ctrl-shift-alt-j-ctrl-command-j-on-a-mac" class="anchor" href="#join-multi-line-strings-and-variable-declarations-ctrl-shift-alt-j-ctrl-command-j-on-a-mac"><span class="octicon octicon-link"></span></a>Join multi-line strings and variable declarations [Ctrl SHIFT Alt J], [Ctrl Command J] on a Mac</h3>
+
+<p>Join strings and variable declarations</p>
+
+<p>Turn a multi-line string into a single string. Press Ctrl SHIFT Alt J on any
+of the string lines or select a block of text and join.</p>
+
+<div class="highlight highlight-javascript"><pre><span class="kd">var</span> <span class="nx">s</span> <span class="o">=</span> <span class="s1">'one '</span> <span class="o">+</span>
+    <span class="s1">'two '</span> <span class="o">+</span>
+    <span class="s1">'three'</span><span class="p">;</span>
+</pre></div>
+
+<p>Into a single string:</p>
+
+<div class="highlight highlight-javascript"><pre><span class="kd">var</span> <span class="nx">s</span> <span class="o">=</span> <span class="s1">'one two three'</span><span class="p">;</span>
+</pre></div>
+
+<p>Join multiple vars into a single var:</p>
+
+<div class="highlight highlight-javascript"><pre><span class="kd">var</span> <span class="nx">foo</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">bar</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+</pre></div>
+
+<p>Into a single var declaration:</p>
+
+<div class="highlight highlight-javascript"><pre><span class="kd">var</span> <span class="nx">foo</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="nx">bar</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+</pre></div>
+
+<h3>
+<a name="open-current-file-in-browser-ctrl-shift-alt-g-shift-option-command-g-on-a-mac" class="anchor" href="#open-current-file-in-browser-ctrl-shift-alt-g-shift-option-command-g-on-a-mac"><span class="octicon octicon-link"></span></a>Open current file in browser [Ctrl SHIFT Alt G], [SHIFT Option Command G] on a Mac</h3>
+
+<p>Open the current file in the browser. Configure the URL that you want to
+use when opening the browser under Settings &gt; JS Toolbox.</p>
+
+<h3>
+<a name="generate-a-method-for-the-current-javascript-class-under-generate-menu" class="anchor" href="#generate-a-method-for-the-current-javascript-class-under-generate-menu"><span class="octicon octicon-link"></span></a>Generate a method for the current javascript class (Under generate menu)</h3>
+
+<p>Add a new method to the current javascript class.</p>
+
+<p>You need to use the <a href="https://github.com/constructor" class="user-mention">@constructor</a> annotation to mark the constructor of the
+class.</p>
+
+<h3>
+<a name="override-a-method-from-the-parent-javascript-class-under-generate-menu" class="anchor" href="#override-a-method-from-the-parent-javascript-class-under-generate-menu"><span class="octicon octicon-link"></span></a>Override a method from the parent javascript class (Under generate menu)</h3>
+
+<p>Override a parent method in the current javascript class.</p>
+
+<p>You need to annotate the classes with the <a href="https://github.com/constructor" class="user-mention">@constructor</a> and <a href="https://github.com/extends" class="user-mention">@extends</a>
+annotations, otherwise the plugin cannot find the class hierarchy.</p>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">JS Toolbox maintained by <a href="https://github.com/andresdominguez">andresdominguez</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
+  </body>
+</html>
