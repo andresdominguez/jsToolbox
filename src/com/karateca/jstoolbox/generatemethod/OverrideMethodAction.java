@@ -7,11 +7,11 @@ import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.popup.JBPopupFactory;
 import com.intellij.ui.components.JBList;
-import com.karateca.jstoolbox.MyAction;
+
+import java.util.List;
 
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-import java.util.List;
 
 /**
  * @author Andres Dominguez
@@ -64,7 +64,12 @@ public class OverrideMethodAction extends GenerateAction {
     JBPopupFactory.getInstance()
         .createListPopupBuilder(jbList)
         .setTitle("Select the method to override")
-        .setFilteringEnabled(com.intellij.util.Function.TO_STRING)
+        .setFilteringEnabled(new com.intellij.util.Function<Object, String>() {
+          @Override
+          public String fun(Object o) {
+            return o == null ? "" : o.toString();
+          }
+        })
         .setItemChoosenCallback(new Runnable() {
           public void run() {
             if (jbList.getSelectedValue() != null) {
