@@ -94,11 +94,15 @@ class HierarchyFinder {
   }
 
   private boolean fileContainsClass(VirtualFile virtualFile, String className) {
-    if (!virtualFile.getName().endsWith(".js")) {
+    // Some directory names can end with .js
+    if (virtualFile.isDirectory() || !virtualFile.getName().endsWith(".js")) {
       return false;
     }
 
     Document document = getDocument(virtualFile);
+    if (document == null) {
+      return false;
+    }
     ClassFinder classFinder = new ClassFinder(document);
 
     return className.equals(classFinder.getClassName());
