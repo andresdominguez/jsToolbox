@@ -1,7 +1,7 @@
 <idea-plugin version="2">
   <id>com.karateca.jstoolbox</id>
   <name>JS Toolbox</name>
-  <version>1.1</version>
+  <version>1.2</version>
   <vendor email="code@karateca.com" url="http://www.andresdominguez.com">
     www.andresdominguez.com
   </vendor>
@@ -141,6 +141,8 @@
     <p>Initial version</p>
     <h2>1.1</h2>
     <p>Fix override method bug</p>
+    <h2>1.2</h2>
+    <p>Add support for constructors with the following syntax: function MyConstructor() {}</p>
     ]]>
     </change-notes>
 

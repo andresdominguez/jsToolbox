@@ -14,6 +14,12 @@ public class ClassFinder {
 
   private final Document document;
   private final String documentText;
+  // Constructor with this pattern: function MyConstructor() {}
+  private static final Pattern FUNCTION_NAME_PATTERN =
+      Pattern.compile("(\\s*function\\s+)([\\w\\.]+)\\s*\\(.*");
+  // Constructor with this pattern: MyConstructor = function () {}
+  private static final Pattern NAME_FUNCTION_PATTERN =
+      Pattern.compile("(\\s*)([\\w\\.]+)(\\s*=\\s*function.*)");
 
   public ClassFinder(Document document) {
     this.document = document;
@@ -35,15 +41,24 @@ public class ClassFinder {
 
     closingJsDocOffset += 2;
 
-    // Get the string until the first "=".
-    int indexOfEqual = documentText.indexOf("=", closingJsDocOffset);
-    if (indexOfEqual < 0) {
+    // Determine the type of constructor:
+    // 1) function MyConstructor() {}
+    // 2) MyConstructor = function() {}
+    int openingBraceIndex = documentText.indexOf("{", closingJsDocOffset);
+    if (openingBraceIndex < 0) {
       return null;
     }
 
-    // And remove empty spaces.
-    return documentText.substring(closingJsDocOffset, indexOfEqual)
-        .replaceAll("\\s+", "");
+    String constructorSubstring = documentText.substring(
+        closingJsDocOffset, openingBraceIndex).trim();
+
+    boolean isNameFunctionPattern =
+        constructorSubstring.matches("\\s*[\\w\\.]+\\s*=\\s*function.*");
+    Pattern pattern = isNameFunctionPattern ?
+        NAME_FUNCTION_PATTERN : FUNCTION_NAME_PATTERN;
+
+    Matcher matcher = pattern.matcher(constructorSubstring);
+    return matcher.find() ? matcher.group(2) : null;
   }
 
   public String getParentClassName() {

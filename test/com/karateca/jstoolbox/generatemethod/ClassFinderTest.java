@@ -24,6 +24,28 @@ public class ClassFinderTest extends BaseTestCase {
     assertEquals("Yo.child", className);
   }
 
+  public void testGetConstructorWhenNotFirstInFile() {
+    // Given a file with a constructor not at the beginning.
+    givenAFile("grandpa.js");
+
+    // When you get the class name.
+    String className = classFinder.getClassName();
+
+    // Then ensure the name was found.
+    assertEquals("Yo.grandpa", className);
+  }
+
+  public void testGetClassNameReverseConstructor() {
+    // Given a constructor in the form of function MyClass() {}
+    givenAFile("reverseConstructor.js");
+
+    // When you get the class name.
+    String className = classFinder.getClassName();
+
+    // Then ensure the class name was found.
+    assertEquals(className, "MyClass.ABC");
+  }
+
   public void testGetClassNameClassNotFound() {
     // Given a file without constructor annotation.
     givenAFile("noConstructor.js");
