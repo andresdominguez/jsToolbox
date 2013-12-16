@@ -15,10 +15,10 @@ public class ClassFinder {
   private final Document document;
   private final String documentText;
   // Constructor with this pattern: function MyConstructor() {}
-  private static final Pattern FUNCTION_NAME_PATTERN =
-      Pattern.compile("(\\s*function\\s+)([\\w\\.]+)\\s*\\(.*");
+  private static final Pattern FUNCTION_THEN_NAME_PATTERN =
+      Pattern.compile("(\\s*function\\s+)([\\w\\.]+)\\s*.*");
   // Constructor with this pattern: MyConstructor = function () {}
-  private static final Pattern NAME_FUNCTION_PATTERN =
+  private static final Pattern NAME_THEN_FUNCTION_PATTERN =
       Pattern.compile("(\\s*)([\\w\\.]+)(\\s*=\\s*function.*)");
 
   public ClassFinder(Document document) {
@@ -44,7 +44,7 @@ public class ClassFinder {
     // Determine the type of constructor:
     // 1) function MyConstructor() {}
     // 2) MyConstructor = function() {}
-    int openingBraceIndex = documentText.indexOf("{", closingJsDocOffset);
+    int openingBraceIndex = documentText.indexOf("(", closingJsDocOffset);
     if (openingBraceIndex < 0) {
       return null;
     }
@@ -52,10 +52,10 @@ public class ClassFinder {
     String constructorSubstring = documentText.substring(
         closingJsDocOffset, openingBraceIndex).trim();
 
-    boolean isNameFunctionPattern =
+    boolean isNameThenFunctionPattern =
         constructorSubstring.matches("\\s*[\\w\\.]+\\s*=\\s*function.*");
-    Pattern pattern = isNameFunctionPattern ?
-        NAME_FUNCTION_PATTERN : FUNCTION_NAME_PATTERN;
+    Pattern pattern = isNameThenFunctionPattern ?
+        NAME_THEN_FUNCTION_PATTERN : FUNCTION_THEN_NAME_PATTERN;
 
     Matcher matcher = pattern.matcher(constructorSubstring);
     return matcher.find() ? matcher.group(2) : null;

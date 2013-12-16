@@ -46,6 +46,17 @@ public class ClassFinderTest extends BaseTestCase {
     assertEquals(className, "MyClass.ABC");
   }
 
+  public void testGetClassNameBugFix() {
+    // Given a constructor in multiple lines.
+    givenAFile("multiLineConstructor.js");
+
+    // When you get the class name.
+    String className = classFinder.getClassName();
+
+    // Then ensure the class name was found.
+    assertEquals("FOO.ThisIsMyName", className);
+  }
+
   public void testGetClassNameClassNotFound() {
     // Given a file without constructor annotation.
     givenAFile("noConstructor.js");
