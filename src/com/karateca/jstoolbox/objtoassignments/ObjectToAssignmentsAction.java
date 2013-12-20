@@ -12,6 +12,7 @@ public class ObjectToAssignmentsAction extends GenerateAction {
       return;
     }
 
+    // Find the var in the current line.
 
   }
 }
