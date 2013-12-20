@@ -17,8 +17,10 @@ public class JoinerAction extends MyAction {
 
   private static final String VAR_DECLARATION = "^\\s*var.*";
   private static final String MULTI_LINE_STRING = ".+\\+\\s*$";
-  private static final String MULTI_LINE_STRING_SECOND_LINE = "^\\s*'.+";
+  private static final String MULTI_LINE_STRING_SECOND_LINE = "^\\s*['\"].+";
   private static final String ENDS_WITH_SEMICOLON = ".*;\\s*$";
+  public static final String singleQuotesSplitSeparator = "'\\s*\\+\\s*'";
+  public static final String doubleQuotesSplitSeparator = "\"\\s*\\+\\s*\"";
   private Document document;
   private Editor editor;
   private Project project;
@@ -97,12 +99,19 @@ public class JoinerAction extends MyAction {
   }
 
   private void joinStringGivenLineRange(int startLine, int endLine) {
-    int startOffset = getTextRange(startLine).getStartOffset();
+    TextRange startLineRange = getTextRange(startLine);
+    int startOffset = startLineRange.getStartOffset();
     int endOffset = getTextRange(endLine).getEndOffset();
 
     String textForRange = getTextForRange(new TextRange(startOffset, endOffset));
 
-    String s = textForRange.replaceAll("'\\s*\\+\\s*'", "");
+    String firstLine = getTextForRange(startLineRange);
+    String splitSeparator = firstLine.matches("'\\s*\\+\\s*") ?
+        singleQuotesSplitSeparator :
+        doubleQuotesSplitSeparator;
+
+    // Remove the ' + \n ' in order to join.
+    String s = textForRange.replaceAll(splitSeparator, "");
 
     replaceString(s, startOffset, endOffset);
   }
