@@ -38,8 +38,7 @@ public class JoinerAction extends MyAction {
     String firstLine = getLocForLineNumber(firstSelectedLine);
     String nextLine = getLocForLineNumber(firstSelectedLine + 1);
 
-    // Is the caret in a multi line string ('foo' +) and the next line is a
-    // string?
+    // Is the caret in a multi line string ('foo' +) and the next line is a string?
     if (firstLine.matches(MULTI_LINE_STRING) &&
         nextLine.matches(MULTI_LINE_STRING_SECOND_LINE)) {
       joinMultiLineString(lineRange);
