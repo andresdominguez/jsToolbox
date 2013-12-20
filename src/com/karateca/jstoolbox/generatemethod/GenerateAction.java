@@ -6,7 +6,7 @@ import com.karateca.jstoolbox.MyAction;
 /**
  * @author Andres Dominguez.
  */
-abstract class GenerateAction extends MyAction {
+public abstract class GenerateAction extends MyAction {
   @Override
   protected boolean canEnableAction(AnActionEvent e) {
     boolean canEnable = super.canEnableAction(e);
