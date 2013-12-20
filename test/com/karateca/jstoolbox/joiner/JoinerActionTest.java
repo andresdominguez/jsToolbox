@@ -17,6 +17,8 @@ public class JoinerActionTest extends LightCodeInsightFixtureTestCase {
   public void testJoin() {
     myFixture.configureByFiles("multiLineStringBefore.js");
 
+    myFixture.performEditorAction("com.karateca.jstoolbox.joiner.JoinerAction");
+
     myFixture.checkResultByFile("multiLineStringBefore.js", "multiLineStringAfter.js", false);
   }
 }
