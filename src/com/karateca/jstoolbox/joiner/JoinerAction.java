@@ -4,10 +4,9 @@ import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.PlatformDataKeys;
 import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.editor.Editor;
-import com.intellij.openapi.editor.SelectionModel;
-import com.intellij.openapi.editor.VisualPosition;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.TextRange;
+import com.karateca.jstoolbox.LineRange;
 import com.karateca.jstoolbox.MyAction;
 
 /**
@@ -34,11 +33,11 @@ public class JoinerAction extends MyAction {
     project = getEventProject(actionEvent);
     document = editor.getDocument();
 
-    LineRange lineRange = getSelectedLineRange();
+    LineRange lineRange = getSelectedLineRange(editor);
     int firstSelectedLine = lineRange.getStart();
 
-    String firstLine = getLocForLineNumber(firstSelectedLine);
-    String nextLine = getLocForLineNumber(firstSelectedLine + 1);
+    String firstLine = getLocForLineNumber(firstSelectedLine, document);
+    String nextLine = getLocForLineNumber(firstSelectedLine + 1, document);
 
     // Is the caret in a multi line string ('foo' +) and the next line is a string?
     if (firstLine.matches(MULTI_LINE_STRING) &&
@@ -61,9 +60,9 @@ public class JoinerAction extends MyAction {
 
   private void joinCurrentVariableDeclaration(final String currentLine) {
     final String nextLine = getNextLine();
-    int lineNumber = getLineNumberAtCaret();
-    final TextRange currentLineTextRange = getTextRange(lineNumber);
-    final TextRange nextLineTextRange = getTextRange(lineNumber + 1);
+    int lineNumber = getLineNumberAtCaret(editor, document);
+    final TextRange currentLineTextRange = getTextRange(lineNumber, document);
+    final TextRange nextLineTextRange = getTextRange(lineNumber + 1, document);
 
     runWriteActionInsideCommand(project, "Join", new Runnable() {
       @Override
@@ -77,31 +76,18 @@ public class JoinerAction extends MyAction {
         // Replace ; from current line.
         newLine = currentLine.replaceAll(";\\s*$", ",");
 
-        document.replaceString(currentLineTextRange.getStartOffset(),
-            currentLineTextRange.getEndOffset(), newLine);
+        document.replaceString(
+            currentLineTextRange.getStartOffset(),
+            currentLineTextRange.getEndOffset(),
+            newLine);
       }
     });
   }
 
-  private LineRange getSelectedLineRange() {
-    SelectionModel selectionModel = editor.getSelectionModel();
-    VisualPosition startPosition = selectionModel.getSelectionStartPosition();
-    VisualPosition endPosition = selectionModel.getSelectionEndPosition();
-
-    if (startPosition == null || endPosition == null) {
-      return null;
-    }
-
-    int startLine = startPosition.getLine();
-    int endLine = endPosition.getLine();
-
-    return new LineRange(Math.min(startLine, endLine), Math.max(startLine, endLine));
-  }
-
   private void joinStringGivenLineRange(int startLine, int endLine) {
-    TextRange startLineRange = getTextRange(startLine);
+    TextRange startLineRange = getTextRange(startLine, document);
     int startOffset = startLineRange.getStartOffset();
-    int endOffset = getTextRange(endLine).getEndOffset();
+    int endOffset = getTextRange(endLine, document).getEndOffset();
 
     String textForRange = getTextForRange(new TextRange(startOffset, endOffset));
 
@@ -125,35 +111,13 @@ public class JoinerAction extends MyAction {
     });
   }
 
-  private String getLocForLineNumber(int lineNumber) {
-    return getTextForRange(getTextRange(lineNumber));
-  }
-
   private String getNextLine() {
-    int lineNumber = getLineNumberAtCaret();
+    int lineNumber = getLineNumberAtCaret(editor, document);
 
-    return getLocForLineNumber(lineNumber + 1);
-  }
-
-  private int getLineNumberAtCaret() {
-    int offset = editor.getCaretModel().getOffset();
-    return document.getLineNumber(offset);
+    return getLocForLineNumber(lineNumber + 1, document);
   }
 
   private String getTextForRange(TextRange range) {
     return document.getText(range);
-  }
-
-  /**
-   * Get the text range for a line of code.
-   *
-   * @param lineNumber The line number.
-   * @return The text range for the line.
-   */
-  private TextRange getTextRange(int lineNumber) {
-    int lineStart = document.getLineStartOffset(lineNumber);
-    int lineEnd = document.getLineEndOffset(lineNumber);
-
-    return new TextRange(lineStart, lineEnd);
   }
 }

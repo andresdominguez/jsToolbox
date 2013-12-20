@@ -1,22 +1,22 @@
-package com.karateca.jstoolbox.joiner;
+package com.karateca.jstoolbox;
 
 /**
  * @author Andres Dominguez.
  */
-class LineRange {
+public class LineRange {
   private final int start;
   private final int end;
 
-  LineRange(int start, int end) {
+  public LineRange(int start, int end) {
     this.start = start;
     this.end = end;
   }
 
-  int getStart() {
+  public int getStart() {
     return start;
   }
 
-  int getEnd() {
+  public int getEnd() {
     return end;
   }
 }

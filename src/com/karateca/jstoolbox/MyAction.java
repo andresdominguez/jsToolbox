@@ -6,8 +6,12 @@ import com.intellij.openapi.actionSystem.LangDataKeys;
 import com.intellij.openapi.actionSystem.PlatformDataKeys;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.command.CommandProcessor;
+import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.editor.Editor;
+import com.intellij.openapi.editor.SelectionModel;
+import com.intellij.openapi.editor.VisualPosition;
 import com.intellij.openapi.project.Project;
+import com.intellij.openapi.util.TextRange;
 import com.intellij.psi.PsiFile;
 
 /**
@@ -53,5 +57,43 @@ public abstract class MyAction extends AnAction {
         ApplicationManager.getApplication().runWriteAction(action);
       }
     }, description, null);
+  }
+
+  public LineRange getSelectedLineRange(Editor editor) {
+    SelectionModel selectionModel = editor.getSelectionModel();
+    VisualPosition startPosition = selectionModel.getSelectionStartPosition();
+    VisualPosition endPosition = selectionModel.getSelectionEndPosition();
+
+    if (startPosition == null || endPosition == null) {
+      return null;
+    }
+
+    int startLine = startPosition.getLine();
+    int endLine = endPosition.getLine();
+
+    return new LineRange(Math.min(startLine, endLine), Math.max(startLine, endLine));
+  }
+
+  /**
+   * Get the text range for a line of code.
+   *
+   * @param lineNumber The line number.
+   * @param document
+   * @return The text range for the line.
+   */
+  public TextRange getTextRange(int lineNumber, Document document) {
+    int lineStart = document.getLineStartOffset(lineNumber);
+    int lineEnd = document.getLineEndOffset(lineNumber);
+
+    return new TextRange(lineStart, lineEnd);
+  }
+
+  protected String getLocForLineNumber(int lineNumber, Document document) {
+    return document.getText(getTextRange(lineNumber, document));
+  }
+
+  protected int getLineNumberAtCaret(Editor editor, Document document) {
+    int offset = editor.getCaretModel().getOffset();
+    return document.getLineNumber(offset);
   }
 }
