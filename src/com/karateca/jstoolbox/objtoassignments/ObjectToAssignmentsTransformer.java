@@ -17,11 +17,16 @@ public class ObjectToAssignmentsTransformer {
   public String getAssignments() {
     StringBuilder sb = new StringBuilder();
 
-    // Get the variable name.
-    int start = objectString.indexOf("{") + 1;
+    String variableName = getVariableName();
+    if (variableName == null) {
+      return "";
+    }
 
-    sb.append(this.objectString.substring(0, start));
-    sb.append("}\n");
+    // Start building the string with: "var varName = {".
+    int start = objectString.indexOf("{") + 1;
+    sb.append(this.objectString.substring(0, start)).append("}\n");
+
+    // Transform each variable name.
 
     return sb.toString();
   }
@@ -37,13 +42,5 @@ public class ObjectToAssignmentsTransformer {
       return matcher.group(2);
     }
     return null;
-  }
-
-  private int getNextVar(int start) {
-    int runner = start;
-
-    int i = objectString.indexOf(",", start);
-
-    return i;
   }
 }
