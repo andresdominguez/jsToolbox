@@ -27,7 +27,7 @@ public class ObjectToAssignmentsTransformer {
   }
 
   public String getVariableName() {
-    // Get the variable name by finding all the substing until the first '{'.
+    // Get the variable name by finding all the substring until the first '{'.
     int braceIndex = objectString.indexOf("{");
     String substring = objectString.substring(0, braceIndex);
 
