@@ -45,10 +45,10 @@ public class ObjectToAssignmentsAction extends GenerateAction {
       return;
     }
 
-    String objectBlock = documentText.substring(startOffset, closingBraceIndex + 1);
+    String objectBlock = documentText.substring(startOffset, closingBraceIndex);
     ObjectToAssignmentsTransformer transformer = new ObjectToAssignmentsTransformer(objectBlock);
     String assignments = transformer.toAssignments();
-    replaceString(assignments, startOffset, closingBraceIndex + 1);
+    replaceString(assignments, startOffset, closingBraceIndex );
   }
 
   private void replaceString(final String replacementText, final int start, final int end) {

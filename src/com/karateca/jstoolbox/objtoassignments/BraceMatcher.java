@@ -21,7 +21,7 @@ class BraceMatcher {
 
         stack.pop();
         if (stack.isEmpty()) {
-          return i;
+          return i + 1;
         }
       }
     }

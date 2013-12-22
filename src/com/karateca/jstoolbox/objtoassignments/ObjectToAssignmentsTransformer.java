@@ -98,7 +98,7 @@ public class ObjectToAssignmentsTransformer {
 
       if (currentMatchIsNotLiteral(prevMatch, matchIndex)) {
         // Find the closing index of the closing brace.
-        int closingBraceIndex = BraceMatcher.getClosingBraceIndex(objectString, prevMatch) + 1;
+        int closingBraceIndex = BraceMatcher.getClosingBraceIndex(objectString, prevMatch);
         locations.add(closingBraceIndex);
         searchFrom = closingBraceIndex;
         prevMatch = closingBraceIndex;
