@@ -10,10 +10,10 @@ import java.util.regex.Pattern;
  * @author Andres Dominguez.
  */
 public class ObjectToAssignmentsTransformer {
-  final String objectString;
+  private final String objectString;
   // Look for: "name: value".
-  public static final Pattern NAME_VALUE_PATTERN = Pattern.compile("['\"]?(\\w+)['\"]?\\s*:(.+)");
-  public static final Pattern BRACE_OR_FUNCTION = Pattern.compile("\\s*(\\{|[\\w\\.]+\\s*\\()");
+  private static final Pattern VARIABLE_NAME = Pattern.compile("['\"]?(\\w+)['\"]?");
+  private static final Pattern BRACE_OR_FUNCTION = Pattern.compile("\\s*(\\{|[\\w\\.]+\\s*\\()");
 
   public ObjectToAssignmentsTransformer(String objectString) {
     this.objectString = objectString;
@@ -36,8 +36,6 @@ public class ObjectToAssignmentsTransformer {
 
     int currentOffset = start;
 
-    System.out.println(variableLocations);
-
     for (Integer varLocation : variableLocations) {
       String assignment = getVarNameAndAssignmentValue(currentOffset, varLocation);
       if (assignment != null) {
@@ -54,20 +52,26 @@ public class ObjectToAssignmentsTransformer {
   }
 
   private String getVarNameAndAssignmentValue(int currentOffset, Integer location) {
-    String assignmentStmt = objectString.substring(currentOffset, location);
+    String assignmentStmt = objectString.substring(currentOffset, location).trim();
 
-    Matcher matcher = NAME_VALUE_PATTERN.matcher(assignmentStmt.trim());
-    if (matcher.find()) {
-      String name = matcher.group(1);
-      String value = matcher.group(2).trim();
-
-      if (value.endsWith(",")) {
-        value = value.substring(0, value.length() - 1);
-      }
-
-      return String.format(".%s = %s;\n", name, value);
+    int colonIndex = assignmentStmt.indexOf(":");
+    if (colonIndex < 0) {
+      return null;
     }
-    return null;
+
+    Matcher matcher = VARIABLE_NAME.matcher(assignmentStmt.substring(0, colonIndex));
+    if (!matcher.find()) {
+      return null;
+    }
+
+    String name = matcher.group(1);
+    String value = assignmentStmt.substring(colonIndex + 1).trim();
+
+    if (value.endsWith(",")) {
+      value = value.substring(0, value.length() - 1);
+    }
+
+    return String.format(".%s = %s;\n", name, value);
   }
 
   public String getVariableName() {
@@ -95,7 +99,7 @@ public class ObjectToAssignmentsTransformer {
 
       if (currentMatchIsNotLiteral(prevMatch, matchIndex)) {
         // Find the closing index of the closing brace.
-        int closingBraceIndex = findClosingBrace(prevMatch);
+        int closingBraceIndex = findClosingBrace(prevMatch) + 1;
         locations.add(closingBraceIndex);
         searchFrom = closingBraceIndex;
         prevMatch = closingBraceIndex;

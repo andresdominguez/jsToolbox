@@ -33,9 +33,9 @@ public class ObjectToAssignmentsTransformerTest {
         "foo.two = 123;\n" +
         "foo.three = 'three';\n" +
         "foo.person = {\n" +
-        "    name: 'John',\n" +
-        "    lastName: 'Doe'\n" +
-        "};\n";
+        "        name: 'John',\n" +
+        "        lastName: 'Doe'\n" +
+        "    };\n";
 
     assertEquals(expected, transformer.getAssignments());
   }
