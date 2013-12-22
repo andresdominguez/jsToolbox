@@ -30,17 +30,18 @@ public class ObjectToAssignmentsTransformer {
     sb.append(objectString.substring(0, start)).append("};\n");
 
     // Transform each variable name.
-    int currentOffset = start;
+
     List<Integer> variableLocations = findVariableLocations();
-    String assignment = "";
 
+    int currentOffset = start;
     for (Integer location : variableLocations) {
-      assignment = getVarNameAndAssignmentValue(currentOffset, location);
+      String assignment = getVarNameAndAssignmentValue(currentOffset, location);
+      if (assignment != null) {
+        sb.append(variableName);
+        sb.append(assignment);
 
-      sb.append(variableName);
-      sb.append(assignment);
-
-      currentOffset = location;
+        currentOffset = location;
+      }
     }
 
     return sb.toString();
@@ -60,7 +61,7 @@ public class ObjectToAssignmentsTransformer {
 
       return String.format(".%s = %s;\n", name, value);
     }
-    return "";
+    return null;
   }
 
   public String getVariableName() {
