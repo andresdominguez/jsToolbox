@@ -37,11 +37,6 @@ public class ObjectToAssignmentsTransformerTest {
         "        lastName: 'Doe'\n" +
         "    };\n";
 
-    assertEquals(expected, transformer.getAssignments());
-  }
-
-  @Test
-  public void testGetVariableName() {
-    assertEquals("foo", transformer.getVariableName());
+    assertEquals(expected, transformer.toAssignments());
   }
 }

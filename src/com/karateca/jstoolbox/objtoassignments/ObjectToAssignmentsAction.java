@@ -4,6 +4,7 @@ import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.PlatformDataKeys;
 import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.editor.Editor;
+import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.TextRange;
 import com.karateca.jstoolbox.LineRange;
 import com.karateca.jstoolbox.generatemethod.GenerateAction;
@@ -13,6 +14,7 @@ import com.karateca.jstoolbox.generatemethod.GenerateAction;
  */
 public class ObjectToAssignmentsAction extends GenerateAction {
   private Document document;
+  private Project project;
 
   public void actionPerformed(AnActionEvent actionEvent) {
     Editor editor = actionEvent.getData(PlatformDataKeys.EDITOR);
@@ -20,6 +22,7 @@ public class ObjectToAssignmentsAction extends GenerateAction {
       return;
     }
     document = editor.getDocument();
+    project = getEventProject(actionEvent);
 
     if (!this.canEnableAction(actionEvent)) {
       return;
@@ -42,8 +45,20 @@ public class ObjectToAssignmentsAction extends GenerateAction {
       return;
     }
 
-    String substring = documentText.substring(startOffset, closingBraceIndex + 1);
-    System.out.println(substring);
+    String objectBlock = documentText.substring(startOffset, closingBraceIndex + 1);
+    ObjectToAssignmentsTransformer transformer = new ObjectToAssignmentsTransformer(objectBlock);
+    String assignments = transformer.toAssignments();
+    replaceString(assignments, startOffset, closingBraceIndex + 1);
+
+  }
+
+  private void replaceString(final String replacementText, final int start, final int end) {
+    runWriteActionInsideCommand(project, "To assignments", new Runnable() {
+      @Override
+      public void run() {
+        document.replaceString(start, end, replacementText);
+      }
+    });
   }
 
   private int getClosingBraceIndex(int startLine, String documentText) {

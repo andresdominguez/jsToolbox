@@ -18,7 +18,7 @@ public class ObjectToAssignmentsTransformer {
     this.objectString = objectString;
   }
 
-  public String getAssignments() {
+  public String toAssignments() {
     StringBuilder sb = new StringBuilder();
 
     String variableName = getVariableName();
@@ -73,7 +73,7 @@ public class ObjectToAssignmentsTransformer {
     return String.format(".%s = %s;\n", name, value);
   }
 
-  public String getVariableName() {
+  private String getVariableName() {
     String substring = objectString;
 
     Pattern pattern = Pattern.compile("(\\s*\\w*\\s*)(\\w+)(\\s*=\\s*)");
