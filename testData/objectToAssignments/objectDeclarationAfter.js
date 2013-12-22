@@ -3,6 +3,6 @@ foo.one = 'xxx';
 foo.two = 123;
 foo.three = 'three';
 foo.person = {
-    name: 'John',
-    lastName: 'Doe'
-};
+        name: 'John',
+        lastName: 'Doe'
+    };

@@ -8,6 +8,10 @@ import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.TextRange;
 import com.karateca.jstoolbox.LineRange;
 import com.karateca.jstoolbox.generatemethod.GenerateAction;
+import org.apache.commons.lang.StringUtils;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author Andres Dominguez.
@@ -15,6 +19,7 @@ import com.karateca.jstoolbox.generatemethod.GenerateAction;
 public class ObjectToAssignmentsAction extends GenerateAction {
   private Document document;
   private Project project;
+  public static final Pattern endsWithSemicolon = Pattern.compile("^;\\n+");
 
   public void actionPerformed(AnActionEvent actionEvent) {
     Editor editor = actionEvent.getData(PlatformDataKeys.EDITOR);
@@ -46,6 +51,14 @@ public class ObjectToAssignmentsAction extends GenerateAction {
     }
 
     String objectBlock = documentText.substring(startOffset, closingBraceIndex);
+
+    // Is the next character a ";"?
+    String codeAfter = StringUtils.substring(documentText, closingBraceIndex);
+    Matcher matcher = endsWithSemicolon.matcher(codeAfter);
+    if (matcher.find()) {
+      closingBraceIndex += matcher.end();
+    }
+
     ToAssignmentsConverter converter = new ToAssignmentsConverter(objectBlock);
     String assignments = converter.toAssignments();
     replaceString(assignments, startOffset, closingBraceIndex);
