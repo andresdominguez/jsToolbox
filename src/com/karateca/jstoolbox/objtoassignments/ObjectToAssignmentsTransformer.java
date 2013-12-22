@@ -22,12 +22,13 @@ public class ObjectToAssignmentsTransformer {
   }
 
   public String toAssignments() {
-    StringBuilder sb = new StringBuilder();
-
     String variableName = getVariableName();
     if (variableName == null) {
+      // TODO: return null and handle null in the action.
       return "";
     }
+
+    StringBuilder sb = new StringBuilder();
 
     // Start building the string with: "var varName = {".
     int start = objectString.indexOf("{") + 1;
