@@ -52,25 +52,6 @@ public class ObjectToAssignmentsAction extends GenerateAction {
     TextRange startLineRange = getTextRange(startLine, document);
     int startOffset = startLineRange.getStartOffset();
 
-    int documentEnd = documentText.length();
-    Stack<Character> stack = new Stack<Character>();
-    for (int i = startOffset; i < documentEnd; i++) {
-      Character currentChar = documentText.charAt(i);
-      if (currentChar == '{') {
-        stack.push(currentChar);
-      } else if (currentChar == '}') {
-        if (stack.isEmpty()) {
-          return -1;
-        }
-
-        stack.pop();
-
-        if (stack.isEmpty()) {
-          return i;
-        }
-      }
-    }
-
-    return -1;
+    return BraceMatcher.getClosingBraceIndex(documentText, startOffset);
   }
 }
