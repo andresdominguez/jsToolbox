@@ -145,6 +145,8 @@
     <p>Add support for constructors with the following syntax: function MyConstructor() {}</p>
     <h2>1.2.1</h2>
     <p>Fix bug finding the parents in override javascript method</p>
+    <h2>1.3</h2>
+    <p>Added object to assignments</p>
     ]]>
     </change-notes>
 
