@@ -19,7 +19,6 @@ public class ObjectToAssignmentsTransformer {
     this.objectString = objectString;
   }
 
-
   public String getAssignments() {
     StringBuilder sb = new StringBuilder();
 
