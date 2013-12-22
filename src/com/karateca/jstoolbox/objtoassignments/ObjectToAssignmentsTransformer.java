@@ -31,7 +31,7 @@ public class ObjectToAssignmentsTransformer {
     sb.append(objectString.substring(0, start)).append("};\n");
 
     // Transform each variable name.
-    List<Integer> variableLocations = findVariableLocations();
+    List<Integer> variableLocations = findVariableLocations(start);
 
     int currentOffset = start;
     for (Integer location : variableLocations) {
@@ -77,16 +77,17 @@ public class ObjectToAssignmentsTransformer {
     return null;
   }
 
-  private List<Integer> findVariableLocations() {
+  private List<Integer> findVariableLocations(int searchFrom) {
     Pattern pattern = Pattern.compile("['\"]?\\w+['\"]?\\s*:.*");
 
     Matcher matcher = pattern.matcher(objectString);
 
     List<Integer> locations = new ArrayList<Integer>();
 
-
-    while (matcher.find()) {
-      locations.add(matcher.start());
+    while (matcher.find(searchFrom)) {
+      searchFrom = matcher.start();
+      locations.add(searchFrom);
+      searchFrom++;
     }
     locations.add(objectString.length() - 1);
 
