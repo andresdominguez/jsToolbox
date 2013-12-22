@@ -14,11 +14,10 @@ import java.util.Stack;
  * @author Andres Dominguez.
  */
 public class ObjectToAssignmentsAction extends GenerateAction {
-  private Editor editor;
   private Document document;
 
   public void actionPerformed(AnActionEvent actionEvent) {
-    editor = actionEvent.getData(PlatformDataKeys.EDITOR);
+    Editor editor = actionEvent.getData(PlatformDataKeys.EDITOR);
     if (editor == null) {
       return;
     }

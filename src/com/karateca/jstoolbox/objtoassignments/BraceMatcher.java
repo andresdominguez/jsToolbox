@@ -5,7 +5,7 @@ import java.util.Stack;
 /**
  * @author Andres Dominguez.
  */
-public class BraceMatcher {
+class BraceMatcher {
   public static int getClosingBraceIndex(String codeText, int fromIndex) {
     Stack<Character> stack = new Stack<Character>();
 

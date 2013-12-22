@@ -2,7 +2,6 @@ package com.karateca.jstoolbox.objtoassignments;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Stack;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -99,7 +98,7 @@ public class ObjectToAssignmentsTransformer {
 
       if (currentMatchIsNotLiteral(prevMatch, matchIndex)) {
         // Find the closing index of the closing brace.
-        int closingBraceIndex = findClosingBrace(prevMatch) + 1;
+        int closingBraceIndex = BraceMatcher.getClosingBraceIndex(objectString, prevMatch) + 1;
         locations.add(closingBraceIndex);
         searchFrom = closingBraceIndex;
         prevMatch = closingBraceIndex;
@@ -112,28 +111,6 @@ public class ObjectToAssignmentsTransformer {
     locations.add(objectString.length() - 1);
 
     return locations;
-  }
-
-  private int findClosingBrace(int fromIndex) {
-    Stack<Character> stack = new Stack<Character>();
-
-    int length = objectString.length();
-    for (int i = fromIndex; i < length; i++) {
-      char c = objectString.charAt(i);
-      if (c == '{') {
-        stack.push(c);
-      } else if (c == '}') {
-        if (stack.isEmpty()) {
-          return fromIndex;
-        }
-
-        stack.pop();
-        if (stack.isEmpty()) {
-          return i;
-        }
-      }
-    }
-    return 0;  //To change body of created methods use File | Settings | File Templates.
   }
 
   private boolean currentMatchIsNotLiteral(int fromIndex, int toIndex) {
