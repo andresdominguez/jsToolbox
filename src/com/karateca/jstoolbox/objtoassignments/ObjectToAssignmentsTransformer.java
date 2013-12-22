@@ -76,6 +76,7 @@ public class ObjectToAssignmentsTransformer {
   private String getVariableName() {
     String substring = objectString;
 
+    // Look for: "var varName ="
     Pattern pattern = Pattern.compile("(\\s*\\w*\\s*)(\\w+)(\\s*=\\s*)");
     Matcher matcher = pattern.matcher(substring);
     if (matcher.find()) {
