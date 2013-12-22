@@ -8,7 +8,7 @@ import java.util.regex.Pattern;
 /**
  * @author Andres Dominguez.
  */
-public class ObjectToAssignmentsTransformer {
+public class ToAssignmentsConverter {
   private final String objectString;
   // Look for: "name: value".
   private static final Pattern VARIABLE_NAME = Pattern.compile("['\"]?(\\w+)['\"]?");
@@ -17,7 +17,7 @@ public class ObjectToAssignmentsTransformer {
   // Look for: "var varName =".
   private static final Pattern FIRST_LINE_VAR_NAME = Pattern.compile("(\\s*\\w*\\s*)(\\w+)(\\s*=\\s*)");
 
-  public ObjectToAssignmentsTransformer(String objectString) {
+  public ToAssignmentsConverter(String objectString) {
     this.objectString = objectString;
   }
 

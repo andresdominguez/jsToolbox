@@ -8,7 +8,7 @@ import static org.junit.Assert.assertEquals;
 /**
  * @author Andres Dominguez.
  */
-public class ObjectToAssignmentsTransformerTest {
+public class ToAssignmentsConverterTest {
 
   public static final String OBJECT_STRING = "var foo = {\n" +
       "    one: 'xxx',\n" +
@@ -19,11 +19,11 @@ public class ObjectToAssignmentsTransformerTest {
       "        lastName: 'Doe'\n" +
       "    }\n" +
       "}";
-  private ObjectToAssignmentsTransformer transformer;
+  private ToAssignmentsConverter converter;
 
   @Before
   public void createTransformer() {
-    transformer = new ObjectToAssignmentsTransformer(OBJECT_STRING);
+    converter = new ToAssignmentsConverter(OBJECT_STRING);
   }
 
   @Test
@@ -37,6 +37,6 @@ public class ObjectToAssignmentsTransformerTest {
         "        lastName: 'Doe'\n" +
         "    };\n";
 
-    assertEquals(expected, transformer.toAssignments());
+    assertEquals(expected, converter.toAssignments());
   }
 }
