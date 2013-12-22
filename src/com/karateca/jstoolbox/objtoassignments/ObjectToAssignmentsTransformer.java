@@ -15,7 +15,7 @@ public class ObjectToAssignmentsTransformer {
   // Determine if there is an opening brace or function in the current line.
   private static final Pattern BRACE_OR_FUNCTION = Pattern.compile("\\s*(\\{|[\\w\\.]+\\s*\\()");
   // Look for: "var varName =".
-  public static final Pattern FIRST_LINE_VAR_NAME = Pattern.compile("(\\s*\\w*\\s*)(\\w+)(\\s*=\\s*)");
+  private static final Pattern FIRST_LINE_VAR_NAME = Pattern.compile("(\\s*\\w*\\s*)(\\w+)(\\s*=\\s*)");
 
   public ObjectToAssignmentsTransformer(String objectString) {
     this.objectString = objectString;

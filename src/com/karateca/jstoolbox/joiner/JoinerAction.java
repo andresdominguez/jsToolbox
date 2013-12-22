@@ -18,8 +18,8 @@ public class JoinerAction extends MyAction {
   private static final String MULTI_LINE_STRING = ".+\\+\\s*$";
   private static final String MULTI_LINE_STRING_SECOND_LINE = "^\\s*['\"].+";
   private static final String ENDS_WITH_SEMICOLON = ".*;\\s*$";
-  public static final String singleQuotesSplitSeparator = "'\\s*\\+\\s*'";
-  public static final String doubleQuotesSplitSeparator = "\"\\s*\\+\\s*\"";
+  private static final String singleQuotesSplitSeparator = "'\\s*\\+\\s*'";
+  private static final String doubleQuotesSplitSeparator = "\"\\s*\\+\\s*\"";
   private Document document;
   private Editor editor;
   private Project project;
