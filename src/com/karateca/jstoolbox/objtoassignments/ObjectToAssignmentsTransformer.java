@@ -39,15 +39,15 @@ public class ObjectToAssignmentsTransformer {
 
     System.out.println(variableLocations);
 
-    for (Integer location : variableLocations) {
-      String assignment = getVarNameAndAssignmentValue(currentOffset, location);
+    for (Integer varLocation : variableLocations) {
+      String assignment = getVarNameAndAssignmentValue(currentOffset, varLocation);
       if (assignment != null) {
         // foo
         sb.append(variableName);
         // .name = value
         sb.append(assignment);
 
-        currentOffset = location;
+        currentOffset = varLocation;
       }
     }
 
@@ -93,12 +93,17 @@ public class ObjectToAssignmentsTransformer {
     int searchFrom = 0;
     while (matcher.find(searchFrom)) {
       int matchIndex = matcher.start();
+
       if (currentMatchIsNotLiteral(prevMatch, matchIndex)) {
         // Find the closing index of the closing brace.
-        locations.add(findClosingBrace(prevMatch));
+        int closingBraceIndex = findClosingBrace(prevMatch);
+        locations.add(closingBraceIndex);
+        searchFrom = closingBraceIndex;
+        prevMatch = closingBraceIndex;
       } else {
         locations.add(matchIndex);
         searchFrom = matcher.end();
+        prevMatch = matchIndex;
       }
     }
     locations.add(objectString.length() - 1);
