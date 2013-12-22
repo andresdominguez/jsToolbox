@@ -2,6 +2,7 @@ package com.karateca.jstoolbox.objtoassignments;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Stack;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -12,6 +13,7 @@ public class ObjectToAssignmentsTransformer {
   final String objectString;
   // Look for: "name: value".
   public static final Pattern NAME_VALUE_PATTERN = Pattern.compile("['\"]?(\\w+)['\"]?\\s*:(.+)");
+  public static final Pattern BRACE_OR_FUNCTION = Pattern.compile("\\s*(\\{|[\\w\\.]+\\s*\\()");
 
   public ObjectToAssignmentsTransformer(String objectString) {
     this.objectString = objectString;
@@ -31,9 +33,12 @@ public class ObjectToAssignmentsTransformer {
     sb.append(objectString.substring(0, start)).append("};\n");
 
     // Transform each variable name.
-    List<Integer> variableLocations = findVariableLocations(start);
+    List<Integer> variableLocations = findVariableLocations();
 
     int currentOffset = start;
+
+    System.out.println(variableLocations);
+
     for (Integer location : variableLocations) {
       String assignment = getVarNameAndAssignmentValue(currentOffset, location);
       if (assignment != null) {
@@ -77,20 +82,61 @@ public class ObjectToAssignmentsTransformer {
     return null;
   }
 
-  private List<Integer> findVariableLocations(int searchFrom) {
+  private List<Integer> findVariableLocations() {
     Pattern pattern = Pattern.compile("['\"]?\\w+['\"]?\\s*:.*");
 
     Matcher matcher = pattern.matcher(objectString);
 
     List<Integer> locations = new ArrayList<Integer>();
 
+    int prevMatch = 0;
+    int searchFrom = 0;
     while (matcher.find(searchFrom)) {
-      searchFrom = matcher.start();
-      locations.add(searchFrom);
-      searchFrom++;
+      int matchIndex = matcher.start();
+      if (currentMatchIsNotLiteral(prevMatch, matchIndex)) {
+        // Find the closing index of the closing brace.
+        locations.add(findClosingBrace(prevMatch));
+      } else {
+        locations.add(matchIndex);
+        searchFrom = matcher.end();
+      }
     }
     locations.add(objectString.length() - 1);
 
     return locations;
+  }
+
+  private int findClosingBrace(int fromIndex) {
+    Stack<Character> stack = new Stack<Character>();
+
+    int length = objectString.length();
+    for (int i = fromIndex; i < length; i++) {
+      char c = objectString.charAt(i);
+      if (c == '{') {
+        stack.push(c);
+      } else if (c == '}') {
+        if (stack.isEmpty()) {
+          return fromIndex;
+        }
+
+        stack.pop();
+        if (stack.isEmpty()) {
+          return i;
+        }
+      }
+    }
+    return 0;  //To change body of created methods use File | Settings | File Templates.
+  }
+
+  private boolean currentMatchIsNotLiteral(int fromIndex, int toIndex) {
+    // Ignore first instance.
+    if (fromIndex == 0) {
+      return false;
+    }
+
+    String expression = objectString.substring(fromIndex, toIndex);
+    expression = expression.substring(expression.indexOf(":") + 1);
+
+    return BRACE_OR_FUNCTION.matcher(expression).find();
   }
 }
