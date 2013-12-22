@@ -47,10 +47,8 @@ public class ObjectToAssignmentsTransformer {
   }
 
   private String getVarNameAndAssignmentValue(int currentOffset, Integer location) {
-    String assignment;
     String assignmentStmt = objectString.substring(currentOffset, location);
 
-    assignment = "";
     Matcher matcher = NAME_VALUE_PATTERN.matcher(assignmentStmt.trim());
     if (matcher.find()) {
       String name = matcher.group(1);
@@ -60,9 +58,9 @@ public class ObjectToAssignmentsTransformer {
         value = value.substring(0, value.length() - 1);
       }
 
-      assignment = String.format(".%s = %s;\n", name, value);
+      return String.format(".%s = %s;\n", name, value);
     }
-    return assignment;
+    return "";
   }
 
   public String getVariableName() {
