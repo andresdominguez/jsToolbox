@@ -8,8 +8,6 @@ import com.intellij.openapi.util.TextRange;
 import com.karateca.jstoolbox.LineRange;
 import com.karateca.jstoolbox.generatemethod.GenerateAction;
 
-import java.util.Stack;
-
 /**
  * @author Andres Dominguez.
  */
