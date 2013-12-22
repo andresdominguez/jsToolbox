@@ -16,7 +16,7 @@ class BraceMatcher {
         stack.push(c);
       } else if (c == '}') {
         if (stack.isEmpty()) {
-          return fromIndex;
+          return -1;
         }
 
         stack.pop();
