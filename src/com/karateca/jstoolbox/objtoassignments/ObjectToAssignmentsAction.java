@@ -5,8 +5,6 @@ import com.intellij.openapi.actionSystem.PlatformDataKeys;
 import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.project.Project;
-import com.intellij.openapi.util.TextRange;
-import com.karateca.jstoolbox.LineRange;
 import com.karateca.jstoolbox.generatemethod.GenerateAction;
 import org.apache.commons.lang.StringUtils;
 
@@ -34,23 +32,24 @@ public class ObjectToAssignmentsAction extends GenerateAction {
     }
 
     // Find the var in the current line.
-    LineRange selectedLineRange = getSelectedLineRange(editor);
-    int lineAtCaret = selectedLineRange.getStart();
-    String currentLine = getLocForLineNumber(lineAtCaret, document);
+    int lineNumberAtCaret = getLineNumberAtCaret(editor, document);
+    String currentLine = getLocForLineNumber(lineNumberAtCaret, document);
 
     // Does the line starts with: var name = ?
     if (!currentLine.matches("\\s*var\\s+\\w+\\s*=.*")) {
       return;
     }
 
+    int offsetAtStartOfCurrentLine = document.getLineStartOffset(lineNumberAtCaret);
+
     // Find the closing }.
     String documentText = document.getText();
-    int closingBraceIndex = getClosingBraceIndex(lineAtCaret, documentText);
+    int closingBraceIndex = BraceMatcher.getClosingBraceIndex(documentText, offsetAtStartOfCurrentLine);
     if (closingBraceIndex == -1) {
       return;
     }
 
-    String objectBlock = documentText.substring(lineAtCaret, closingBraceIndex);
+    String objectBlock = documentText.substring(offsetAtStartOfCurrentLine, closingBraceIndex);
 
     // Is the next character a ";"?
     String codeAfter = StringUtils.substring(documentText, closingBraceIndex);
@@ -61,7 +60,7 @@ public class ObjectToAssignmentsAction extends GenerateAction {
 
     ToAssignmentsConverter converter = new ToAssignmentsConverter(objectBlock);
     String assignments = converter.toAssignments();
-    replaceString(assignments, lineAtCaret, closingBraceIndex);
+    replaceString(assignments, offsetAtStartOfCurrentLine, closingBraceIndex);
   }
 
   private void replaceString(final String replacementText, final int start, final int end) {
@@ -71,12 +70,5 @@ public class ObjectToAssignmentsAction extends GenerateAction {
         document.replaceString(start, end, replacementText);
       }
     });
-  }
-
-  private int getClosingBraceIndex(int startLine, String documentText) {
-    TextRange startLineRange = getTextRange(startLine, document);
-    int startOffset = startLineRange.getStartOffset();
-
-    return BraceMatcher.getClosingBraceIndex(documentText, startOffset);
   }
 }

@@ -12,7 +12,7 @@ TheConstructor = function () {
  * @param right
  */
 TheConstructor.prototype.someFn = function (left, right) {
-  return left + right;
+    return left + right;
 };
 
 var foo = <caret>{
