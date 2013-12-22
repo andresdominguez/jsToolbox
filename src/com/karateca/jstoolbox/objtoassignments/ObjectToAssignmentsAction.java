@@ -48,7 +48,7 @@ public class ObjectToAssignmentsAction extends GenerateAction {
     String objectBlock = documentText.substring(startOffset, closingBraceIndex);
     ToAssignmentsConverter converter = new ToAssignmentsConverter(objectBlock);
     String assignments = converter.toAssignments();
-    replaceString(assignments, startOffset, closingBraceIndex );
+    replaceString(assignments, startOffset, closingBraceIndex);
   }
 
   private void replaceString(final String replacementText, final int start, final int end) {
