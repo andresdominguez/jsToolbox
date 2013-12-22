@@ -12,7 +12,10 @@ public class ObjectToAssignmentsTransformer {
   private final String objectString;
   // Look for: "name: value".
   private static final Pattern VARIABLE_NAME = Pattern.compile("['\"]?(\\w+)['\"]?");
+  // Determine if there is an opening brace or function in the current line.
   private static final Pattern BRACE_OR_FUNCTION = Pattern.compile("\\s*(\\{|[\\w\\.]+\\s*\\()");
+  // Look for: "var varName =".
+  public static final Pattern FIRST_LINE_VAR_NAME = Pattern.compile("(\\s*\\w*\\s*)(\\w+)(\\s*=\\s*)");
 
   public ObjectToAssignmentsTransformer(String objectString) {
     this.objectString = objectString;
@@ -74,11 +77,7 @@ public class ObjectToAssignmentsTransformer {
   }
 
   private String getVariableName() {
-    String substring = objectString;
-
-    // Look for: "var varName ="
-    Pattern pattern = Pattern.compile("(\\s*\\w*\\s*)(\\w+)(\\s*=\\s*)");
-    Matcher matcher = pattern.matcher(substring);
+    Matcher matcher = FIRST_LINE_VAR_NAME.matcher(objectString);
     if (matcher.find()) {
       return matcher.group(2);
     }
