@@ -19,7 +19,7 @@ import java.util.regex.Pattern;
 public class ObjectToAssignmentsAction extends GenerateAction {
   private Document document;
   private Project project;
-  public static final Pattern endsWithSemicolon = Pattern.compile("^;\\n+");
+  private static final Pattern endsWithSemicolon = Pattern.compile("^;\\n+");
 
   public void actionPerformed(AnActionEvent actionEvent) {
     Editor editor = actionEvent.getData(PlatformDataKeys.EDITOR);
