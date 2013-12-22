@@ -10,6 +10,7 @@ import java.util.regex.Pattern;
  */
 public class ObjectToAssignmentsTransformer {
   final String objectString;
+  // Look for: "name: value".
   public static final Pattern NAME_VALUE_PATTERN = Pattern.compile("['\"]?(\\w+)['\"]?\\s*:(.+)");
 
   public ObjectToAssignmentsTransformer(String objectString) {
@@ -30,14 +31,15 @@ public class ObjectToAssignmentsTransformer {
     sb.append(objectString.substring(0, start)).append("};\n");
 
     // Transform each variable name.
-
     List<Integer> variableLocations = findVariableLocations();
 
     int currentOffset = start;
     for (Integer location : variableLocations) {
       String assignment = getVarNameAndAssignmentValue(currentOffset, location);
       if (assignment != null) {
+        // foo
         sb.append(variableName);
+        // .name = value
         sb.append(assignment);
 
         currentOffset = location;
