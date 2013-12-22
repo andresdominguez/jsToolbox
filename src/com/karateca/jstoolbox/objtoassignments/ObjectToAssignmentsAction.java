@@ -35,8 +35,8 @@ public class ObjectToAssignmentsAction extends GenerateAction {
 
     // Find the var in the current line.
     LineRange selectedLineRange = getSelectedLineRange(editor);
-    int startOffset = selectedLineRange.getStart();
-    String currentLine = getLocForLineNumber(startOffset, document);
+    int lineAtCaret = selectedLineRange.getStart();
+    String currentLine = getLocForLineNumber(lineAtCaret, document);
 
     // Does the line starts with: var name = ?
     if (!currentLine.matches("\\s*var\\s+\\w+\\s*=.*")) {
@@ -45,12 +45,12 @@ public class ObjectToAssignmentsAction extends GenerateAction {
 
     // Find the closing }.
     String documentText = document.getText();
-    int closingBraceIndex = getClosingBraceIndex(startOffset, documentText);
+    int closingBraceIndex = getClosingBraceIndex(lineAtCaret, documentText);
     if (closingBraceIndex == -1) {
       return;
     }
 
-    String objectBlock = documentText.substring(startOffset, closingBraceIndex);
+    String objectBlock = documentText.substring(lineAtCaret, closingBraceIndex);
 
     // Is the next character a ";"?
     String codeAfter = StringUtils.substring(documentText, closingBraceIndex);
@@ -61,7 +61,7 @@ public class ObjectToAssignmentsAction extends GenerateAction {
 
     ToAssignmentsConverter converter = new ToAssignmentsConverter(objectBlock);
     String assignments = converter.toAssignments();
-    replaceString(assignments, startOffset, closingBraceIndex);
+    replaceString(assignments, lineAtCaret, closingBraceIndex);
   }
 
   private void replaceString(final String replacementText, final int start, final int end) {
