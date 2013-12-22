@@ -49,7 +49,6 @@ public class ObjectToAssignmentsAction extends GenerateAction {
     ObjectToAssignmentsTransformer transformer = new ObjectToAssignmentsTransformer(objectBlock);
     String assignments = transformer.toAssignments();
     replaceString(assignments, startOffset, closingBraceIndex + 1);
-
   }
 
   private void replaceString(final String replacementText, final int start, final int end) {
