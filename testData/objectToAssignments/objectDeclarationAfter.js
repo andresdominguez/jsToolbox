@@ -6,6 +6,14 @@ TheConstructor = function () {
     this.hey = 123;
 };
 
+/**
+ * The js doc.
+ * @param left
+ * @param right
+ */
+TheConstructor.prototype.someFn = function (left, right) {
+    return left + right;
+};
 
 var foo = {};
 foo.one = 'xxx';
