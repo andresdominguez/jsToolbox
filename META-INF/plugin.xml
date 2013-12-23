@@ -217,6 +217,13 @@
       <keyboard-shortcut keymap="$default" first-keystroke="alt T"/>
       <keyboard-shortcut keymap="$default" first-keystroke="ctrl meta T"/>
     </action>
+    <action id="com.karateca.jstoolbox.assignmentstoobj.AssignmentsToObjectAction"
+            class="com.karateca.jstoolbox.assignmentstoobj.AssignmentsToObjectAction"
+            text="Assignment to object"
+            description="Transform a set of assignments to an object declaration">
+      <keyboard-shortcut keymap="$default" first-keystroke="alt I"/>
+      <keyboard-shortcut keymap="$default" first-keystroke="ctrl meta I"/>
+    </action>
 
     <!-- Add everything under tools -->
     <group id="TestActionGroup"
@@ -231,6 +238,7 @@
       <reference ref="com.karateca.jstoolbox.generatemethod.GenerateMethodAction"/>
       <reference ref="com.karateca.jstoolbox.generatemethod.OverrideMethodAction"/>
       <reference ref="com.karateca.jstoolbox.objtoassignments.ObjectToAssignmentsAction"/>
+      <reference ref="com.karateca.jstoolbox.assignmentstoobj.AssignmentsToObjectAction"/>
       <add-to-group group-id="ToolsMenu" anchor="first"/>
       <add-to-group group-id="EditorPopupMenu"/>
     </group>
