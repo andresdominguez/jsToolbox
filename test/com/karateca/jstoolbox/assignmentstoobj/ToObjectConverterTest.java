@@ -15,7 +15,7 @@ public class ToObjectConverterTest {
   @Before
   public void createConverter() {
     String codeText = "var theThing = {};\n" +
-        "theThing.fist = 'Jackie';\n" +
+        "theThing.first = 'Jackie';\n" +
         "theThing.last = 'Chan';\n" +
         "theThing.phone = {\n" +
         "  areacode: 212,\n" +
@@ -34,5 +34,20 @@ public class ToObjectConverterTest {
   public void findVariableNameWithoutVar() {
     converter = new ToObjectConverter("foo   \n  = \n");
     assertEquals("foo", converter.getVarName());
+  }
+
+  @Test
+  public void shouldConvertToObject() {
+    String code = converter.getObjectDeclaration();
+
+    String expected = "var theThing = {\n" +
+        "  first: 'Jackie',\n" +
+        "  last: 'Chan'," +
+        "  phone: {\n" +
+        "    areacode: 212,\n" +
+        "    phone: '123-4567'\n" +
+        "  }\n" +
+        "};";
+    assertEquals(expected, code);
   }
 }

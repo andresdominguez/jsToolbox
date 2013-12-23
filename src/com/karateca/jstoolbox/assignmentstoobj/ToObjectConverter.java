@@ -1,5 +1,7 @@
 package com.karateca.jstoolbox.assignmentstoobj;
 
+import org.apache.commons.lang.StringUtils;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -8,18 +10,48 @@ import java.util.regex.Pattern;
  */
 class ToObjectConverter {
   private final String selectedCode;
-  public static final Pattern variableName = Pattern.compile("(\\s*var\\s+)(\\w+)[\\s=]*");
+  public static final Pattern variableName = Pattern.compile("(\\s*var\\s+)?(\\w+)[\\s=]*");
 
   ToObjectConverter(String selectedCode) {
     this.selectedCode = selectedCode;
   }
 
   public String getObjectDeclaration() {
+    // Does it match foo = {};?
+    if (!firstLineMatchesObjDeclaration()) {
+      return null;
+    }
+
+    // The the variable name.
     String variableName = getVarName();
+    if (variableName == null) {
+      return null;
+    }
 
-    System.out.println(variableName);
+    StringBuilder sb = new StringBuilder();
 
-    return "";
+    int braceIndex = selectedCode.indexOf("{");
+    String substring = selectedCode.substring(0, braceIndex + 1);
+    System.out.println(substring);
+
+    while (true) {
+      break;
+    }
+
+    int firstSemicolon = selectedCode.indexOf(";") + 1;
+    String firstStmt = selectedCode.substring(0, firstSemicolon);
+
+
+    sb.append(firstStmt);
+
+    return sb.toString();
+  }
+
+  private boolean firstLineMatchesObjDeclaration() {
+    Pattern pattern = Pattern.compile("(\\s*var\\s+)?\\w+\\s*=\\s*\\{\\s*\\};");
+    String firstLine = StringUtils.substringBefore(selectedCode, "\n");
+    Matcher matcher = pattern.matcher(firstLine);
+    return matcher.find();
   }
 
   String getVarName() {
@@ -29,8 +61,6 @@ class ToObjectConverter {
     }
 
     String textUntilFirstAssignment = selectedCode.substring(0, firstAssignment);
-
-    System.out.println(textUntilFirstAssignment);
 
     Matcher matcher = variableName.matcher(textUntilFirstAssignment);
     if (matcher.find()) {
