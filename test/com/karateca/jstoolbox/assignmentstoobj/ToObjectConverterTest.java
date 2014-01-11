@@ -44,9 +44,9 @@ public class ToObjectConverterTest {
         "  first: 'Jackie',\n" +
         "  last: 'Chan',\n" +
         "  phone: {\n" +
-        "    areaCode: 212,\n" +
-        "    phone: '123-4567'\n" +
-        "  }\n" +
+        "  areaCode: 212,\n" +
+        "  phone: '123-4567'\n" +
+        "},\n" +
         "};";
     assertEquals(expected, code);
   }
