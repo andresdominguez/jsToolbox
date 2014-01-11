@@ -46,11 +46,7 @@ class ToObjectConverter {
     // Remove the last comma.
     int lastIndex = transformed.size() - 1;
     String lastItem = transformed.get(lastIndex);
-    if (lastItem.endsWith("\n")) {
-      lastItem = lastItem.replaceAll(",\n$", "\n");
-    } else {
-      lastItem = lastItem.replaceAll(",$", "");
-    }
+    lastItem = replaceAtEnd(lastItem, ",", "");
 
     transformed.set(lastIndex, lastItem);
 
@@ -77,11 +73,7 @@ class ToObjectConverter {
       var = var.replaceFirst("\\s*=", ":");
 
       // Replace the ";" with "," at the end.
-      if (var.endsWith("\n")) {
-        var = var.replaceAll(";\\n$", ",\n");
-      } else {
-        var = var.replaceAll(";$", ",");
-      }
+      var = replaceAtEnd(var, ";", ",");
 
       result.add(var);
     }
@@ -89,8 +81,10 @@ class ToObjectConverter {
     return result;
   }
 
-  private String removeCharAtEnd(String line, String charToRemove) {
-    return line;
+  private String replaceAtEnd(String line, String findTerm, String replaceWith) {
+    return line.endsWith("\n") ?
+        line.replaceAll(findTerm + "\\n$", replaceWith + "\n") :
+        line.replaceAll(findTerm + "$", replaceWith);
   }
 
   /**
