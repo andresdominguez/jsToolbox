@@ -42,7 +42,7 @@ public class ToObjectConverterTest {
 
     String expected = "var theThing = {\n" +
         "  first: 'Jackie',\n" +
-        "  last: 'Chan'," +
+        "  last: 'Chan',\n" +
         "  phone: {\n" +
         "    areacode: 212,\n" +
         "    phone: '123-4567'\n" +
