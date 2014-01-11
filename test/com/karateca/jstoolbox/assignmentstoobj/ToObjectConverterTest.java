@@ -18,7 +18,7 @@ public class ToObjectConverterTest {
         "theThing.first = 'Jackie';\n" +
         "theThing.last = 'Chan';\n" +
         "theThing.phone = {\n" +
-        "  areacode: 212,\n" +
+        "  areaCode: 212,\n" +
         "  phone: '123-4567'\n" +
         "};\n";
     converter = new ToObjectConverter(codeText);
@@ -44,7 +44,7 @@ public class ToObjectConverterTest {
         "  first: 'Jackie',\n" +
         "  last: 'Chan',\n" +
         "  phone: {\n" +
-        "    areacode: 212,\n" +
+        "    areaCode: 212,\n" +
         "    phone: '123-4567'\n" +
         "  }\n" +
         "};";
