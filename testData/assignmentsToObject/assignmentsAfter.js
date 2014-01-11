@@ -9,11 +9,12 @@ SomeClass = function (first, last) {
   this.last = last;
 };
 
+<selection>
 var theThing = {
   fist: 'Jackie',
   last: 'Chan',
   phone: {
-    areacode: 212,
-    phone: '123-4567'
-  }
-};
+  areacode: 212,
+  phone: '123-4567'
+}
+};</selection>
