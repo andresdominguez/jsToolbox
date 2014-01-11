@@ -42,6 +42,9 @@ public class AssignmentsToObjectAction extends GenerateAction {
     ToObjectConverter converter = new ToObjectConverter(selectedText);
 
     String objectDeclaration = converter.getObjectDeclaration();
+    if (objectDeclaration == null) {
+      return;
+    }
     replaceString(objectDeclaration, selectionStart, selectionEnd);
   }
 
