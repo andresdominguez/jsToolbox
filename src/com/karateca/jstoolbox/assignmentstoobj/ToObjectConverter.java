@@ -128,8 +128,8 @@ class ToObjectConverter {
   }
 
   private boolean firstLineMatchesObjDeclaration() {
-    Pattern pattern = Pattern.compile("(\\s*var\\s+)?\\w+\\s*=\\s*\\{\\s*\\};");
-    String firstLine = StringUtils.substringBefore(selectedCode, "\n");
+    Pattern pattern = Pattern.compile("(\\s*var\\s+)?\\w+\\s*=\\s*");
+    String firstLine = StringUtils.substringBefore(selectedCode, "{");
     Matcher matcher = pattern.matcher(firstLine);
     return matcher.find();
   }
