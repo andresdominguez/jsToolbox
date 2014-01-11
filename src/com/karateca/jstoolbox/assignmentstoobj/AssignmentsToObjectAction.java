@@ -38,7 +38,6 @@ public class AssignmentsToObjectAction extends GenerateAction {
     String documentText = document.getText();
     String selectedText = documentText.substring(selectionStart, selectionEnd);
 
-    System.out.println(selectedText);
     ToObjectConverter converter = new ToObjectConverter(selectedText);
 
     String objectDeclaration = converter.getObjectDeclaration();
