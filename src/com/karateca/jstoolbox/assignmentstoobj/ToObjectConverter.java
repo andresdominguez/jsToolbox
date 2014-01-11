@@ -38,9 +38,34 @@ class ToObjectConverter {
 
     int braceIndex = selectedCode.indexOf("{");
     String substring = selectedCode.substring(0, braceIndex + 1);
-    sb.append(substring + "\n");
+    sb.append(substring).append("\n");
 
     List<String> declarations = getVariableDeclarations(variableName);
+    List<String> transformed = transformVariables(declarations, variableName);
+
+    // Remove the last comma.
+    int lastIndex = transformed.size() - 1;
+    String lastItem = transformed.get(lastIndex);
+    if (lastItem.endsWith("\n")) {
+      lastItem = lastItem.replaceAll(",\n$", "\n");
+    } else {
+      lastItem = lastItem.replaceAll(",$", "");
+    }
+
+    transformed.set(lastIndex, lastItem);
+
+    for (String var : transformed) {
+      sb.append(var);
+    }
+
+    // Close the object expression.
+    sb.append("};");
+
+    return sb.toString();
+  }
+
+  private List<String> transformVariables(List<String> declarations, String variableName) {
+    List<String> result = new ArrayList<String>();
 
     String varStartWithDot = variableName + "\\.";
 
@@ -48,22 +73,24 @@ class ToObjectConverter {
       // Remove the "foo." from "foo.propertyName".
       String var = varDeclaration.replaceFirst(varStartWithDot, indentation);
 
+      // Replace the "=" with ":".
       var = var.replaceFirst("\\s*=", ":");
 
+      // Replace the ";" with "," at the end.
       if (var.endsWith("\n")) {
         var = var.replaceAll(";\\n$", ",\n");
       } else {
         var = var.replaceAll(";$", ",");
       }
 
-      sb.append(var);
+      result.add(var);
     }
 
-    sb.append("};");
+    return result;
+  }
 
-    System.out.println(sb);
-
-    return sb.toString();
+  private String removeCharAtEnd(String line, String charToRemove) {
+    return line;
   }
 
   /**
