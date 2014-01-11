@@ -10,6 +10,7 @@ import java.util.regex.Pattern;
  */
 class ToObjectConverter {
   private final String selectedCode;
+  // Find the variable name in: "var foo =".
   public static final Pattern variableName = Pattern.compile("(\\s*var\\s+)?(\\w+)[\\s=]*");
 
   ToObjectConverter(String selectedCode) {
