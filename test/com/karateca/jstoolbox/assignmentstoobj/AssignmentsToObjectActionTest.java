@@ -14,12 +14,12 @@ public class AssignmentsToObjectActionTest extends LightCodeInsightFixtureTestCa
   }
 
   public void testTransformToObject() {
-    myFixture.configureByFiles("assignmentsBefore.js");
+    myFixture.configureByFiles("assignmentsToObjectBefore.js");
 
     myFixture.performEditorAction("com.karateca.jstoolbox.assignmentstoobj.AssignmentsToObjectAction");
 
     myFixture.checkResultByFile(
-        "assignmentsBefore.js",
-        "assignmentsAfter.js", true);
+        "assignmentsToObjectBefore.js",
+        "assignmentsToObjectAfter.js", true);
   }
 }
