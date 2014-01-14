@@ -4,8 +4,8 @@ import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.PlatformDataKeys;
 import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.editor.Editor;
+import com.intellij.openapi.editor.SelectionModel;
 import com.intellij.openapi.project.Project;
-import com.karateca.jstoolbox.LineRange;
 import com.karateca.jstoolbox.generatemethod.GenerateAction;
 
 /**
@@ -17,26 +17,24 @@ public class AssignmentsToObjectAction extends GenerateAction {
 
   public void actionPerformed(AnActionEvent actionEvent) {
     Editor editor = actionEvent.getData(PlatformDataKeys.EDITOR);
-    if (editor == null) {
+    if (editor == null || !canEnableAction(actionEvent)) {
       return;
     }
+
+    // No selection? Nothing to do here.
+    SelectionModel selection = editor.getSelectionModel();
+    if (!selection.hasSelection()) {
+      return;
+    }
+
     document = editor.getDocument();
     project = getEventProject(actionEvent);
 
-    if (!this.canEnableAction(actionEvent)) {
-      return;
-    }
-
-    LineRange lineRange = getSelectedLineRange(editor);
-    if (lineRange.getStart() == lineRange.getEnd()) {
-      return;
-    }
-
-    int selectionStart = document.getLineStartOffset(lineRange.getStart());
-    int selectionEnd = document.getLineEndOffset(lineRange.getEnd());
+    int start = selection.getSelectionStart();
+    int end = selection.getSelectionEnd();
 
     String documentText = document.getText();
-    String selectedText = documentText.substring(selectionStart, selectionEnd);
+    String selectedText = documentText.substring(start, end);
 
     ToObjectConverter converter = new ToObjectConverter(selectedText);
 
@@ -44,7 +42,7 @@ public class AssignmentsToObjectAction extends GenerateAction {
     if (objectDeclaration == null) {
       return;
     }
-    replaceString(objectDeclaration, selectionStart, selectionEnd);
+    replaceString(objectDeclaration, start, end);
   }
 
   private void replaceString(final String replacementText, final int start, final int end) {
