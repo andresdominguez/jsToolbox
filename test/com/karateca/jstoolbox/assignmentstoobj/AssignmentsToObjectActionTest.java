@@ -14,12 +14,27 @@ public class AssignmentsToObjectActionTest extends LightCodeInsightFixtureTestCa
   }
 
   public void testTransformToObject() {
-    myFixture.configureByFiles("assignmentsToObjectBefore.js");
-
-    myFixture.performEditorAction("com.karateca.jstoolbox.assignmentstoobj.AssignmentsToObjectAction");
+    runActionOnFile("assignmentsToObjectBefore.js");
 
     myFixture.checkResultByFile(
         "assignmentsToObjectBefore.js",
-        "assignmentsToObjectAfter.js", true);
+        "assignmentsToObjectAfter.js",
+        true);
+  }
+
+  public void testTransformPartialSelection() {
+    runActionOnFile("assignmentsToObjectPartialSelBefore.js");
+
+    myFixture.checkResultByFile(
+        "assignmentsToObjectPartialSelBefore.js",
+        "assignmentsToObjectPartialSelAfter.js",
+        true
+    );
+  }
+
+  private void runActionOnFile(String fileName) {
+    myFixture.configureByFiles(fileName);
+
+    myFixture.performEditorAction("com.karateca.jstoolbox.assignmentstoobj.AssignmentsToObjectAction");
   }
 }
