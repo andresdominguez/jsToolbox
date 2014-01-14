@@ -15,6 +15,8 @@ TheConstructor.prototype.someFn = function (left, right) {
     return left + right;
 };
 
+<selection>
+
 var foo = {};
 foo.one = 'xxx';
 foo.two = 123;
@@ -23,3 +25,4 @@ foo.person = {
         name: 'John',
         lastName: 'Doe'
     };
+</selection>
