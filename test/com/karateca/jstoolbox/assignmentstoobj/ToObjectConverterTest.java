@@ -4,6 +4,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 /**
  * @author Andres Dominguez.
@@ -49,5 +50,22 @@ public class ToObjectConverterTest {
         "}\n" +
         "};";
     assertEquals(expected, code);
+  }
+
+  @Test
+  public void shouldIgnoreMalformedCode() {
+    String code = "\n" +
+        "var theThing = {\n" +
+        "  fist: 'Jackie',\n" +
+        "  last: 'Chan',\n" +
+        "  phone: {\n" +
+        "        areacode: 212,\n" +
+        "        phone: '123-4567'\n" +
+        "    }\n" +
+        "};";
+
+    converter = new ToObjectConverter(code);
+
+    assertNull(converter.getObjectDeclaration());
   }
 }

@@ -43,6 +43,10 @@ class ToObjectConverter {
     List<String> declarations = getVariableDeclarations(variableName);
     List<String> transformed = transformVariables(declarations, variableName);
 
+    if (transformed.size() == 0) {
+      return null;
+    }
+
     // Remove the last comma.
     int lastIndex = transformed.size() - 1;
     String lastItem = transformed.get(lastIndex);
