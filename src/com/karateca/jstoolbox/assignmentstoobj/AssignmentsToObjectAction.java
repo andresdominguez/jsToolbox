@@ -30,19 +30,17 @@ public class AssignmentsToObjectAction extends GenerateAction {
     document = editor.getDocument();
     project = getEventProject(actionEvent);
 
-    int start = selection.getSelectionStart();
-    int end = selection.getSelectionEnd();
-
-    String documentText = document.getText();
-    String selectedText = documentText.substring(start, end);
-
+    String selectedText = selection.getSelectedText();
     ToObjectConverter converter = new ToObjectConverter(selectedText);
 
     String objectDeclaration = converter.getObjectDeclaration();
     if (objectDeclaration == null) {
       return;
     }
-    replaceString(objectDeclaration, start, end);
+
+    replaceString(objectDeclaration,
+        selection.getSelectionStart(),
+        selection.getSelectionEnd());
   }
 
   private void replaceString(final String replacementText, final int start, final int end) {
