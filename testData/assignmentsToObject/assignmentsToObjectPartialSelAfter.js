@@ -13,9 +13,7 @@ SomeClass = function (first, last) {
 var theThing = {
   fist: 'Jackie',
   last: 'Chan'
-};
-</selection>
-  phone: {
+};</selection>theThing.phone = {
   areacode: 212,
   phone: '123-4567'
-}
+};
