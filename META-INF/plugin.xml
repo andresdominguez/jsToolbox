@@ -146,7 +146,7 @@
     <h2>1.2.1</h2>
     <p>Fix bug finding the parents in override javascript method</p>
     <h2>1.3</h2>
-    <p>Added object to assignments</p>
+    <p>Add shortcut to add a semicolon at the end of the current line.</p>
     ]]>
     </change-notes>
 
@@ -198,6 +198,11 @@
             description="Open the current file in browser">
       <keyboard-shortcut keymap="$default" first-keystroke="shift ctrl alt G"/>
     </action>
+    <action id="com.karateca.jstoolbox.semicolon.AddSemiColonAction"
+            class="com.karateca.jstoolbox.semicolon.AddSemiColonAction"
+            text="Add semicolon" description="Add a ; at the end of the line">
+      <keyboard-shortcut keymap="$default" first-keystroke="shift ctrl SEMICOLON"/>
+    </action>
     <action id="com.karateca.jstoolbox.generatemethod.GenerateMethodAction"
             class="com.karateca.jstoolbox.generatemethod.GenerateMethodAction"
             text="Generate javascript method"
@@ -235,6 +240,7 @@
       <reference ref="com.karateca.jstoolbox.torelated.GoToTestAction"/>
       <reference ref="com.karateca.jstoolbox.torelated.GoToViewAction"/>
       <reference ref="com.karateca.jstoolbox.tobrowser.ToBrowserAction"/>
+      <reference ref="com.karateca.jstoolbox.semicolon.AddSemiColonAction"/>
       <reference ref="com.karateca.jstoolbox.generatemethod.GenerateMethodAction"/>
       <reference ref="com.karateca.jstoolbox.generatemethod.OverrideMethodAction"/>
       <reference ref="com.karateca.jstoolbox.objtoassignments.ObjectToAssignmentsAction"/>
