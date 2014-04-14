@@ -106,7 +106,7 @@ public class JoinerAction extends MyAction {
     String textForRange = getTextForRange(new TextRange(startOffset, endOffset));
 
     String firstLine = getTextForRange(startLineRange);
-    String splitSeparator = firstLine.matches("'\\s*\\+\\s*") ?
+    String splitSeparator = firstLine.matches(".*'\\s*\\+\\s*") ?
         singleQuotesSplitSeparator :
         doubleQuotesSplitSeparator;
 
