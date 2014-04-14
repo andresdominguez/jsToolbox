@@ -15,51 +15,47 @@ import com.intellij.openapi.util.SystemInfo;
 import com.intellij.openapi.wm.IdeFocusManager;
 import com.intellij.ui.awt.RelativePoint;
 
+import javax.swing.*;
 import java.awt.*;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
 public class SortSelection extends AnAction {
 
   private Project project;
-  private SearchBox searchBox;
+  private JTextField searchBox;
   private JBPopup popup;
+  private Editor editor;
 
   public void actionPerformed(AnActionEvent actionEvent) {
-
-    Editor editor = actionEvent.getData(PlatformDataKeys.EDITOR);
+    editor = actionEvent.getData(PlatformDataKeys.EDITOR);
     if (editor == null) {
       return;
     }
 
     project = actionEvent.getProject();
+    searchBox = new JTextField();
 
+    Dimension dimension = getDimension(editor);
+    showSearchBox(dimension);
+  }
+
+  private Dimension getDimension(Editor editor) {
     EditorColorsScheme scheme = EditorColorsManager.getInstance().getGlobalScheme();
 
     Font font = new Font(scheme.getEditorFontName(), Font.BOLD, scheme.getConsoleFontSize());
 
-    searchBox = new SearchBox();
     int width = searchBox.getFontMetrics(font).stringWidth("w");
     Dimension dimension = new Dimension(width * 2, editor.getLineHeight());
     if (SystemInfo.isMac) {
       dimension.setSize(dimension.width * 2, dimension.height * 2);
     }
+    return dimension;
+  }
 
+  private void showSearchBox(Dimension dimension) {
     searchBox.setSize(dimension);
     searchBox.setFocusable(true);
-    searchBox.addFocusListener(new FocusListener() {
-      @Override
-      public void focusGained(FocusEvent focusEvent) {
-        System.out.println("gained");
-      }
-
-      @Override
-      public void focusLost(FocusEvent focusEvent) {
-        System.out.println("lost");
-      }
-    });
     searchBox.addKeyListener(new KeyAdapter() {
       @Override
       public void keyPressed(KeyEvent keyEvent) {
