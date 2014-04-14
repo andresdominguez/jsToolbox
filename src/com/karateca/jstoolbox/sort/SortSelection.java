@@ -5,16 +5,25 @@ import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.PlatformDataKeys;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.editor.Editor;
+import com.intellij.openapi.editor.VisualPosition;
 import com.intellij.openapi.editor.colors.EditorColorsManager;
 import com.intellij.openapi.editor.colors.EditorColorsScheme;
+import com.intellij.openapi.project.Project;
+import com.intellij.openapi.ui.popup.ComponentPopupBuilder;
+import com.intellij.openapi.ui.popup.JBPopup;
+import com.intellij.openapi.ui.popup.JBPopupFactory;
 import com.intellij.openapi.util.SystemInfo;
 import com.intellij.openapi.wm.IdeFocusManager;
+import com.intellij.ui.awt.RelativePoint;
 
 import java.awt.*;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 
 public class SortSelection extends AnAction {
+
+  private Project project;
+  private SearchBox searchBox;
 
   public void actionPerformed(AnActionEvent actionEvent) {
 
@@ -23,11 +32,13 @@ public class SortSelection extends AnAction {
       return;
     }
 
+    project = actionEvent.getProject();
+
     EditorColorsScheme scheme = EditorColorsManager.getInstance().getGlobalScheme();
 
     Font font = new Font(scheme.getEditorFontName(), Font.BOLD, scheme.getConsoleFontSize());
 
-    SearchBox searchBox = new SearchBox();
+    searchBox = new SearchBox();
     int width = searchBox.getFontMetrics(font).stringWidth("w");
     Dimension dimension = new Dimension(width * 2, editor.getLineHeight());
     if (SystemInfo.isMac) {
@@ -47,6 +58,29 @@ public class SortSelection extends AnAction {
         System.out.println("lost");
       }
     });
+
+    searchBox.setVisible(true);
+
+    JBPopup popup = JBPopupFactory.getInstance()
+            .createComponentPopupBuilder(searchBox, searchBox)
+            .setCancelKeyEnabled(true)
+            .createPopup();
+
+    popup.show(guessBestLocation(editor));
+    popup.setSize(dimension);
+
+    focus();
+  }
+
+  private RelativePoint guessBestLocation(Editor editor) {
+    VisualPosition logicalPosition = editor.getCaretModel().getVisualPosition();
+    return getPointFromVisualPosition(editor, logicalPosition);
+  }
+
+  private RelativePoint getPointFromVisualPosition(Editor editor, VisualPosition logicalPosition) {
+    Point p = editor.visualPositionToXY(new VisualPosition(logicalPosition.line, logicalPosition.column));
+    return new RelativePoint(editor.getContentComponent(), p);
+
   }
 
   void focus() {
