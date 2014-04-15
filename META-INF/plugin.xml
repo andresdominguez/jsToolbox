@@ -20,6 +20,7 @@
       <li>Join multi-line strings and variable declarations [Ctrl SHIFT Alt J], [Ctrl Command J] on Mac</li>
       <li>Open current file in browser [Ctrl SHIFT Alt G], [SHIFT Option Command G] on Mac</li>
       <li>Add a semi-color at the end of the line [Ctrl SHIFT ;], [Command SHIFT ;] on Mac</li>
+      <li>Sort the selection using a user-defined splitter [Ctrl SHIFT 1], [Command SHIFT 1] on Mac</li>
       <li>Generate a method for the current javascript class</li>
       <li>Override a method from the parent javascript class</li>
     </ul>
@@ -148,6 +149,8 @@
     <p>Fix bug finding the parents in override javascript method</p>
     <h2>1.3</h2>
     <p>Add shortcut to add a semicolon at the end of the current line.</p>
+    <h2>1.4</h2>
+    <p>Add sort shortcut</p>
     ]]>
     </change-notes>
 
