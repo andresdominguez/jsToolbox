@@ -1,10 +1,10 @@
 package com.karateca.jstoolbox.sort;
 
-import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
-import com.intellij.openapi.actionSystem.PlatformDataKeys;
 import com.intellij.openapi.application.ApplicationManager;
+import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.editor.Editor;
+import com.intellij.openapi.editor.SelectionModel;
 import com.intellij.openapi.editor.VisualPosition;
 import com.intellij.openapi.editor.colors.EditorColorsManager;
 import com.intellij.openapi.editor.colors.EditorColorsScheme;
@@ -14,21 +14,36 @@ import com.intellij.openapi.ui.popup.JBPopupFactory;
 import com.intellij.openapi.util.SystemInfo;
 import com.intellij.openapi.wm.IdeFocusManager;
 import com.intellij.ui.awt.RelativePoint;
+import com.karateca.jstoolbox.MyAction;
+import org.apache.commons.lang.StringUtils;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.*;
+import java.util.List;
 
-public class SortSelection extends AnAction {
+public class SortSelection extends MyAction {
 
   private Project project;
   private JTextField searchBox;
   private JBPopup popup;
   private Editor editor;
 
+  @Override
+  protected boolean canEnableAction(AnActionEvent e) {
+    // Must have a selection to do the sort.
+    editor = getEditor(e);
+    if (editor == null) {
+      return false;
+    }
+
+    return editor.getSelectionModel().hasSelection();
+  }
+
   public void actionPerformed(AnActionEvent actionEvent) {
-    editor = actionEvent.getData(PlatformDataKeys.EDITOR);
+    getEditor(actionEvent);
     if (editor == null) {
       return;
     }
@@ -76,11 +91,43 @@ public class SortSelection extends AnAction {
     popup.show(guessBestLocation(editor));
     popup.setSize(dimension);
 
-    focus();
+    // Get focus.
+    ApplicationManager.getApplication().invokeLater(new Runnable() {
+      @Override
+      public void run() {
+        IdeFocusManager.getInstance(project).requestFocus(searchBox, true);
+      }
+    });
   }
 
   private void doSort() {
-    String text = searchBox.getText();
+    String separator = searchBox.getText();
+    final SelectionModel selectionModel = editor.getSelectionModel();
+    String selectedText = selectionModel.getSelectedText();
+    if (selectedText == null) {
+      return;
+    }
+
+    List<String> strings = Arrays.asList(selectedText.split(separator));
+    Collections.sort(strings, new Comparator<String>() {
+      @Override
+      public int compare(String s, String s2) {
+        return s.trim().compareTo(s2.trim());
+      }
+    });
+
+    final String join = StringUtils.join(strings, separator);
+    final Document document = editor.getDocument();
+    runWriteActionInsideCommand(project, "Joining", new Runnable() {
+      @Override
+      public void run() {
+        document.replaceString(
+                selectionModel.getSelectionStart(),
+                selectionModel.getSelectionEnd(),
+                join
+        );
+      }
+    });
     popup.closeOk(null);
   }
 
@@ -92,14 +139,5 @@ public class SortSelection extends AnAction {
   private RelativePoint getPointFromVisualPosition(Editor editor, VisualPosition logicalPosition) {
     Point p = editor.visualPositionToXY(new VisualPosition(logicalPosition.line, logicalPosition.column));
     return new RelativePoint(editor.getContentComponent(), p);
-  }
-
-  void focus() {
-    ApplicationManager.getApplication().invokeLater(new Runnable() {
-      @Override
-      public void run() {
-        IdeFocusManager.getInstance(project).requestFocus(searchBox, true);
-      }
-    });
   }
 }
