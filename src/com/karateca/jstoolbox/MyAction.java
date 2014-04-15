@@ -54,4 +54,8 @@ public abstract class MyAction extends AnAction {
       }
     }, description, null);
   }
+
+  protected Editor getEditor(AnActionEvent actionEvent) {
+    return actionEvent.getData(PlatformDataKeys.EDITOR);
+  }
 }
