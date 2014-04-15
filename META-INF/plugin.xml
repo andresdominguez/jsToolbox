@@ -136,6 +136,15 @@
 
     <p>You need to annotate the classes with the @constructor and @extends annotations, otherwise the plugin cannot find
       the class hierarchy.</p>
+
+    <h3>Add a semi-color at the end of the line [Ctrl SHIFT ;], [Command SHIFT ;] on Mac</h3>
+
+    <p>Add a ; character at the end of the current line.</p>
+    <li>Sort the selection using a user-defined splitter [Ctrl SHIFT 1], [Command SHIFT 1] on Mac</li>
+
+    <h3>Sort the selection using a user-defined splitter [Ctrl SHIFT 1], [Command SHIFT 1] on Mac</h3>
+
+    <p>For example, select a bunch of arguments, choose sort, and enter a text (eg. ,) to split and sort the result.</p>
     ]]></description>
 
   <change-notes><![CDATA[
