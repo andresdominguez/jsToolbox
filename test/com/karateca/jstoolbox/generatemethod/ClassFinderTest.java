@@ -46,6 +46,13 @@ public class ClassFinderTest extends BaseTestCase {
     assertEquals(className, "MyClass.ABC");
   }
 
+  public void testGetClassNameStartingWithVar() {
+    // Given a constructor with format: "var MyClass".
+    givenAFile("varConstructor.js");
+
+    assertEquals(classFinder.getClassName(), "TheClass");
+  }
+
   public void testGetClassNameBugFix() {
     // Given a constructor in multiple lines.
     givenAFile("multiLineConstructor.js");
@@ -112,18 +119,18 @@ public class ClassFinderTest extends BaseTestCase {
     Function withManyLines = methods.get(2);
     assertEquals("withManyLines", withManyLines.getName());
     assertEquals("one, two,\n" +
-        "              three", withManyLines.getArguments());
+            "              three", withManyLines.getArguments());
     assertNull(withManyLines.getJsDoc());
 
     Function withJsDoc = methods.get(3);
     assertEquals("withJsDoc", withJsDoc.getName());
     assertEquals("one, two, three", withJsDoc.getArguments());
     assertEquals("/**\n" +
-        " *\n" +
-        " * @param one\n" +
-        " * @param two\n" +
-        " * @param three\n" +
-        " */", withJsDoc.getJsDoc());
+            " *\n" +
+            " * @param one\n" +
+            " * @param two\n" +
+            " * @param three\n" +
+            " */", withJsDoc.getJsDoc());
   }
 
   public void testGeSortedMethods() {
