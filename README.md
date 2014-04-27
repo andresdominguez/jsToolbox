@@ -11,6 +11,7 @@ Here is a list of available actions:
 * Join multi-line strings and variable declarations [Ctrl SHIFT Alt J], [Ctrl Command J] on a Mac
 * Open current file in browser [Ctrl SHIFT Alt G], [SHIFT Option Command G] on a Mac
 * Add a semicolon at the end of the current line [Ctrl SHIFT ;], [Command SHIFT ;] on a Mac.
+* Sort the selection using a user-defined splitter [SHIFT alt 1], [Command SHIFT 1] on Mac.
 * Generate a method for the current javascript class
 * Override a method from the parent javascript class
 
@@ -105,6 +106,10 @@ use when opening the browser under Settings > JS Toolbox.
 ### Add a semicolon at the end of the current line [Ctrl SHIFT ;], [Command SHIFT ;] on a Mac.
 
 Add a semicolon at the end of the current line.
+
+### Sort the selection using a user-defined splitter [SHIFT alt 1], [Command SHIFT 1] on Mac.
+
+Select a block of code that you want to sort, choose sort, and enter a separator (like comma or new line) to sort.
 
 ### Generate a method for the current javascript class (Under generate menu)
 

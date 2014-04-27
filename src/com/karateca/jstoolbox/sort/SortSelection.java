@@ -62,9 +62,8 @@ public class SortSelection extends MyAction {
 
     int width = searchBox.getFontMetrics(font).stringWidth("w");
     Dimension dimension = new Dimension(width * 2, editor.getLineHeight());
-    if (SystemInfo.isMac) {
-      dimension.setSize(dimension.width * 2, dimension.height * 2);
-    }
+    dimension.setSize(dimension.width * 2, dimension.height * 2);
+
     return dimension;
   }
 
