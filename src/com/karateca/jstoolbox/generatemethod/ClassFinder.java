@@ -17,6 +17,7 @@ public class ClassFinder {
   // Constructor with this pattern: function MyConstructor() {}
   private static final Pattern FUNCTION_THEN_NAME_PATTERN =
       Pattern.compile("(\\s*function\\s+)([\\w\\.]+)\\s*.*");
+
   // Constructor with this pattern: MyConstructor = function () {}
   private static final Pattern NAME_THEN_FUNCTION_PATTERN =
       Pattern.compile("(\\s*)([\\w\\.]+)(\\s*=\\s*function.*)");
@@ -44,16 +45,16 @@ public class ClassFinder {
     // Determine the type of constructor:
     // 1) function MyConstructor() {}
     // 2) MyConstructor = function() {}
-    int openingBraceIndex = documentText.indexOf("(", closingJsDocOffset);
-    if (openingBraceIndex < 0) {
+    int openingParenIndex = documentText.indexOf("(", closingJsDocOffset);
+    if (openingParenIndex < 0) {
       return null;
     }
 
     String constructorSubstring = documentText.substring(
-        closingJsDocOffset, openingBraceIndex).trim();
+        closingJsDocOffset, openingParenIndex).trim();
 
     boolean isNameThenFunctionPattern =
-        constructorSubstring.matches("\\s*[\\w\\.]+\\s*=\\s*function.*");
+        constructorSubstring.matches("\\s*(var\\s+)?[\\w\\.]+\\s*=\\s*function.*");
     Pattern pattern = isNameThenFunctionPattern ?
         NAME_THEN_FUNCTION_PATTERN : FUNCTION_THEN_NAME_PATTERN;
 
