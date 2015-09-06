@@ -11,6 +11,8 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 
+import static com.karateca.jstoolbox.torelated.CandidateFinder.suggestDestinationFiles;
+
 /**
  * foo-controller.js to vie
  * <p>
@@ -35,7 +37,26 @@ abstract class GoToRelatedAction extends MyAction {
     performSwitch(event, getCurrentFileName(event));
   }
 
-  abstract void performSwitch(AnActionEvent event, String fileName);
+  void performSwitch(AnActionEvent event, String fileName) {
+    List<String> fromSuffixes = suffixesForType(getFileType(fileName));
+    List<String> toSuffixes = suffixesForType(getNavigateTo(fileName));
+
+    goToFiles(event, suggestDestinationFiles(fileName, fromSuffixes, toSuffixes));
+  }
+
+  List<String> suffixesForType(FileType fileType) {
+    if (fileType == FileType.FILE) {
+      return fileSuffixList;
+    }
+
+    if (fileType == FileType.TEST) {
+      return testSuffixList;
+    }
+
+    return viewSuffixList;
+  }
+
+  abstract FileType getNavigateTo(String fileName);
 
   void readConfig() {
     JsToolboxSettings settings = new JsToolboxSettings();
@@ -45,16 +66,24 @@ abstract class GoToRelatedAction extends MyAction {
     testSuffixList = Arrays.asList(settings.getTestSuffix().split(","));
   }
 
-  boolean isInCodeFile(String fileName) {
-    return !isTestFile(fileName) && !isViewFile(fileName);
-  }
-
   boolean isViewFile(String fileName) {
     return endsWithAnyOf(fileName, viewSuffixList);
   }
 
   boolean isTestFile(String fileName) {
     return endsWithAnyOf(fileName, testSuffixList);
+  }
+
+  FileType getFileType(String fileName) {
+    if (isViewFile(fileName)) {
+      return FileType.VIEW;
+    }
+
+    if (isTestFile(fileName)) {
+      return FileType.TEST;
+    }
+
+    return FileType.FILE;
   }
 
   private boolean endsWithAnyOf(String fileName, List<String> destinationSuffix) {
