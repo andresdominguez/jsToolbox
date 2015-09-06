@@ -1,11 +1,9 @@
 package com.karateca.jstoolbox.torelated;
 
-import java.util.List;
-
 public class LongestSuffix {
 
-  public static String find(List<String> matches, String filePath) {
-    String longest = matches.get(0);
+  public static String find(Iterable<String> matches, String filePath) {
+    String longest = null;
     int longestLen = 0;
 
     StringBuilder reversedCurrentFilePath = new StringBuilder(filePath).reverse();
