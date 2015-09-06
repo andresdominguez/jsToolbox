@@ -1,14 +1,19 @@
 package com.karateca.jstoolbox.torelated;
 
-import java.util.List;
+import com.intellij.openapi.actionSystem.AnActionEvent;
 
-/**
- * @author Andres Dominguez
- */
+import static com.karateca.jstoolbox.torelated.CandidateFinder.suggestDestinationFiles;
+
 public class GoToViewAction extends GoToRelatedAction {
 
-  @Override
-  List<String> getDestinationSuffixList() {
-    return viewSuffixList;
+  protected void performSwitch(AnActionEvent e, String fileName) {
+    if (isViewFile(fileName)) {
+      goToFiles(e, suggestDestinationFiles(fileName, viewSuffixList, fileSuffixList));
+    } else if (isTestFile(fileName)) {
+      goToFiles(e, suggestDestinationFiles(fileName, testSuffixList, viewSuffixList));
+    } else if (isInCodeFile(fileName)) {
+      goToFiles(e, suggestDestinationFiles(fileName, fileSuffixList, viewSuffixList));
+    }
+
   }
 }
