@@ -8,6 +8,7 @@ import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.command.CommandProcessor;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.project.Project;
+import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.PsiFile;
 
 /**
@@ -30,6 +31,11 @@ public abstract class MyAction extends AnAction {
   protected String getCurrentFileName(AnActionEvent e) {
     PsiFile file = e.getData(LangDataKeys.PSI_FILE);
     return file == null ? "" : file.getName();
+  }
+
+  protected String getCurrentFilePath(AnActionEvent event) {
+    VirtualFile virtualFile = event.getData(LangDataKeys.VIRTUAL_FILE);
+    return virtualFile == null ? "" : virtualFile.getCanonicalPath();
   }
 
   protected boolean isJsFile(AnActionEvent e) {
