@@ -137,11 +137,6 @@
     <p>You need to annotate the classes with the @constructor and @extends annotations, otherwise the plugin cannot find
       the class hierarchy.</p>
 
-    <h3>Add a semi-color at the end of the line [Ctrl SHIFT ;], [Command SHIFT ;] on Mac</h3>
-
-    <p>Add a ; character at the end of the current line.</p>
-    <li>Sort the selection using a user-defined splitter [Ctrl SHIFT 1], [Command SHIFT 1] on Mac</li>
-
     <h3>Sort the selection using a user-defined splitter [Ctrl SHIFT 1], [Command SHIFT 1] on Mac</h3>
 
     <p>For example, select a bunch of arguments, choose sort, and enter a text (eg. ,) to split and sort the result.</p>
@@ -217,11 +212,6 @@
             description="Open the current file in browser">
       <keyboard-shortcut keymap="$default" first-keystroke="shift ctrl alt G"/>
     </action>
-    <action id="com.karateca.jstoolbox.semicolon.AddSemiColonAction"
-            class="com.karateca.jstoolbox.semicolon.AddSemiColonAction"
-            text="Add semicolon" description="Add a ; at the end of the line">
-      <keyboard-shortcut keymap="$default" first-keystroke="shift ctrl SEMICOLON"/>
-    </action>
     <action id="com.karateca.jstoolbox.generatemethod.GenerateMethodAction"
             class="com.karateca.jstoolbox.generatemethod.GenerateMethodAction"
             text="Generate javascript method"
@@ -253,7 +243,6 @@
       <reference ref="com.karateca.jstoolbox.torelated.GoToTestAction"/>
       <reference ref="com.karateca.jstoolbox.torelated.GoToViewAction"/>
       <reference ref="com.karateca.jstoolbox.tobrowser.ToBrowserAction"/>
-      <reference ref="com.karateca.jstoolbox.semicolon.AddSemiColonAction"/>
       <reference ref="com.karateca.jstoolbox.sort.SortSelection"/>
       <reference ref="com.karateca.jstoolbox.generatemethod.GenerateMethodAction"/>
       <reference ref="com.karateca.jstoolbox.generatemethod.OverrideMethodAction"/>
