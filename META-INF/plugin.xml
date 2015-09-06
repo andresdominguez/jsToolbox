@@ -1,7 +1,7 @@
 <idea-plugin version="2">
   <id>com.karateca.jstoolbox</id>
   <name>JS Toolbox</name>
-  <version>1.5</version>
+  <version>1.6</version>
   <vendor email="code@karateca.com" url="http://www.andresdominguez.com">
     Andres Dominguez
   </vendor>
@@ -159,6 +159,8 @@
             <dd>Add sort shortcut</p>
             <dt>1.5</dt>
             <dd>Accept constructors starting with var. Change shortcuts for sort.</dd>
+            <dt>1.6</dt>
+            <dd>Improve the go view/test. Add line number in open in browser</dd>
         </dl>
         </html>
         ]]>
