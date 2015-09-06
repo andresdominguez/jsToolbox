@@ -137,7 +137,7 @@
             </constraints>
             <properties>
               <font style="2"/>
-              <text value="Use FILE_NAME e.g. https://github.com/search?q=FILE_NAME"/>
+              <text value="Use {fileName} and {line} e.g. https://github.com/search?q={fileName}#L{line}"/>
             </properties>
           </component>
           <component id="49c07" class="javax.swing.JCheckBox" binding="useFilePath">
@@ -172,7 +172,7 @@
             </constraints>
             <properties>
               <font style="2"/>
-              <text value="FILE_NAME will be replaced by the path of the file starting from &lt;root dir&gt;/path/to/currentFile.js"/>
+              <text value="{fileName} will be replaced by the path of the file starting from &lt;root dir&gt;/path/to/currentFile.js"/>
             </properties>
           </component>
         </children>

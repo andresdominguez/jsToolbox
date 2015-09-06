@@ -11,7 +11,8 @@ public class JsToolboxSettings {
     TestSuffix("com.karateca.jstoolbox.testSuffix", "-spec.js"),
     FileSuffix("com.karateca.jstoolbox.fileSuffix", ".js"),
     ViewSuffix("com.karateca.jstoolbox.viewSuffix", ".html"),
-    SearchUrl("com.karateca.jstoolbox.searchUrl", "https://github.com/search?q=FILE_NAME"),
+    SearchUrl("com.karateca.jstoolbox.searchUrl",
+        "https://github.com/search?q={fileName}#L{line}"),
     UseFilePath("com.karateca.jstoolbox.useFilePath", "false"),
     FromPath("com.karateca.jstoolbox.fromPath", "");
 
@@ -32,7 +33,8 @@ public class JsToolboxSettings {
     }
   }
 
-  public static final String FILE_NAME_TOKEN = "FILE_NAME";
+  public static final String FILE_NAME_TOKEN = "{fileName}";
+  public static final String LINE_TOKEN = "{line}";
 
   private final PropertiesComponent properties;
 
