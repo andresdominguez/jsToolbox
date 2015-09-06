@@ -2,18 +2,18 @@ package com.karateca.jstoolbox.torelated;
 
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.project.Project;
-import com.intellij.openapi.roots.ContentIterator;
 import com.intellij.openapi.roots.ProjectRootManager;
+import com.intellij.psi.PsiFile;
 import com.intellij.psi.PsiManager;
 import com.karateca.jstoolbox.MyAction;
 import com.karateca.jstoolbox.config.JsToolboxSettings;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-/**
- * @author Andres Dominguez.
- */
 abstract class GoToRelatedAction extends MyAction {
 
   abstract List<String> getDestinationSuffixList();
@@ -48,7 +48,7 @@ abstract class GoToRelatedAction extends MyAction {
     }
   }
 
-  private void readConfig() {
+  void readConfig() {
     JsToolboxSettings settings = new JsToolboxSettings();
 
     fileSuffixList = Arrays.asList(settings.getFileSuffix().split(","));
@@ -108,18 +108,46 @@ abstract class GoToRelatedAction extends MyAction {
 
   void goToFiles(AnActionEvent e, String fromSuffix, List<String> toSuffixes) {
     String fileName = getCurrentFileName(e);
+    String filePath = getCurrentFilePath(e);
 
     for (String suffix : toSuffixes) {
       String goToFileName = fileName.replace(fromSuffix, suffix);
 
-      openFileInEditor(goToFileName, e.getProject());
+      List<PsiFile> files = openFileInEditor(goToFileName, e.getProject());
+      if (files.size() == 0) {
+        return;
+      }
+
+      if (files.size() == 1) {
+        files.get(0).navigate(true);
+      }
+
+      // There is more that one match. Look for the closest match.
+      Map<String, PsiFile> filesByPath = groupFilesByPath(files);
+      String targetPath = filePath.replace(fileName, goToFileName);
+      String longest = LongestSuffix.find(filesByPath.keySet(), targetPath);
+      if (longest != null) {
+        filesByPath.get(longest).navigate(true);
+      }
     }
   }
 
-  void openFileInEditor(String findFileName, Project project) {
-    ContentIterator fileIterator = new FindRelatedFileIterator(findFileName, PsiManager.getInstance(
-        project));
+  @NotNull
+  private Map<String, PsiFile> groupFilesByPath(List<PsiFile> files) {
+    Map<String, PsiFile> filesByPath = new HashMap<>();
+    for (PsiFile file : files) {
+      String path = file.getVirtualFile().getCanonicalPath();
+      filesByPath.put(path, file);
+    }
+    return filesByPath;
+  }
 
-    ProjectRootManager.getInstance(project).getFileIndex().iterateContent(fileIterator);
+  List<PsiFile> openFileInEditor(String fileName, Project project) {
+    FindRelatedFileIterator iterator =
+        new FindRelatedFileIterator(fileName, PsiManager.getInstance(project));
+
+    ProjectRootManager.getInstance(project).getFileIndex().iterateContent(iterator);
+
+    return iterator.getFiles();
   }
 }
