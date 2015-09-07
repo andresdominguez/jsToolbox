@@ -8,6 +8,7 @@ public class SortDialog extends JDialog {
   private JButton buttonOK;
   private JButton buttonCancel;
   private JTextField sortByText;
+  public boolean clickedOk;
 
   public SortDialog() {
     setContentPane(contentPane);
@@ -43,13 +44,16 @@ public class SortDialog extends JDialog {
   }
 
   private void onOK() {
-// add your code here
+    clickedOk = true;
     dispose();
   }
 
   private void onCancel() {
-// add your code here if necessary
     dispose();
+  }
+
+  public String getSortToken() {
+    return this.sortByText.getText();
   }
 
   public static void main(String[] args) {
