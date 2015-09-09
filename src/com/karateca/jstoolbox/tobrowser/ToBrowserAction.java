@@ -59,7 +59,7 @@ public class ToBrowserAction extends MyAction {
     }
     Editor editor = getEditor(actionEvent);
     int offset = editor.getCaretModel().getVisualLineEnd();
-    return document.getLineNumber(offset) + 1;
+    return document.getLineNumber(offset);
   }
 
   private void openBrowser(String url) {
