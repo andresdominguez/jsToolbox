@@ -4,13 +4,10 @@ import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.editor.SelectionModel;
-import com.intellij.openapi.editor.VisualPosition;
 import com.intellij.openapi.project.Project;
-import com.intellij.ui.awt.RelativePoint;
 import com.karateca.jstoolbox.MyAction;
 import org.apache.commons.lang.StringUtils;
 
-import java.awt.*;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
@@ -39,32 +36,14 @@ public class SortSelection extends MyAction {
     }
 
     project = actionEvent.getProject();
-    String sortToken = showDialog();
-    if (sortToken != null) {
-      doSort(sortToken);
+    SortDialog dialog = new SortDialog(project);
+    dialog.show();
+    if (dialog.isOK()) {
+      doSort(dialog.getSortToken(), SortDialog.ignoreCase);
     }
   }
 
-  private String showDialog() {
-    SortDialog dialog = new SortDialog();
-    dialog.pack();
-    RelativePoint relativePoint = guessBestLocation(editor);
-    dialog.setLocation(relativePoint.getOriginalPoint());
-    dialog.setVisible(true);
-    return dialog.clickedOk ? dialog.getSortToken() : null;
-  }
-
-  private RelativePoint guessBestLocation(Editor editor) {
-    VisualPosition logicalPosition = editor.getCaretModel().getVisualPosition();
-    return getPointFromVisualPosition(editor, logicalPosition);
-  }
-
-  private RelativePoint getPointFromVisualPosition(Editor editor, VisualPosition logicalPosition) {
-    Point p = editor.visualPositionToXY(new VisualPosition(logicalPosition.line, logicalPosition.column));
-    return new RelativePoint(editor.getContentComponent(), p);
-  }
-
-  private void doSort(String separator) {
+  private void doSort(String separator, final boolean ignoreCase) {
     final SelectionModel selectionModel = editor.getSelectionModel();
     String selectedText = selectionModel.getSelectedText();
     if (selectedText == null) {
@@ -75,6 +54,10 @@ public class SortSelection extends MyAction {
     Collections.sort(strings, new Comparator<String>() {
       @Override
       public int compare(String s, String s2) {
+        if (ignoreCase) {
+          s = s.toLowerCase();
+          s2 = s2.toLowerCase();
+        }
         return s.trim().compareTo(s2.trim());
       }
     });
