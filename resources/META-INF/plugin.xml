@@ -142,7 +142,7 @@
     <p>For example, select a bunch of arguments, choose sort, and enter a text (eg. ,) to split and sort the result.</p>
     ]]></description>
 
-    <change-notes><![CDATA[
+  <change-notes><![CDATA[
       <html>
       <dl>
         <dt>1.0</dt>
@@ -164,7 +164,7 @@
       </dl>
       </html>
       ]]>
-    </change-notes>
+  </change-notes>
 
   <!-- please see http://confluence.jetbrains.net/display/IDEADEV/Build+Number+Ranges for description -->
   <idea-version since-build="107.105"/>
@@ -230,9 +230,9 @@
             class="com.karateca.jstoolbox.sort.SortSelection"
             text="Sort selection"
             description="Sort the currently selected items">
-        <keyboard-shortcut keymap="$default" first-keystroke="shift alt 1"/>
-        <keyboard-shortcut keymap="Mac OS X" first-keystroke="shift meta 1"/>
-        <keyboard-shortcut keymap="Mac OS X 10.5+" first-keystroke="shift meta 1"/>
+      <keyboard-shortcut keymap="$default" first-keystroke="shift alt 1"/>
+      <keyboard-shortcut keymap="Mac OS X" first-keystroke="shift meta 1"/>
+      <keyboard-shortcut keymap="Mac OS X 10.5+" first-keystroke="shift meta 1"/>
     </action>
 
     <!-- Add everything under tools -->
