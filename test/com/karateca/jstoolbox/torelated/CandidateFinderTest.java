@@ -1,6 +1,5 @@
 package com.karateca.jstoolbox.torelated;
 
-import org.hamcrest.Matchers;
 import org.junit.Test;
 
 import java.util.Arrays;
@@ -18,10 +17,10 @@ public class CandidateFinderTest {
     List<String> candidates = CandidateFinder.suggestDestinationFiles(
         "foo-controller.js", fromSuffixes, toSuffixes);
 
-    assertThat(candidates, Matchers.containsInAnyOrder(
-        "foo-controller_spec.js",
-        "foo-controller-spec.js",
-        "foo-spec.js",
-        "foo_spec.js"));
+    assertEquals(4, candidates.size());
+    assertTrue(candidates.contains("foo-controller_spec.js"));
+    assertTrue(candidates.contains("foo-controller-spec.js"));
+    assertTrue(candidates.contains("foo-spec.js"));
+    assertTrue(candidates.contains("foo_spec.js"));
   }
 }
