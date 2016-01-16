@@ -22,4 +22,17 @@ public class CaseHelper {
 
     return builder.toString();
   }
+
+  public static String toDashCase(String camelCase) {
+    StringBuilder builder = new StringBuilder();
+
+    for (char c : camelCase.toCharArray()) {
+      if (Character.isUpperCase(c)) {
+        builder.append("-");
+      }
+      builder.append(c);
+    }
+
+    return builder.toString().toLowerCase();
+  }
 }
