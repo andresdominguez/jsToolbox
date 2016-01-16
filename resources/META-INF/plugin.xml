@@ -1,7 +1,7 @@
 <idea-plugin version="2">
   <id>com.karateca.jstoolbox</id>
   <name>JS Toolbox</name>
-  <version>1.7</version>
+  <version>1.8</version>
   <vendor email="code@karateca.com" url="http://www.andresdominguez.com">
     Andres Dominguez
   </vendor>
@@ -80,6 +80,22 @@
 
       "my-component.html" or "my-component-view.html"
     </p>
+
+    <h3>Turn selection into camel case</h3>
+    <p>
+      Select some text and then choose the "To camel case" action
+    </p>
+    <pre>one-two-three</pre>
+    <p>Will turn into</p>
+    <pre>oneTwoThree</pre>
+
+    <h3>Turn selection into dash case</h3>
+    <p>
+      Select some text and then choose the "To dash case" action
+    </p>
+    <pre>oneTwoThree</pre>
+    <p>Will turn into</p>
+    <pre>one-two-three</pre>
 
     <h3>Go to constructor [Alt G], [Ctrl Command G] on a mac</h3>
     <p>
@@ -163,6 +179,8 @@
         <dd>Improve the go view/test. Add line number in open in browser</dd>
         <dt>1.7</dt>
         <dd>Improve the sort implementation. Add a new dialog</dd>
+        <dt>1.8</dt>
+        <dd>Add actions for camel case and dash case</dd>
       </dl>
       </html>
       ]]>
@@ -236,6 +254,14 @@
       <keyboard-shortcut keymap="Mac OS X" first-keystroke="shift meta 1"/>
       <keyboard-shortcut keymap="Mac OS X 10.5+" first-keystroke="shift meta 1"/>
     </action>
+    <action id="toCamelCase"
+            class="com.karateca.jstoolbox.dashcamel.ToCamelCaseAction"
+            text="To camel case"
+            description="Turn selection into camel case"/>
+    <action id="toDashCase"
+            class="com.karateca.jstoolbox.dashcamel.ToDashCaseAction"
+            text="To dash case"
+            description="Turn selection into dash case"/>
 
     <!-- Add everything under tools -->
     <group id="TestActionGroup"
@@ -250,6 +276,8 @@
       <reference ref="com.karateca.jstoolbox.sort.SortSelection"/>
       <reference ref="com.karateca.jstoolbox.generatemethod.GenerateMethodAction"/>
       <reference ref="com.karateca.jstoolbox.generatemethod.OverrideMethodAction"/>
+      <reference ref="toCamelCase"/>
+      <reference ref="toDashCase"/>
       <add-to-group group-id="ToolsMenu" anchor="first"/>
       <add-to-group group-id="EditorPopupMenu"/>
     </group>
