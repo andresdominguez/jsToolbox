@@ -9,6 +9,7 @@ public class CaseHelperTest {
   public void shouldTransformToCamelCase() {
     assertEquals("oneTwoThree", CaseHelper.toCamelCase("one-two-three"));
     assertEquals("one", CaseHelper.toCamelCase("one"));
+    assertEquals("o", CaseHelper.toCamelCase("o"));
   }
 
   @Test
@@ -20,6 +21,7 @@ public class CaseHelperTest {
   public void shouldAcceptSpaces() {
     assertEquals("oneTwoThree", CaseHelper.toCamelCase("one two-three"));
     assertEquals("oneTwoThree", CaseHelper.toCamelCase("one  two-three"));
+    assertEquals("x", CaseHelper.toCamelCase("          x        -- - - -  "));
   }
 
   @Test
@@ -31,5 +33,10 @@ public class CaseHelperTest {
   @Test
   public void shouldCorrectUpperCase() {
     assertEquals("oneTwoThree", CaseHelper.toCamelCase("ONE-TWO-THREE"));
+  }
+
+  @Test
+  public void shouldTransformCamelToDash() {
+    assertEquals("one-two", CaseHelper.toDashCase("oneTwo"));
   }
 }
