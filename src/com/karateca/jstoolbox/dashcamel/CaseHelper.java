@@ -1,17 +1,23 @@
 package com.karateca.jstoolbox.dashcamel;
 
-import java.util.Arrays;
-import java.util.List;
-
 public class CaseHelper {
   public static String toCamelCase(String dashCase) {
     // Split on dash and space
-    List<String> parts = Arrays.asList(dashCase.split("[- ]"));
-    StringBuilder builder = new StringBuilder(parts.get(0));
+    String[] parts = dashCase.toLowerCase().split("[- ]+");
+    StringBuilder builder = new StringBuilder();
 
-    for (String part : parts.subList(1, parts.size())) {
-      builder.append(part.substring(0, 1).toUpperCase());
-      builder.append(part.substring(1));
+    // Make the first character upper case
+    for (String part : parts) {
+      if (part.length() > 0) {
+        builder.append(part.substring(0, 1).toUpperCase());
+        builder.append(part.substring(1));
+      }
+    }
+
+    // First char is lower case
+    if (builder.length() > 0) {
+      String firstChar = builder.substring(0, 1).toLowerCase();
+      builder.replace(0, 1, firstChar);
     }
 
     return builder.toString();
