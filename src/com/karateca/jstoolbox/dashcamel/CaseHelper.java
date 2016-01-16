@@ -5,7 +5,8 @@ import java.util.List;
 
 public class CaseHelper {
   public static String toCamelCase(String dashCase) {
-    List<String> parts = Arrays.asList(dashCase.split("-"));
+    // Split on dash and space
+    List<String> parts = Arrays.asList(dashCase.split("[- ]"));
     StringBuilder builder = new StringBuilder(parts.get(0));
 
     for (String part : parts.subList(1, parts.size())) {
