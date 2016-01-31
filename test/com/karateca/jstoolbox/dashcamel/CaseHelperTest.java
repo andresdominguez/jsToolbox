@@ -38,5 +38,6 @@ public class CaseHelperTest {
   @Test
   public void shouldTransformCamelToDash() {
     assertEquals("one-two", CaseHelper.toggleCase("oneTwo"));
+    assertEquals("one-two", CaseHelper.toggleCase("OneTwo"));
   }
 }

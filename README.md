@@ -10,8 +10,8 @@ Here is a list of available actions:
 * Go to constructor [Alt G], [Ctrl Command G] on a mac
 * Join multi-line strings and variable declarations [Ctrl SHIFT Alt J], [Ctrl Command J] on a Mac
 * Open current file in browser [Ctrl SHIFT Alt G], [SHIFT Option Command G] on a Mac
-* Add a semicolon at the end of the current line [Ctrl SHIFT ;], [Command SHIFT ;] on a Mac.
 * Sort the selection using a user-defined splitter [SHIFT alt 1], [Command SHIFT 1] on Mac.
+* Toggle from dash case to camel case and back
 * Generate a method for the current javascript class
 * Override a method from the parent javascript class
 
@@ -102,10 +102,6 @@ var foo = 1,
 
 Open the current file in the browser. Configure the URL that you want to
 use when opening the browser under Settings > JS Toolbox.
-
-### Add a semicolon at the end of the current line [Ctrl SHIFT ;], [Command SHIFT ;] on a Mac.
-
-Add a semicolon at the end of the current line.
 
 ### Sort the selection using a user-defined splitter [SHIFT alt 1], [Command SHIFT 1] on Mac.
 

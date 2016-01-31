@@ -2,7 +2,7 @@ package com.karateca.jstoolbox.dashcamel;
 
 public class CaseHelper {
   public static String toggleCase(String input) {
-    if (input.indexOf('-') >= 0) {
+    if (input.contains("-")) {
       return CaseHelper.toCamelCase(input);
     }
     return CaseHelper.toDashCase(input);
@@ -34,7 +34,7 @@ public class CaseHelper {
     StringBuilder builder = new StringBuilder();
 
     for (char c : camelCase.toCharArray()) {
-      if (Character.isUpperCase(c)) {
+      if (Character.isUpperCase(c) && builder.length() > 0) {
         builder.append("-");
       }
       builder.append(c);
