@@ -1,6 +1,13 @@
 package com.karateca.jstoolbox.dashcamel;
 
 public class CaseHelper {
+  public static String toggleCase(String input) {
+    if (input.indexOf('-') >= 0) {
+      return CaseHelper.toCamelCase(input);
+    }
+    return CaseHelper.toDashCase(input);
+  }
+
   public static String toCamelCase(String dashCase) {
     // Split on dash and space
     String[] parts = dashCase.toLowerCase().split("[- ]+");

@@ -254,14 +254,10 @@
       <keyboard-shortcut keymap="Mac OS X" first-keystroke="shift meta 1"/>
       <keyboard-shortcut keymap="Mac OS X 10.5+" first-keystroke="shift meta 1"/>
     </action>
-    <action id="toCamelCase"
-            class="com.karateca.jstoolbox.dashcamel.ToCamelCaseAction"
-            text="To camel case"
-            description="Turn selection into camel case"/>
-    <action id="toDashCase"
-            class="com.karateca.jstoolbox.dashcamel.ToDashCaseAction"
-            text="To dash case"
-            description="Turn selection into dash case"/>
+    <action id="toggleCamelDashCase"
+            class="com.karateca.jstoolbox.dashcamel.ToggleCamelDashCaseAction"
+            text="Toggle camel and dash case"
+            description="Turn selection into dash case if in camel case and vice versa"/>
 
     <!-- Add everything under tools -->
     <group id="TestActionGroup"
@@ -276,8 +272,7 @@
       <reference ref="com.karateca.jstoolbox.sort.SortSelection"/>
       <reference ref="com.karateca.jstoolbox.generatemethod.GenerateMethodAction"/>
       <reference ref="com.karateca.jstoolbox.generatemethod.OverrideMethodAction"/>
-      <reference ref="toCamelCase"/>
-      <reference ref="toDashCase"/>
+      <reference ref="toggleCamelDashCase"/>
       <add-to-group group-id="ToolsMenu" anchor="first"/>
       <add-to-group group-id="EditorPopupMenu"/>
     </group>

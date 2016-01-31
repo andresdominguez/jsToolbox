@@ -7,36 +7,36 @@ import static org.junit.Assert.*;
 public class CaseHelperTest {
   @Test
   public void shouldTransformToCamelCase() {
-    assertEquals("oneTwoThree", CaseHelper.toCamelCase("one-two-three"));
-    assertEquals("one", CaseHelper.toCamelCase("one"));
-    assertEquals("o", CaseHelper.toCamelCase("o"));
+    assertEquals("oneTwoThree", CaseHelper.toggleCase("one-two-three"));
+    assertEquals("one", CaseHelper.toggleCase("one"));
+    assertEquals("o", CaseHelper.toggleCase("o"));
   }
 
   @Test
   public void shouldTransformEmptyString() {
-    assertEquals("", CaseHelper.toCamelCase(""));
+    assertEquals("", CaseHelper.toggleCase(""));
   }
 
   @Test
   public void shouldAcceptSpaces() {
-    assertEquals("oneTwoThree", CaseHelper.toCamelCase("one two-three"));
-    assertEquals("oneTwoThree", CaseHelper.toCamelCase("one  two-three"));
-    assertEquals("x", CaseHelper.toCamelCase("          x        -- - - -  "));
+    assertEquals("oneTwoThree", CaseHelper.toggleCase("one two-three"));
+    assertEquals("oneTwoThree", CaseHelper.toggleCase("one  two-three"));
+    assertEquals("x", CaseHelper.toggleCase("          x        -- - - -  "));
   }
 
   @Test
   public void shouldAcceptMultipleDashes() {
-    assertEquals("oneTwoThreeee", CaseHelper.toCamelCase("one--two---threeee  "));
-    assertEquals("oneTwoThreeee", CaseHelper.toCamelCase("---one--two---threeee---"));
+    assertEquals("oneTwoThreeee", CaseHelper.toggleCase("one--two---threeee  "));
+    assertEquals("oneTwoThreeee", CaseHelper.toggleCase("---one--two---threeee---"));
   }
 
   @Test
   public void shouldCorrectUpperCase() {
-    assertEquals("oneTwoThree", CaseHelper.toCamelCase("ONE-TWO-THREE"));
+    assertEquals("oneTwoThree", CaseHelper.toggleCase("ONE-TWO-THREE"));
   }
 
   @Test
   public void shouldTransformCamelToDash() {
-    assertEquals("one-two", CaseHelper.toDashCase("oneTwo"));
+    assertEquals("one-two", CaseHelper.toggleCase("oneTwo"));
   }
 }

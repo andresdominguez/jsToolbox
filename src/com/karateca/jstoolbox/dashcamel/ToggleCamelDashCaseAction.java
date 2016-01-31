@@ -7,7 +7,7 @@ import com.intellij.openapi.editor.SelectionModel;
 import com.intellij.openapi.project.Project;
 import com.karateca.jstoolbox.MyAction;
 
-public abstract class BaseCaseAction extends MyAction {
+public class ToggleCamelDashCaseAction extends MyAction {
   @Override
   protected boolean canEnableAction(AnActionEvent e) {
     return super.canEnableAction(e) && getEditor(e).getSelectionModel().hasSelection();
@@ -42,5 +42,7 @@ public abstract class BaseCaseAction extends MyAction {
     });
   }
 
-  abstract String changeCase(String selectedText);
+  String changeCase(String selectedText) {
+    return CaseHelper.toggleCase(selectedText);
+  }
 }
