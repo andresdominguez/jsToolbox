@@ -7,8 +7,6 @@ import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class SortDialog extends DialogWrapper {
 
@@ -46,12 +44,7 @@ public class SortDialog extends DialogWrapper {
 
     final JCheckBox checkBox = new JCheckBox("Ignore case when sorting");
     checkBox.setSelected(ignoreCase);
-    checkBox.addActionListener(new ActionListener() {
-      @Override
-      public void actionPerformed(ActionEvent e) {
-        ignoreCase = checkBox.isSelected();
-      }
-    });
+    checkBox.addActionListener(e -> ignoreCase = checkBox.isSelected());
 
     panel.add(sortToken, BorderLayout.CENTER);
     panel.add(checkBox, BorderLayout.PAGE_END);

@@ -1,7 +1,7 @@
-<idea-plugin version="2">
+<idea-plugin>
   <id>com.karateca.jstoolbox</id>
   <name>JS Toolbox</name>
-  <version>1.9</version>
+  <version>1.9.1</version>
   <vendor email="code@karateca.com" url="http://www.andresdominguez.com">
     Andres Dominguez
   </vendor>

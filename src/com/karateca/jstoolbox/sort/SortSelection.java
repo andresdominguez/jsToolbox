@@ -7,10 +7,9 @@ import com.intellij.openapi.editor.SelectionModel;
 import com.intellij.openapi.project.Project;
 import com.karateca.jstoolbox.MyAction;
 import org.apache.commons.lang.StringUtils;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 public class SortSelection extends MyAction {
@@ -29,7 +28,7 @@ public class SortSelection extends MyAction {
     return editor.getSelectionModel().hasSelection();
   }
 
-  public void actionPerformed(AnActionEvent actionEvent) {
+  public void actionPerformed(@NotNull AnActionEvent actionEvent) {
     getEditor(actionEvent);
     if (editor == null) {
       return;
@@ -51,15 +50,12 @@ public class SortSelection extends MyAction {
     }
 
     List<String> strings = Arrays.asList(selectedText.split(separator));
-    Collections.sort(strings, new Comparator<String>() {
-      @Override
-      public int compare(String s, String s2) {
-        if (ignoreCase) {
-          s = s.toLowerCase();
-          s2 = s2.toLowerCase();
-        }
-        return s.trim().compareTo(s2.trim());
+    strings.sort((s, s2) -> {
+      if (ignoreCase) {
+        s = s.toLowerCase();
+        s2 = s2.toLowerCase();
       }
+      return s.trim().compareTo(s2.trim());
     });
 
     final String join = StringUtils.join(strings, separator);
