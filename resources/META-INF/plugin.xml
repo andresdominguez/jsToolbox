@@ -1,7 +1,7 @@
 <idea-plugin>
   <id>com.karateca.jstoolbox</id>
   <name>JS Toolbox</name>
-  <version>1.9.1</version>
+  <version>1.10</version>
   <vendor email="code@karateca.com" url="http://www.andresdominguez.com">
     Andres Dominguez
   </vendor>
@@ -21,8 +21,6 @@
       <li>Open current file in browser [Ctrl SHIFT Alt G], [SHIFT Option Command G] on Mac</li>
       <li>Add a semi-color at the end of the line [Ctrl SHIFT ;], [Command SHIFT ;] on Mac</li>
       <li>Sort the selection using a user-defined splitter [SHIFT alt 1], [Command SHIFT 1] on Mac</li>
-      <li>Generate a method for the current javascript class</li>
-      <li>Override a method from the parent javascript class</li>
     </ul>
     <p>See all the JS Toolbox actions from two locations:</p>
 
@@ -136,19 +134,6 @@
     <p>Open the current file in the browser. Configure the URL that you want to use when opening the browser under
       Settings &gt; JS Toolbox.</p>
 
-    <h3>Generate a method for the current javascript class (Under generate menu)</h3>
-
-    <p>Add a new method to the current javascript class. </p>
-
-    <p>You need to use the @constructor annotation to mark the constructor of the class.</p>
-
-    <h3>Override a method from the parent javascript class (Under generate menu)</h3>
-
-    <p>Override a parent method in the current javascript class. </p>
-
-    <p>You need to annotate the classes with the @constructor and @extends annotations, otherwise the plugin cannot find
-      the class hierarchy.</p>
-
     <h3>Sort the selection using a user-defined splitter [Ctrl SHIFT 1], [Command SHIFT 1] on Mac</h3>
 
     <p>For example, select a bunch of arguments, choose sort, and enter a text (eg. ,) to split and sort the result.</p>
@@ -157,6 +142,7 @@
   <change-notes><![CDATA[
       <html>
       <ul>
+        <li>1.10 - Drop override / generator method actions</li>
         <li>1.9 - Implement toggle camel and dash case</li>
         <li>1.8 - Add actions for camel case and dash case</li>
         <li>1.7 - Improve the sort implementation. Add a new dialog</li>
@@ -221,18 +207,6 @@
             description="Open the current file in browser">
       <keyboard-shortcut keymap="$default" first-keystroke="shift ctrl alt G"/>
     </action>
-    <action id="com.karateca.jstoolbox.generatemethod.GenerateMethodAction"
-            class="com.karateca.jstoolbox.generatemethod.GenerateMethodAction"
-            text="Generate javascript method"
-            description="Generate a new method">
-      <add-to-group group-id="GenerateGroup" anchor="last"/>
-    </action>
-    <action id="com.karateca.jstoolbox.generatemethod.OverrideMethodAction"
-            class="com.karateca.jstoolbox.generatemethod.OverrideMethodAction"
-            text="Override javascript method"
-            description="Override a method from the parent">
-      <add-to-group group-id="GenerateGroup" anchor="last"/>
-    </action>
     <action id="com.karateca.jstoolbox.sort.SortSelection"
             class="com.karateca.jstoolbox.sort.SortSelection"
             text="Sort selection"
@@ -258,8 +232,6 @@
       <reference ref="com.karateca.jstoolbox.tobrowser.ToBrowserAction"/>
       <reference ref="com.karateca.jstoolbox.sort.SortSelection"/>
       <reference ref="toggleCamelDashCase"/>
-      <reference ref="com.karateca.jstoolbox.generatemethod.GenerateMethodAction"/>
-      <reference ref="com.karateca.jstoolbox.generatemethod.OverrideMethodAction"/>
       <add-to-group group-id="ToolsMenu" anchor="first"/>
       <add-to-group group-id="EditorPopupMenu"/>
     </group>

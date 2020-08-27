@@ -12,8 +12,6 @@ Here is a list of available actions:
 * Open current file in browser [Ctrl SHIFT Alt G], [SHIFT Option Command G] on a Mac
 * Sort the selection using a user-defined splitter [SHIFT alt 1], [Command SHIFT 1] on Mac.
 * Toggle from dash case to camel case and back
-* Generate a method for the current javascript class
-* Override a method from the parent javascript class
 
 See all the JS Toolbox actions from two locations:
 
@@ -106,17 +104,3 @@ use when opening the browser under Settings > JS Toolbox.
 ### Sort the selection using a user-defined splitter [SHIFT alt 1], [Command SHIFT 1] on Mac.
 
 Select a block of code that you want to sort, choose sort, and enter a separator (like comma or new line) to sort.
-
-### Generate a method for the current javascript class (Under generate menu)
-
-Add a new method to the current javascript class.
-
-You need to use the @constructor annotation to mark the constructor of the
-class.
-
-### Override a method from the parent javascript class (Under generate menu)
-
-Override a parent method in the current javascript class.
-
-You need to annotate the classes with the @constructor and @extends
-annotations, otherwise the plugin cannot find the class hierarchy.
